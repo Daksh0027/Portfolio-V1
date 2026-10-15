@@ -110,11 +110,57 @@ export default function Portfolio() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroVisible, setHeroVisible] = useState(false);
 
+  const [catPixelSize, setCatPixelSize] = useState(9);
+  const [catTransform, setCatTransform] = useState({ x: 0, y: 0 });
+
   const heroTagline = useScramble(
     "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
     heroVisible,
     200
   );
+
+  // Position the pixel cat on top of the first "D" in the name
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const h1 = monumentRef.current;
+    if (!h1) return;
+
+    const positionCat = () => {
+      const fontSize = parseFloat(getComputedStyle(h1).fontSize);
+      // Scale cat pixel size with the font
+      const px = Math.max(4, Math.round(fontSize / 16));
+      setCatPixelSize(px);
+
+      // The cat is 12 cols wide × 18 rows tall
+      const catW = 12 * px;
+      const catH = 18 * px;
+
+      // The "D" cap height is roughly 0.72 × fontSize
+      // The h1 has leading-[0.88], so line height = 0.88 × fontSize
+      // We want the cat's bottom to sit right at the top of the D's cap,
+      // slightly overlapping. Position so cat bottom ≈ cap top.
+      // The D starts at the top of the line box. With leading 0.88, the
+      // gap above cap height ≈ (0.88 - 0.72) / 2 × fontSize ≈ 0.08 × fontSize
+      const capTopOffset = (0.88 - 0.72) / 2 * fontSize; // gap above the D
+      // Place cat so its bottom edge sits just above the D cap top,
+      // with a slight overlap for the "sitting on" effect
+      const y = capTopOffset - catH + px * 2; // overlap 2 pixels into the D
+      // Center the cat horizontally on the D's left stroke.
+      // The D's stroke starts near x=0 of the h1; center cat over first ~2 strokes
+      const x = px * 2; // nudge right so cat sits on the D, not floating left
+
+      setCatTransform({ x, y });
+    };
+
+    positionCat();
+    window.addEventListener("resize", positionCat);
+    // Re-measure after fonts load
+    const fontTimer = setTimeout(positionCat, 300);
+    return () => {
+      window.removeEventListener("resize", positionCat);
+      clearTimeout(fontTimer);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -354,15 +400,16 @@ export default function Portfolio() {
             <div className="relative">
               {/* 8-bit cat sitting on top of the D, tail hanging down */}
               <div
+                id="cat-perch"
                 style={{
                   position: "absolute",
-                  // sits just above the cap-height of the first letter
-                  top: "clamp(-160px, -11.5vw, -100px)",
-                  left: "clamp(0px, 0.2vw, 6px)",
+                  top: 0,
+                  left: 0,
                   zIndex: 10,
+                  transform: `translate(${catTransform.x}px, ${catTransform.y}px)`,
                 }}
               >
-                <PixelCat pixelSize={9} />
+                <PixelCat pixelSize={catPixelSize} />
               </div>
 
               <h1 ref={monumentRef} className="text-[clamp(3.5rem,13vw,12.5rem)] font-bold tracking-[-0.04em] leading-[0.88] text-[#f2f5f3] select-none break-words">
