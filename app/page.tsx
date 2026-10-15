@@ -1,695 +1,719 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import dynamic from 'next/dynamic';
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CustomCursor from "@/components/CustomCursor";
+import ScrollProgress from "@/components/ScrollProgress";
+import PixelCharacter from "@/components/PixelCharacter";
+import PixelCat from "@/components/PixelCat";
+import Marquee from "@/components/Marquee";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
-import IntroAnimation from '@/components/IntroAnimation';
-import ParticleField from '@/components/ParticleField';
+// ─── Scramble hook ────────────────────────────────────────────────────────────
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#";
 
-const AnimatedHeroName = ({ hasEntered }: { hasEntered: boolean }) => {
-  const [scanPos, setScanPos] = useState(-1);
+function useScramble(target: string, trigger: boolean, delay = 0) {
+  const [display, setDisplay] = useState(target);
+  useEffect(() => {
+    if (!trigger) return;
+    let iter = 0;
+    const id = setTimeout(() => {
+      const iv = setInterval(() => {
+        iter += 1;
+        setDisplay(
+          target.split("").map((ch, i) => {
+            if (ch === " ") return " ";
+            if (i < iter / 1.5) return ch;
+            return CHARS[Math.floor(Math.random() * CHARS.length)];
+          }).join("")
+        );
+        if (iter >= target.length * 1.8) {
+          clearInterval(iv);
+          setDisplay(target);
+        }
+      }, 28);
+      return () => clearInterval(iv);
+    }, delay);
+    return () => clearTimeout(id);
+  }, [trigger, target, delay]);
+  return display;
+}
+
+// ─── Animated counter ─────────────────────────────────────────────────────────
+function AnimatedCounter({ value, label }: { value: string; label: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [display, setDisplay] = useState(value);
 
   useEffect(() => {
-    if (!hasEntered) return;
-
-    // Initial delay before starting the scan
-    const startTimer = setTimeout(() => {
-      setScanPos(0);
-    }, 800); // 800ms gives time for the portfolio to settle
-
-    return () => clearTimeout(startTimer);
-  }, [hasEntered]);
-
-  useEffect(() => {
-    if (scanPos >= 0 && scanPos <= 13) {
-      const timer = setTimeout(() => {
-        setScanPos(p => p + 1);
-      }, 80); // 80ms per character
-      return () => clearTimeout(timer);
-    }
-  }, [scanPos]);
-
-  return (
-    <h1 className="hero-name">
-      {scanPos >= 0 && scanPos <= 5 ? (
-        <>{"DAKSH".slice(0, scanPos)}<span className="text-[var(--accent)]">_</span>{"DAKSH".slice(scanPos)}</>
-      ) : (
-        "DAKSH"
-      )}
-      <br />
-      {scanPos >= 6 && scanPos <= 13 ? (
-        <>{"SHASTRI".slice(0, scanPos - 6)}<span className="text-[var(--accent)]">_</span>{"SHASTRI".slice(scanPos - 6)}</>
-      ) : (
-        "SHASTRI"
-      )}
-      <span className="blink">|</span>
-    </h1>
-  );
-};
-
-export default function Portfolio() {
-  const router = useRouter();
-  const [hasEntered, setHasEntered] = useState(false);
-  const [skipExit, setSkipExit] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-
-  useEffect(() => {
-    // Only skip intro if the user is returning from the map page
-    if (sessionStorage.getItem('cameFromMap') === 'true') {
-      sessionStorage.removeItem('cameFromMap'); // consume it — next reload shows intro
-      setSkipExit(true);
-      setHasEntered(true);
-      return;
-    }
-
-    // Hide overflow during the entire intro and transition phase
-    document.body.style.overflow = 'hidden';
-
-    // Automatically transition to portfolio after animation completes
-    const timer1 = setTimeout(() => {
-      setHasEntered(true);
-    }, 6900);
-
-    // Restore overflow after the portfolio entrance animation completes
-    const timer2 = setTimeout(() => {
-      document.body.style.overflow = '';
-    }, 6900 + 1600); // 6.9s intro + 1.6s portfolio transition
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      document.body.style.overflow = '';
-    };
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!hasEntered) return;
+    if (!visible) return;
+    // numeric value? tick up
+    const num = parseInt(value.replace(/\D/g, ""), 10);
+    if (isNaN(num)) {
+      // text — just scramble it
+      let iter = 0;
+      const iv = setInterval(() => {
+        iter++;
+        setDisplay(
+          value.split("").map((ch, i) => {
+            if (i < iter / 1.2) return ch;
+            return CHARS[Math.floor(Math.random() * CHARS.length)];
+          }).join("")
+        );
+        if (iter >= value.length * 2) { clearInterval(iv); setDisplay(value); }
+      }, 35);
+      return () => clearInterval(iv);
+    }
+    // numeric counter
+    const prefix = value.replace(/[\d,]+.*/, "");
+    const suffix2 = value.replace(/^[^0-9]*[\d,]+/, "");
+    let start = 0;
+    const total = 60;
+    const iv = setInterval(() => {
+      start++;
+      const v = Math.round((start / total) * num);
+      setDisplay(prefix + v + suffix2);
+      if (start >= total) { clearInterval(iv); setDisplay(value); }
+    }, 18);
+    return () => clearInterval(iv);
+  }, [visible, value]);
 
-    let io: IntersectionObserver;
-    let secIO: IntersectionObserver;
-    let initTimer: NodeJS.Timeout;
+  return (
+    <div ref={ref}>
+      <div className="stat-number text-3xl md:text-5xl font-bold text-[#c6f19d]" style={{ fontVariantNumeric: "tabular-nums" }}>
+        {display}
+      </div>
+      <p className="mt-3 text-sm text-[#f2f5f3]">{label}</p>
+    </div>
+  );
+}
 
-    const initObservers = () => {
-      const fadeElements = document.querySelectorAll('.fade-in');
-      if (fadeElements.length === 0) {
-        initTimer = setTimeout(initObservers, 50);
-        return;
-      }
 
-      const sections = ['#hero', '#about', '#experience', '#projects', '#stack', '#education', '#certs', '#contact'];
-      const dots = document.querySelectorAll('.nav-link');
-      const mapBtn = document.getElementById('map-btn');
+export default function Portfolio() {
+  const monumentRef = useRef<HTMLHeadingElement>(null);
+  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [heroVisible, setHeroVisible] = useState(false);
 
-      io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.1 });
+  const heroTagline = useScramble(
+    "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
+    heroVisible,
+    200
+  );
 
-      fadeElements.forEach(el => io.observe(el));
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-      secIO = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            const idx = sections.indexOf('#' + e.target.id);
-            if (idx >= 0) {
-              dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-              // Update active section for particle text effect
-              // Map section IDs to display names; skip home section
-              if (e.target.id === 'hero') {
-                setActiveSection('');
-                return;
-              }
-              const sectionNames: Record<string, string> = {};
-              const name = sectionNames[e.target.id] ?? e.target.id;
-              setActiveSection(name);
-            }
-          }
-        });
-      }, { threshold: 0.4 });
-
-      sections.forEach(s => {
-        const el = document.querySelector(s);
-        if (el) secIO.observe(el);
+    // Hero entrance animation
+    const ctx = gsap.context(() => {
+      // Stagger hero content
+      gsap.from(".animate-rise", {
+        y: 32,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out"
       });
 
-      const handleScroll = () => {
-        if (mapBtn) {
-          mapBtn.classList.toggle('visible', window.scrollY > window.innerHeight * 0.8);
-        }
-      };
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      (window as any)._appScrollHandler = handleScroll;
-    };
-
-    initObservers();
-
-    return () => {
-      clearTimeout(initTimer);
-      if ((window as any)._appScrollHandler) {
-        window.removeEventListener('scroll', (window as any)._appScrollHandler);
-        delete (window as any)._appScrollHandler;
+      // Monument name reveal
+      if (monumentRef.current) {
+        gsap.from(monumentRef.current, {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          delay: 0.3,
+          ease: "power4.out"
+        });
       }
-      if (io) io.disconnect();
-      if (secIO) secIO.disconnect();
-    };
-  }, [hasEntered]);
 
-  const handleSkip = () => {
-    setHasEntered(true);
-    document.body.style.overflow = '';
-  };
+      // Section scroll animations
+      sectionsRef.current.forEach((section) => {
+        if (!section) return;
+        
+        const elements = section.querySelectorAll(".animate-rise, .animate-rise-1, .animate-rise-2, .animate-rise-3");
+        
+        gsap.from(elements, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            end: "top 20%",
+            toggleActions: "play none none none"
+          },
+          y: 24,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power2.out"
+        });
+      });
 
-  const scrollTo = (id: string) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+      // Stats counter animation
+      const statElements = document.querySelectorAll(".stat-number");
+      statElements.forEach((stat) => {
+        gsap.from(stat, {
+          scrollTrigger: {
+            trigger: stat,
+            start: "top 85%"
+          },
+          scale: 0.9,
+          opacity: 0,
+          duration: 0.6,
+          ease: "back.out(1.7)"
+        });
+      });
+
+
+
+      // Section heading line wipe — a green underline sweeps in
+      document.querySelectorAll("h2[data-wipe]").forEach((heading) => {
+        gsap.fromTo(
+          heading,
+          { backgroundSize: "0% 3px" },
+          {
+            backgroundSize: "100% 3px",
+            duration: 0.9,
+            ease: "power3.inOut",
+            scrollTrigger: {
+              trigger: heading,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+
+      // 3-D tilt on project cards (mouse-follow)
+      const cards = document.querySelectorAll("[data-project-card]");
+      cards.forEach((card) => {
+        const el = card as HTMLElement;
+        el.addEventListener("mousemove", (e: MouseEvent) => {
+          const rect = el.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const rx = ((e.clientY - cy) / (rect.height / 2)) * 6;
+          const ry = ((e.clientX - cx) / (rect.width / 2)) * -6;
+          gsap.to(el, {
+            rotateX: rx,
+            rotateY: ry,
+            transformPerspective: 800,
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        });
+        el.addEventListener("mouseleave", () => {
+          gsap.to(el, {
+            rotateX: 0,
+            rotateY: 0,
+            duration: 0.6,
+            ease: "elastic.out(1, 0.4)",
+          });
+        });
+      });
+
+
+      const magneticButtons = document.querySelectorAll('[data-magnetic]');
+      magneticButtons.forEach((button) => {
+        const element = button as HTMLElement;
+        
+        element.addEventListener('mousemove', (e: MouseEvent) => {
+          const rect = element.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          
+          gsap.to(element, {
+            x: x * 0.3,
+            y: y * 0.3,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+        
+        element.addEventListener('mouseleave', () => {
+          gsap.to(element, {
+            x: 0,
+            y: 0,
+            duration: 0.4,
+            ease: "elastic.out(1, 0.5)"
+          });
+        });
+      });
+
+      // Email signature effect - characters split and animate
+      const emailLink = document.querySelector('[data-email]');
+      if (emailLink) {
+        emailLink.addEventListener('mouseenter', () => {
+          gsap.to(emailLink, {
+            scale: 1.02,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+        
+        emailLink.addEventListener('mouseleave', () => {
+          gsap.to(emailLink, {
+            scale: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        });
+      }
+
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  // trigger hero scramble once
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setHeroVisible(true); obs.disconnect(); } },
+      { threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const addToSectionsRef = (el: HTMLElement | null) => {
+    if (el && !sectionsRef.current.includes(el)) {
+      sectionsRef.current.push(el);
+    }
   };
 
   return (
-    <>
-    {hasEntered && <ParticleField activeSection={activeSection} />}
-    <AnimatePresence mode="wait">
-      {!hasEntered ? (
-        <motion.div
-          key="intro"
-          className="flex flex-col items-center justify-center min-h-screen relative w-full bg-[#080c0a] font-mono text-[var(--app-text)] overflow-hidden z-10"
-          exit={skipExit ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, scale: 1.5, filter: "blur(20px) brightness(2)" }}
-          transition={{ duration: 0.8, ease: "easeIn" }}
-        >
-          <div className="crt-overlay z-[60] pointer-events-none" />
-          <div className="crt-scanlines z-[60] pointer-events-none" />
-          <IntroAnimation onSkip={handleSkip} />
-        </motion.div>
-      ) : (
-        <motion.div
-          key="portfolio"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-full relative"
-        >
-          <style dangerouslySetInnerHTML={{
-            __html: `
-            @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap');
-            * { margin:0; padding:0; box-sizing:border-box; }
-            :root {
-              --bg:#080c0a;
-              --bg2:#0e1410;
-              --bg3:#131a15;
-              --accent:#4eff91;
-              --accent2:#00c45a;
-              --muted:#3a4a3f;
-              --text:#e8f0ea;
-              --text2:#8a9e8f;
-              --text3:#4a5e50;
-              --border:#1e2e22;
-              --border2:#2a3e2f;
-              --mono:'JetBrains Mono',monospace;
-              --sans:'Space Grotesk',sans-serif;
-            }
-            html { scroll-behavior:smooth; }
-            body { background:var(--bg); color:var(--text); font-family:var(--sans); overflow-x:hidden; min-height:100vh; }
+    <div className="w-full bg-[#0c0e0d] text-[#f2f5f3]">
+      <CustomCursor />
+      <ScrollProgress />
+      {/* TOP NAVIGATION BAR */}
+      <header className="sticky top-0 z-50 w-full bg-[#0c0e0d] px-6 md:px-12 py-5 flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <a href="#hero" className="text-base font-semibold tracking-tight text-[#f2f5f3] hover:text-[#c6f19d] transition-colors">
+            Daksh Shastri
+          </a>
+          <span className="hidden sm:inline-block text-sm text-[#829087]">
+            Delhi, India · Available for Engineering Roles
+          </span>
+        </div>
 
-            /* GRID OVERLAY */
-            body::before {
-              content:''; position:fixed; inset:0;
-              background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
-              background-size:60px 60px;
-              opacity:0.35; pointer-events:none; z-index:0;
-            }
+        <nav className="flex items-center gap-6 text-sm">
+          <a href="#work" className="text-[#829087] hover:text-[#f2f5f3] transition-colors">
+            Work
+          </a>
+          <a href="#credentials" className="text-[#829087] hover:text-[#f2f5f3] transition-colors">
+            Record
+          </a>
+          <a href="#contact" className="text-[#829087] hover:text-[#c6f19d] transition-colors">
+            Contact
+          </a>
+        </nav>
+      </header>
 
-            section { position:relative; z-index:1; }
+      <main className="w-full">
+        {/* HERO SECTION — THE NAME AS A MONUMENT */}
+        <section id="hero" ref={heroRef} className="min-h-[92dvh] px-6 md:px-12 flex flex-col justify-between pt-12 pb-16">
+          <div className="max-w-3xl">
+            <p className="text-xl md:text-2xl text-[#f2f5f3] font-normal leading-relaxed animate-rise" style={{ fontVariantNumeric: "normal" }}>
+              {heroTagline}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4 items-center animate-rise-1">
+              <a
+                data-magnetic
+                href="#work"
+                className="px-6 py-3 bg-[#c6f19d] text-[#0c0e0d] text-sm font-semibold tracking-wide hover:bg-[#ffffff] transition-colors"
+              >
+                Inspect Selected Work
+              </a>
+              <a
+                data-magnetic
+                href="#contact"
+                className="px-6 py-3 bg-[#141715] text-[#f2f5f3] text-sm font-medium hover:bg-[#1b201d] transition-colors"
+              >
+                Send Message
+              </a>
+            </div>
+          </div>
 
-            /* ── HERO ── */
-            #hero {
-              min-height:100vh; display:flex; flex-direction:column; justify-content:center;
-              padding:4rem 3rem; position:relative; border-bottom:1px solid var(--border2);
-            }
-            .hero-tag { position:relative; z-index:10; font-family:var(--mono); font-size:11px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:2rem; display:flex; align-items:center; gap:8px; }
-            .hero-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
-            .hero-name { position:relative; z-index:10; font-family:var(--mono); font-size:clamp(3rem,8vw,6rem); font-weight:700; line-height:0.95; color:var(--text); letter-spacing:-2px; margin-bottom:1.5rem; }
-            .hero-name span { color:var(--accent); }
-            .hero-sub { position:relative; z-index:10; font-size:1rem; color:var(--text2); max-width:480px; line-height:1.7; margin-bottom:2.5rem; font-weight:300; }
-            .hero-chips { position:relative; z-index:10; display:flex; gap:8px; flex-wrap:wrap; margin-bottom:3rem; }
-            .chip { font-family:var(--mono); font-size:10px; letter-spacing:1px; padding:5px 12px; border:1px solid var(--border2); color:var(--text2); text-transform:uppercase; }
-            .hero-scroll { position:relative; z-index:10; display:flex; align-items:center; gap:12px; font-family:var(--mono); font-size:11px; color:var(--text3); cursor:pointer; text-transform:uppercase; letter-spacing:2px; transition:color 0.2s; }
-            .hero-scroll:hover { color:var(--accent); }
-            .scroll-line { width:40px; height:1px; background:var(--text3); transition:background 0.2s; }
-            .hero-scroll:hover .scroll-line { background:var(--accent); }
-            .blink { animation:blink 1s step-end infinite; }
-            @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-            /* STATUS ROW */
-            .status-row { position:relative; z-index:10; display:flex; gap:2rem; margin-bottom:3rem; flex-wrap:wrap; }
-            .stat { display:flex; flex-direction:column; gap:4px; }
-            .stat-label { font-family:var(--mono); font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:2px; }
-            .stat-val { font-family:var(--mono); font-size:13px; color:var(--text); }
-            .stat-val.green { color:var(--accent); }
-
-            /* ── SECTION HEADER ── */
-            .sec-header { display:flex; align-items:center; gap:16px; margin-bottom:3rem; }
-            .sec-code { font-family:var(--mono); font-size:10px; color:var(--accent); letter-spacing:3px; text-transform:uppercase; }
-            .sec-title { font-family:var(--mono); font-size:1.5rem; font-weight:700; color:var(--text); }
-            .sec-line { flex:1; height:1px; background:var(--border2); }
-
-            /* ── ABOUT ── */
-            #about { padding:5rem 3rem; border-bottom:1px solid var(--border2); }
-            .about-content { max-width: 800px; }
-            .about-text { font-size:1rem; line-height:1.8; color:var(--text2); font-weight:300; }
-            .about-text p { margin-bottom:1rem; }
-            .about-text strong { color:var(--text); font-weight:500; }
-
-            /* ── EXPERIENCE ── */
-            #experience { padding:5rem 3rem; border-bottom:1px solid var(--border2); }
-            .exp-card { border:1px solid var(--border2); padding:2rem; position:relative; margin-bottom:1px; transition:border-color 0.2s; }
-            .exp-card:hover { border-color:var(--accent2); }
-            .exp-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--accent); opacity:0; }
-            .exp-card:hover::before { opacity:1; }
-            .exp-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem; gap:1rem; flex-wrap:wrap; }
-            .exp-title { font-size:1rem; font-weight:500; color:var(--text); }
-            .exp-date { font-family:var(--mono); font-size:10px; color:var(--accent); letter-spacing:1px; white-space:nowrap; }
-            .exp-company { font-family:var(--mono); font-size:11px; color:var(--text2); letter-spacing:1px; margin-bottom:0.5rem; }
-            .exp-desc { font-size:0.875rem; color:var(--text2); line-height:1.6; }
-
-            /* ── PROJECTS ── */
-            #projects { padding:5rem 3rem; border-bottom:1px solid var(--border2); }
-            .proj-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border2); }
-            .proj-card { background:var(--bg); padding:2rem; position:relative; overflow:hidden; transition:background 0.2s; cursor:pointer; }
-            .proj-card:hover { background:var(--bg3); }
-            .proj-num { font-family:var(--mono); font-size:10px; color:var(--text3); letter-spacing:2px; margin-bottom:1rem; }
-            .proj-name { font-size:1.1rem; font-weight:500; color:var(--text); margin-bottom:0.75rem; line-height:1.3; }
-            .proj-desc { font-size:0.8rem; color:var(--text2); line-height:1.6; margin-bottom:1.5rem; font-weight:300; }
-            .proj-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:1rem; }
-            .proj-tag { font-family:var(--mono); font-size:9px; padding:3px 8px; border:1px solid var(--border2); color:var(--text3); text-transform:uppercase; letter-spacing:1px; }
-            .proj-link { font-family:var(--mono); font-size:10px; color:var(--accent); text-decoration:none; letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:6px; }
-            .proj-link:hover { color:var(--text); }
-            .proj-date { font-family:var(--mono); font-size:9px; color:var(--text3); margin-bottom:0.5rem; letter-spacing:1px; }
-            .proj-corner { position:absolute; top:1rem; right:1rem; width:6px; height:6px; border-top:1px solid var(--accent); border-right:1px solid var(--accent); opacity:0; transition:opacity 0.2s; }
-            .proj-card:hover .proj-corner { opacity:1; }
-
-            /* ── STACK ── */
-            #stack { padding:5rem 3rem; border-bottom:1px solid var(--border2); }
-            .stack-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; background:var(--border2); }
-            .stack-block { background:var(--bg); padding:1.75rem; }
-            .stack-cat { font-family:var(--mono); font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:3px; margin-bottom:1rem; }
-            .stack-items { display:flex; flex-direction:column; gap:6px; }
-            .stack-item { font-family:var(--mono); font-size:12px; color:var(--text2); display:flex; align-items:center; gap:8px; }
-            .stack-item::before { content:''; width:4px; height:4px; background:var(--accent); flex-shrink:0; }
-
-            /* ── EDUCATION ── */
-            #education { padding:5rem 3rem; border-bottom:1px solid var(--border2); }
-            .edu-list { display:flex; flex-direction:column; gap:1px; }
-            .edu-row { display:flex; align-items:flex-start; gap:2rem; padding:1.5rem 0; border-bottom:1px solid var(--border); }
-            .edu-year { font-family:var(--mono); font-size:11px; color:var(--text3); min-width:80px; padding-top:2px; }
-            .edu-content { flex:1; }
-            .edu-title { font-size:0.95rem; font-weight:500; color:var(--text); margin-bottom:4px; }
-            .edu-sub { font-family:var(--mono); font-size:11px; color:var(--text2); }
-            .edu-extra { font-family:var(--mono); font-size:10px; color:var(--accent); margin-top:4px; }
-
-            /* ── CERTIFICATIONS ── */
-            #certs { padding:5rem 3rem; border-bottom:1px solid var(--border2); }
-            .certs-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
-            .cert-item { border-left:1px solid var(--border2); padding-left:1.5rem; margin-bottom:1.5rem; }
-            .cert-title { font-size:0.9rem; color:var(--text); font-weight:500; margin-bottom:4px; }
-            .cert-sub { font-family:var(--mono); font-size:10px; color:var(--text2); margin-bottom:4px; letter-spacing:1px; }
-            .cert-date { font-family:var(--mono); font-size:10px; color:var(--text3); }
-            .bullets-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
-            .bullets-list li { font-family:var(--mono); font-size:12px; color:var(--text2); display:flex; align-items:flex-start; gap:10px; line-height:1.5; }
-            .bullets-list li::before { content:'>'; color:var(--accent); flex-shrink:0; margin-top:1px; }
-            .col-title { font-family:var(--mono); font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:3px; margin-bottom:1.5rem; }
-
-            /* ── CONTACT ── */
-            #contact { padding:5rem 3rem; min-height:50vh; }
-            .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
-            .contact-tagline { font-size:2rem; font-weight:500; line-height:1.2; color:var(--text); margin-bottom:1rem; font-family:var(--mono); }
-            .contact-tagline span { color:var(--accent); }
-            .contact-sub { font-size:0.9rem; color:var(--text2); line-height:1.7; margin-bottom:2rem; }
-            .contact-links { display:flex; flex-direction:column; gap:0; }
-            .contact-link { display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--border); text-decoration:none; transition:color 0.2s; group:true; }
-            .contact-link:first-of-type { border-top:1px solid var(--border); }
-            .contact-link-label { font-family:var(--mono); font-size:12px; color:var(--text2); text-transform:uppercase; letter-spacing:1px; transition:color 0.2s; }
-            .contact-link-url { font-family:var(--mono); font-size:11px; color:var(--text3); transition:color 0.2s; }
-            .contact-link:hover .contact-link-label { color:var(--accent); }
-            .contact-link:hover .contact-link-url { color:var(--text2); }
-            .contact-arr { color:var(--text3); font-size:16px; transition:transform 0.2s,color 0.2s; }
-            .contact-link:hover .contact-arr { transform:translate(3px,-3px); color:var(--accent); }
-
-            #map-btn {
-              background:transparent; border:1px solid var(--accent);
-              color:var(--accent); font-family:var(--mono); font-size:10px; letter-spacing:1px; text-transform:uppercase;
-              padding:6px 12px; cursor:pointer; display:flex; align-items:center; gap:6px;
-              transition:all 0.2s;
-            }
-            #map-btn:hover { background:var(--accent); color:var(--bg); }
-            #map-btn::before { content:'⬡'; font-size:12px; }
-            .nav-sep { width:1px; height:20px; background:var(--border2); margin:0 0.5rem; }
-
-            /* ── TOP NAV ── */
-            #top-nav {
-              position:fixed; top:0; left:0; width:100%; height:60px; z-index:100;
-              display:flex; justify-content:center; align-items:center; gap:2rem;
-              background:rgba(5, 10, 6, 0.85); backdrop-filter:blur(8px);
-              border-bottom:1px solid var(--border2);
-            }
-            .nav-link {
-              font-family:var(--mono); font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:2px; cursor:pointer; transition:color 0.3s;
-            }
-            .nav-link:hover, .nav-link.active { color:var(--accent); }
-
-            /* FADE IN */
-            .fade-in { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease,transform 0.6s ease; }
-            .fade-in.visible { opacity:1; transform:translateY(0); }
-
-            @media(max-width:600px){
-              #hero,#about,#experience,#projects,#stack,#education,#certs,#contact { padding:4rem 1.25rem; }
-              .proj-grid,.certs-grid,.contact-grid { grid-template-columns:1fr; }
-              .hero-name { font-size:clamp(2.2rem, 12vw, 4rem); letter-spacing:-1px; }
-              #top-nav { gap:1.25rem; overflow-x:auto; padding:0 1.25rem; justify-content:flex-start; scrollbar-width: none; }
-              #top-nav::-webkit-scrollbar { display: none; }
-              .nav-link { white-space:nowrap; font-size: 10px; }
-              .hero-tag { font-size: 9px; margin-bottom: 1.5rem; }
-              .hero-sub { font-size: 0.95rem; }
-              .status-row { gap: 1.25rem; }
-              .contact-tagline { font-size: 1.5rem; }
-              .sec-title { font-size: 1.25rem; }
-            }
-          `}} />
-
-          <nav id="top-nav">
-            <div className="nav-link active" onClick={() => scrollTo('#hero')} title="Home">HOME</div>
-            <div className="nav-link" onClick={() => scrollTo('#about')} title="About">ABOUT</div>
-            <div className="nav-link" onClick={() => scrollTo('#experience')} title="Experience">EXPERIENCE</div>
-            <div className="nav-link" onClick={() => scrollTo('#projects')} title="Projects">PROJECTS</div>
-            <div className="nav-link" onClick={() => scrollTo('#stack')} title="Stack">STACK</div>
-            <div className="nav-link" onClick={() => scrollTo('#education')} title="Education">EDUCATION</div>
-            <div className="nav-link" onClick={() => scrollTo('#certs')} title="Certs">CERTS</div>
-            <div className="nav-link" onClick={() => scrollTo('#contact')} title="Contact">CONTACT</div>
-            <div className="nav-sep"></div>
-            <button id="map-btn" onClick={() => {
-              sessionStorage.setItem('cameFromMap', 'true');
-              router.push('/map');
-            }}>View Map</button>
-          </nav>
-
-          <motion.div
-            initial={{ opacity: 0, filter: "blur(20px)", scale: 0.8, rotateX: 45, y: 100 }}
-            animate={{ opacity: 1, filter: "blur(0px)", scale: 1, rotateX: 0, y: 0 }}
-            transition={{ duration: 1.4, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            style={{ perspective: 1200 }}
-            className="w-full relative"
-          >
-            {/* HERO */}
-            <section id="hero">
-              <div className="hero-tag">Portfolio · v2025</div>
-              <AnimatedHeroName hasEntered={hasEntered} />
-              <p className="hero-sub">Full-stack engineer and competitive programmer building load-bearing systems. Based in Delhi.</p>
-              <div className="status-row">
-                <div className="stat"><span className="stat-label">Status</span><span className="stat-val green">● Active</span></div>
-                <div className="stat"><span className="stat-label">Role</span><span className="stat-val">Frontend Dev Intern</span></div>
-                <div className="stat"><span className="stat-label">Rank</span><span className="stat-val">CF Pupil</span></div>
-                <div className="stat"><span className="stat-label">Location</span><span className="stat-val">Delhi, India</span></div>
+          <div className="mt-16 md:mt-24 flex items-end gap-6 md:gap-10">
+            {/* ── name monument ── */}
+            <div className="relative">
+              {/* 8-bit cat sitting on top of the D, tail hanging down */}
+              <div
+                style={{
+                  position: "absolute",
+                  // sits just above the cap-height of the first letter
+                  top: "clamp(-160px, -11.5vw, -100px)",
+                  left: "clamp(0px, 0.2vw, 6px)",
+                  zIndex: 10,
+                }}
+              >
+                <PixelCat pixelSize={9} />
               </div>
-              <div className="stat-label" style={{ marginBottom: '0.75rem' }}>Hobbies</div>
-              <div className="hero-chips">
-                <div className="chip">Gaming</div>
-                <div className="chip">Music</div>
-                <div className="chip">Reading</div>
-                <div className="chip">Swimming</div>
-                <div className="chip">PenTesting</div>
-                <div className="chip">Cracking</div>
-              </div>
-              <div className="hero-scroll" onClick={() => scrollTo('#about')}>
-                <div className="scroll-line"></div>
-                Scroll to explore
-              </div>
-            </section>
 
-            {/* ABOUT */}
-            <section id="about">
-              <div className="sec-header fade-in">
-                <span className="sec-code">01 · CORE</span>
-                <h2 className="sec-title">The Operator</h2>
-                <div className="sec-line"></div>
-              </div>
-              <div className="about-content fade-in">
-                <div className="about-text">
-                  <p>Information Technology undergraduate at <strong>Bhagwan Parshuram Institute of Technology</strong> and an active competitive programmer based in Delhi.</p>
-                  <p>Currently working as a <strong>Front-End Development Intern</strong> at Shree Ji Facility Services, bridging the gap between algorithmic problem-solving and full-stack application architecture.</p>
-                  <p>Seeking to apply a diverse skill set spanning <strong>React, Node.js, and C++</strong> to solve complex technical challenges, contribute to impactful projects, and continually level up as a software engineer.</p>
-                </div>
-              </div>
-            </section>
+              <h1 ref={monumentRef} className="text-[clamp(3.5rem,13vw,12.5rem)] font-bold tracking-[-0.04em] leading-[0.88] text-[#f2f5f3] select-none break-words">
+                DAKSH<br />SHASTRI
+              </h1>
+            </div>
 
-            {/* EXPERIENCE */}
-            <section id="experience">
-              <div className="sec-header fade-in">
-                <span className="sec-code">02 · SURFACE</span>
-                <h2 className="sec-title">Operational History</h2>
-                <div className="sec-line"></div>
-              </div>
-              <div className="fade-in">
-                <div className="exp-card">
-                  <div className="exp-top">
-                    <span className="exp-title">Front End Development Intern</span>
-                    <span className="exp-date">May 2026 – Present</span>
-                  </div>
-                  <div className="exp-company">SHREE JI FACILITY SERVICES · Delhi</div>
-                  <div className="exp-desc">Building and maintaining frontend systems. Bridging algorithmic problem-solving with real-world full-stack application architecture in a professional environment.</div>
-                </div>
-              </div>
-            </section>
+            {/* ── inline pixel character ── */}
+            <div className="hidden md:flex pb-2" style={{ alignSelf: "flex-end" }}>
+              <PixelCharacter
+                pixelSize={10}
+                inline={true}
+              />
+            </div>
+          </div>
+        </section>
 
-            {/* PROJECTS */}
-            <section id="projects">
-              <div className="sec-header fade-in">
-                <span className="sec-code">03 · PROVING</span>
-                <h2 className="sec-title">Classified Research</h2>
-                <div className="sec-line"></div>
-              </div>
-              <div className="proj-grid fade-in">
-                <div className="proj-card" onClick={() => window.open('https://respectro.vercel.app/', '_blank')}>
-                  <div className="proj-corner"></div>
-                  <div className="proj-num">PRJ-001</div>
-                  <div className="proj-date">Aug 2025 – Feb 2026</div>
-                  <div className="proj-name">ReSpectro · Movie Streaming Platform</div>
-                  <div className="proj-desc">A responsive movie and TV series discovery app built in React and Vite. Integrated with TMDB API for real-time data, Clerk for user authentication, and Appwrite as backend for personalization tracking.</div>
-                  <div className="proj-tags">
-                    <span className="proj-tag">React</span><span className="proj-tag">Vite</span><span className="proj-tag">Appwrite</span><span className="proj-tag">TMDB API</span>
-                  </div>
-                  <a className="proj-link" href="https://respectro.vercel.app/" target="_blank" rel="noopener noreferrer">→ Live Demo</a>
-                </div>
-                <div className="proj-card" onClick={() => window.open('https://bot-clone.netlify.app/', '_blank')}>
-                  <div className="proj-corner"></div>
-                  <div className="proj-num">PRJ-002</div>
-                  <div className="proj-date">Feb 2025 – Present</div>
-                  <div className="proj-name">Gemini Clone · AI Agent</div>
-                  <div className="proj-desc">A frontend clone of Google Gemini's UI with clean design and full responsiveness. Actually usable — powered by Gemini's API. Built in React with minimal but polished CSS.</div>
-                  <div className="proj-tags">
-                    <span className="proj-tag">React</span><span className="proj-tag">Gemini API</span><span className="proj-tag">CSS</span>
-                  </div>
-                  <a className="proj-link" href="https://bot-clone.netlify.app/" target="_blank" rel="noopener noreferrer">→ Live Demo</a>
-                </div>
-                <div className="proj-card">
-                  <div className="proj-corner"></div>
-                  <div className="proj-num">PRJ-003</div>
-                  <div className="proj-date">Jan 2024 – Feb 2024</div>
-                  <div className="proj-name">Library Management System</div>
-                  <div className="proj-desc">A fully scalable library management system in Python. Manages inventory and sales records for a store with an inbuilt command-line UI. Integrated with MySQL for persistent data storage.</div>
-                  <div className="proj-tags">
-                    <span className="proj-tag">Python</span><span className="proj-tag">MySQL</span><span className="proj-tag">CLI</span>
-                  </div>
-                </div>
-                <div className="proj-card" style={{ background: 'var(--bg3)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '200px' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text3)', letterSpacing: '3px', marginBottom: '8px' }}>STATUS</div>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: '13px', color: 'var(--accent)' }}>More incoming_</div>
-                  </div>
-                </div>
-              </div>
-            </section>
+        {/* MARQUEE DIVIDER */}
+        <Marquee
+          items={["React", "Next.js", "TypeScript", "C++", "Competitive Programming", "BPIT Delhi", "Frontend Engineering", "Node.js", "Appwrite", "MySQL"]}
+          speed={30}
+        />
 
-            {/* STACK */}
-            <section id="stack">
-              <div className="sec-header fade-in">
-                <span className="sec-code">04 · LOAD</span>
-                <h2 className="sec-title">Core Competencies</h2>
-                <div className="sec-line"></div>
-              </div>
-              <div className="stack-grid fade-in">
-                <div className="stack-block">
-                  <div className="stack-cat">Languages</div>
-                  <div className="stack-items">
-                    <span className="stack-item">C++</span>
-                    <span className="stack-item">C</span>
-                    <span className="stack-item">C#</span>
-                    <span className="stack-item">Python</span>
-                    <span className="stack-item">JavaScript</span>
-                  </div>
-                </div>
-                <div className="stack-block">
-                  <div className="stack-cat">Frontend</div>
-                  <div className="stack-items">
-                    <span className="stack-item">HTML &amp; CSS</span>
-                    <span className="stack-item">Tailwind CSS</span>
-                    <span className="stack-item">React</span>
-                    <span className="stack-item">Vite</span>
-                  </div>
-                </div>
-                <div className="stack-block">
-                  <div className="stack-cat">Backend</div>
-                  <div className="stack-items">
-                    <span className="stack-item">Node.js</span>
-                    <span className="stack-item">Django</span>
-                    <span className="stack-item">Flask</span>
-                  </div>
-                </div>
-                <div className="stack-block">
-                  <div className="stack-cat">Database</div>
-                  <div className="stack-items">
-                    <span className="stack-item">MySQL</span>
-                    <span className="stack-item">PL/SQL</span>
-                    <span className="stack-item">Appwrite</span>
-                  </div>
-                </div>
-                <div className="stack-block">
-                  <div className="stack-cat">Tools &amp; DevOps</div>
-                  <div className="stack-items">
-                    <span className="stack-item">GitHub</span>
-                    <span className="stack-item">Vercel</span>
-                    <span className="stack-item">Netlify</span>
-                  </div>
-                </div>
-              </div>
-            </section>
+        {/* SECTION 1: INTRO & MEASURABLE FACTS */}
+        <section ref={addToSectionsRef} className="px-6 md:px-12 py-24 bg-[#141715]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+            <div className="md:col-span-6 animate-rise">
+              <h2 data-wipe className="text-[clamp(2.25rem,4.5vw,4.5rem)] font-bold tracking-tight leading-[1.02] text-[#f2f5f3]"
+                style={{
+                  backgroundImage: "linear-gradient(#c6f19d, #c6f19d)",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "0 100%",
+                  backgroundSize: "0% 3px",
+                  paddingBottom: 4,
+                }}
+              >
+                Algorithmic Rigor in Production
+              </h2>
+            </div>
+            <div className="md:col-span-6 animate-rise-1">
+              <p className="text-lg md:text-xl text-[#f2f5f3] leading-relaxed">
+                Information Technology undergraduate at Bhagwan Parshuram Institute of Technology and front-end development intern at Shree Ji Facility Services. Translating contest-grade problem solving into responsive, accessible web architecture.
+              </p>
+            </div>
+          </div>
 
-            {/* EDUCATION */}
-            <section id="education">
-              <div className="sec-header fade-in">
-                <span className="sec-code">05 · ARCHIVES</span>
-                <h2 className="sec-title">Academic History</h2>
-                <div className="sec-line"></div>
-              </div>
-              <div className="edu-list fade-in">
-                <div className="edu-row">
-                  <span className="edu-year">2024–28</span>
-                  <div className="edu-content">
-                    <div className="edu-title">B.Tech, Information Technology</div>
-                    <div className="edu-sub">Bhagwan Parshuram Institute of Technology</div>
-                  </div>
-                </div>
-                <div className="edu-row">
-                  <span className="edu-year">2024</span>
-                  <div className="edu-content">
-                    <div className="edu-title">Senior Secondary (XII) · Science</div>
-                    <div className="edu-sub">St. Joseph's Academy (CBSE)</div>
-                    <div className="edu-extra">81.60%</div>
-                  </div>
-                </div>
-                <div className="edu-row">
-                  <span className="edu-year">2022</span>
-                  <div className="edu-content">
-                    <div className="edu-title">Secondary (X)</div>
-                    <div className="edu-sub">St. Joseph's Academy (CBSE)</div>
-                    <div className="edu-extra">91.20%</div>
-                  </div>
-                </div>
-                <div className="edu-row">
-                  <span className="edu-year">Ongoing</span>
-                  <div className="edu-content">
-                    <div className="edu-title">Public Relations Associate</div>
-                    <div className="edu-sub">College Society</div>
-                  </div>
-                </div>
-              </div>
-            </section>
+          {/* Editorial Statistics Grid (Unboxed) */}
+          <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-12 animate-rise-2">
+            <AnimatedCounter value="CF Pupil" label="Codeforces Competitive Rating" />
+            <AnimatedCounter value="Rank 222" label="LeetCode Weekly Contest 451 (Global)" />
+            <AnimatedCounter value="Rank 295" label="CodeChef Starters 190 (Global)" />
+            <AnimatedCounter value="Intern"   label="Frontend at Shree Ji Facility Services" />
+          </div>
+        </section>
 
-            {/* CERTIFICATIONS */}
-            <section id="certs">
-              <div className="sec-header fade-in">
-                <span className="sec-code">06 · TRANSMISSION</span>
-                <h2 className="sec-title">Issued Credentials</h2>
-                <div className="sec-line"></div>
-              </div>
-              <div className="certs-grid fade-in">
+        {/* ACCENT MARQUEE */}
+        <Marquee
+          items={["Selected Work", "Open Source", "Production Interfaces", "Algorithms", "ReSpectro", "Gemini Clone", "Python Systems", "Live Demos Available"]}
+          speed={22}
+          accent
+        />
+
+        {/* SECTION 3: WORK — SELECTED PROJECTS WITH INTERFACE FRAGMENTS */}        <section ref={addToSectionsRef} id="work" className="px-6 md:px-12 py-24 bg-[#141715]">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4 animate-rise">
+            <div>
+              <h2 data-wipe className="text-[clamp(2.5rem,6vw,6rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
+                style={{
+                  backgroundImage: "linear-gradient(#c6f19d, #c6f19d)",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "0 100%",
+                  backgroundSize: "0% 3px",
+                  paddingBottom: 4,
+                }}
+              >
+                Selected Work
+              </h2>
+              <p className="mt-4 text-base md:text-lg text-[#f2f5f3]">
+                Production interfaces, conversational AI clients, and scalable transactional engines.
+              </p>
+            </div>
+            <a
+              href="https://github.com/Daksh0027"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-[#c6f19d] hover:underline"
+            >
+              All Repositories on GitHub →
+            </a>
+          </div>
+
+          {/* Asymmetric Project Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Featured Project 1: ReSpectro (Spans 12 columns) */}
+            <div data-project-card className="lg:col-span-12 bg-[#0c0e0d] p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center animate-rise-1">
+              <div className="md:col-span-6 flex flex-col justify-between h-full">
                 <div>
-                  <div className="col-title">Certificates</div>
-                  <div className="cert-item">
-                    <div className="cert-title">Complete IP Addressing &amp; Subnetting</div>
-                    <div className="cert-sub">GeeksforGeeks · Online</div>
-                    <div className="cert-date">Jun 2025</div>
+                  <h3 className="text-3xl font-bold text-[#f2f5f3]">
+                    ReSpectro <span className="text-sm font-normal text-[#829087] ml-2">2025–2026</span>
+                  </h3>
+                  <p className="text-base text-[#829087] mt-1 font-medium">Movie Streaming & Discovery Platform</p>
+                  <p className="text-base text-[#f2f5f3] mt-6 leading-relaxed">
+                    Responsive movie discovery and catalog streaming platform built with React and Vite. Integrated with TMDB API for live data feeds, Clerk for authentication, and Appwrite backend for user watchlists.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">React</span>
+                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Vite</span>
+                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Appwrite</span>
+                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">TMDB API</span>
                   </div>
                 </div>
-                <div>
-                  <div className="col-title">Competitive Achievements</div>
-                  <ul className="bullets-list">
-                    <li>Ranked 222 in LeetCode Weekly Contest 451</li>
-                    <li>Global Rank 295 in CodeChef Starters 190</li>
-                    <li>Ranked Pupil on Codeforces</li>
-                    <li>Participated in SIH'24 · Qualified to Mentor Round</li>
-                    <li>Placed 13th in Cyber Security CTF at MAIT</li>
-                  </ul>
+                <div className="mt-8">
+                  <a
+                    data-magnetic
+                    href="https://respectro.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block px-5 py-2.5 bg-[#1b201d] text-sm text-[#c6f19d] hover:bg-[#c6f19d] hover:text-[#0c0e0d] font-semibold transition-colors"
+                  >
+                    Open Live Demo →
+                  </a>
                 </div>
               </div>
-            </section>
 
-            {/* CONTACT */}
-            <section id="contact">
-              <div className="sec-header fade-in">
-                <span className="sec-code">07 · CLASSIFIED</span>
-                <h2 className="sec-title">Open Uplink</h2>
-                <div className="sec-line"></div>
-              </div>
-              <div className="contact-grid fade-in">
-                <div>
-                  <div className="contact-tagline">Let's build<br /><span>something.</span></div>
-                  <p className="contact-sub">Open to internships, projects, and full-time roles. Based in Delhi — available remotely.</p>
+              {/* Interface Fragment for ReSpectro */}
+              <div data-ui="respectro-preview" className="md:col-span-6 bg-[#141715] p-5">
+                <div className="flex items-center justify-between pb-3 text-sm text-[#829087]">
+                  <span>respectro.vercel.app</span>
+                  <span className="text-[#c6f19d]">Streaming Live</span>
                 </div>
-                <div className="contact-links">
-                  <a className="contact-link" href="mailto:dakshshastri0627@gmail.com">
-                    <div>
-                      <div className="contact-link-label">Email</div>
-                      <div className="contact-link-url">dakshshastri0627@gmail.com</div>
-                    </div>
-                    <span className="contact-arr">↗</span>
-                  </a>
-                  <a className="contact-link" href="https://github.com/Daksh0027" target="_blank" rel="noopener noreferrer">
-                    <div>
-                      <div className="contact-link-label">GitHub</div>
-                      <div className="contact-link-url">Daksh0027</div>
-                    </div>
-                    <span className="contact-arr">↗</span>
-                  </a>
-                  <a className="contact-link" href="https://leetcode.com/u/Daksh0027" target="_blank" rel="noopener noreferrer">
-                    <div>
-                      <div className="contact-link-label">LeetCode</div>
-                      <div className="contact-link-url">Daksh0027</div>
-                    </div>
-                    <span className="contact-arr">↗</span>
-                  </a>
-                  <a className="contact-link" href="https://www.codechef.com/users/gam_pearl_90" target="_blank" rel="noopener noreferrer">
-                    <div>
-                      <div className="contact-link-label">CodeChef</div>
-                      <div className="contact-link-url">gam_pearl_90</div>
-                    </div>
-                    <span className="contact-arr">↗</span>
-                  </a>
+                <div className="grid grid-cols-2 gap-3 mt-2">
+                  <div className="bg-[#1b201d] p-4">
+                    <div className="text-sm font-bold text-[#f2f5f3]">Dune: Part Two</div>
+                    <div className="text-sm text-[#829087] mt-1">Sci-Fi · 8.6 Rating</div>
+                  </div>
+                  <div className="bg-[#1b201d] p-4">
+                    <div className="text-sm font-bold text-[#f2f5f3]">Oppenheimer</div>
+                    <div className="text-sm text-[#829087] mt-1">History · 8.9 Rating</div>
+                  </div>
                 </div>
               </div>
-              <div style={{ marginTop: '5rem', paddingTop: '2rem', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text3)', letterSpacing: '2px' }}>CITY OF CONSTRUCTED SYSTEMS</span>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text3)', letterSpacing: '2px' }}>DAKSH SHASTRI · 2025</span>
+            </div>
+
+            {/* Project 2: Gemini Clone (6 columns) */}
+            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-2">
+              <div>
+                <h3 className="text-2xl font-bold text-[#f2f5f3]">
+                  Gemini Clone <span className="text-sm font-normal text-[#829087] ml-2">2025–Present</span>
+                </h3>
+                <p className="text-sm text-[#829087] mt-1 font-medium">Conversational AI Agent Interface</p>
+                <p className="text-base text-[#f2f5f3] mt-4 leading-relaxed">
+                  Clean frontend clone of Google Gemini built in React with minimalist CSS architecture. Fully functional and driven by live Gemini API streaming completions with session history handling.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">React</span>
+                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Gemini API</span>
+                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">CSS</span>
+                </div>
+
+                {/* Interface Fragment for Gemini */}
+                <div data-ui="gemini-preview" className="mt-6 bg-[#141715] p-4 text-sm">
+                  <div className="text-sm text-[#829087] mb-2">Prompt Input Stream</div>
+                  <p className="text-sm text-[#f2f5f3] bg-[#0c0e0d] p-3">
+                    Analyze time complexity of topological sorting on directed acyclic graph.
+                  </p>
+                </div>
               </div>
-            </section>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-    <div className="fixed bottom-0 left-0 w-full h-16 pointer-events-none bg-gradient-to-t from-[#050a06]/80 to-transparent backdrop-blur-[1px] z-[100]" />
-  </>
+              <div className="mt-8 pt-6">
+                <a
+                  data-magnetic
+                  href="https://bot-clone.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-5 py-2.5 bg-[#1b201d] text-sm text-[#c6f19d] hover:bg-[#c6f19d] hover:text-[#0c0e0d] font-semibold transition-colors"
+                >
+                  Open Live Demo →
+                </a>
+              </div>
+            </div>
+
+            {/* Project 3: Library System (6 columns) */}
+            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-3">
+              <div>
+                <h3 className="text-2xl font-bold text-[#f2f5f3]">
+                  Library System <span className="text-sm font-normal text-[#829087] ml-2">2024</span>
+                </h3>
+                <p className="text-sm text-[#829087] mt-1 font-medium">Inventory & Sales Ledger Engine</p>
+                <p className="text-base text-[#f2f5f3] mt-4 leading-relaxed">
+                  Scalable store management system in Python and MySQL. Handles multi-branch inventory tracking, sales recording, and automated receipt validation through an interactive command-line interface.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Python</span>
+                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">MySQL</span>
+                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">CLI</span>
+                </div>
+
+                {/* Interface Fragment for Library Engine */}
+                <div data-ui="library-preview" className="mt-6 bg-[#141715] p-4 text-sm">
+                  <div className="text-sm text-[#829087] mb-2">SQL Transaction Schema</div>
+                  <pre className="text-sm text-[#c6f19d] bg-[#0c0e0d] p-3 overflow-x-auto">
+                    <code>SELECT id, stock FROM inventory WHERE branch_id = 1;</code>
+                  </pre>
+                </div>
+              </div>
+              <div className="mt-8 pt-6">
+                <a
+                  href="https://github.com/Daksh0027"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-5 py-2.5 bg-[#1b201d] text-sm text-[#c6f19d] hover:bg-[#c6f19d] hover:text-[#0c0e0d] font-semibold transition-colors"
+                >
+                  View Source Repository →
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* MARQUEE DIVIDER */}
+        <Marquee
+          items={["Verified Record", "Competitive Programming", "Technical Competencies", "Certifications", "Hackathons", "CTF Contests", "Academic Background"]}
+          speed={26}
+        />
+
+        {/* SECTION 5: TECHNICAL ARSENAL & CREDENTIALS TABLE */}
+        <section ref={addToSectionsRef} id="credentials" className="px-6 md:px-12 py-24 bg-[#141715]">
+          <div className="mb-16 animate-rise">
+            <h2 data-wipe className="text-[clamp(2.5rem,5vw,5rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
+              style={{
+                backgroundImage: "linear-gradient(#c6f19d, #c6f19d)",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "0 100%",
+                backgroundSize: "0% 3px",
+                paddingBottom: 4,
+              }}
+            >
+              Verified Technical Record
+            </h2>
+            <p className="mt-4 text-base md:text-lg text-[#f2f5f3]">
+              Languages, frameworks, competitive milestones, and certifications.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-rise-1">
+            {/* Table 1: Competencies */}
+            <div>
+              <h3 className="text-xl font-bold text-[#f2f5f3] mb-6">Technical Competencies</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base font-medium text-[#f2f5f3]">Languages</span>
+                  <span className="text-sm text-[#f2f5f3]">C++, C, C#, Python, JavaScript, TypeScript</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base font-medium text-[#f2f5f3]">Frontend Architecture</span>
+                  <span className="text-sm text-[#f2f5f3]">React, Next.js, Vite, Tailwind CSS, HTML & CSS</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base font-medium text-[#f2f5f3]">Backend & Storage</span>
+                  <span className="text-sm text-[#f2f5f3]">Node.js, Django, Flask, MySQL, Appwrite</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base font-medium text-[#f2f5f3]">DevOps & Tooling</span>
+                  <span className="text-sm text-[#f2f5f3]">Git, GitHub, Vercel, Netlify, Linux</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Table 2: Milestones */}
+            <div>
+              <h3 className="text-xl font-bold text-[#f2f5f3] mb-6">Contest & Achievement Record</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base text-[#f2f5f3]">LeetCode Weekly Contest 451</span>
+                  <span className="text-sm font-semibold text-[#c6f19d]">Global Rank 222</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base text-[#f2f5f3]">CodeChef Starters 190</span>
+                  <span className="text-sm font-semibold text-[#c6f19d]">Global Rank 295</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base text-[#f2f5f3]">Codeforces</span>
+                  <span className="text-sm font-semibold text-[#c6f19d]">Pupil Division</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base text-[#f2f5f3]">Smart India Hackathon &apos;24</span>
+                  <span className="text-sm text-[#f2f5f3]">Qualified to Mentor Round</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base text-[#f2f5f3]">Cyber Security CTF at MAIT</span>
+                  <span className="text-sm text-[#f2f5f3]">13th Place</span>
+                </div>
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                  <span className="text-base text-[#f2f5f3]">IP Addressing & Subnetting</span>
+                  <span className="text-sm text-[#f2f5f3]">GeeksforGeeks Certification</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 6: CONTACT — EMAIL AS DISPLAY TYPE */}
+        <section ref={addToSectionsRef} id="contact" className="min-h-[85dvh] px-6 md:px-12 py-24 bg-[#0c0e0d] flex flex-col justify-between">
+          <div className="animate-rise">
+            <p className="text-xl md:text-2xl text-[#f2f5f3] max-w-xl font-normal leading-relaxed">
+              Open for engineering roles, technical internships, and collaborative software projects. Based in Delhi — available worldwide.
+            </p>
+          </div>
+
+          <div className="my-16 animate-rise-1">
+            <a
+              data-email
+              href="mailto:dakshshastri0627@gmail.com"
+              className="block text-[clamp(1.75rem,5.5vw,5.5rem)] font-bold text-[#f2f5f3] hover:text-[#c6f19d] transition-colors tracking-tight break-all"
+            >
+              dakshshastri0627@gmail.com
+            </a>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-12 animate-rise-2">
+            <div className="flex items-center gap-6 text-sm font-medium">
+              <a
+                href="https://github.com/Daksh0027"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#f2f5f3] hover:text-[#c6f19d] transition-colors"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://leetcode.com/u/Daksh0027"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#f2f5f3] hover:text-[#c6f19d] transition-colors"
+              >
+                LeetCode
+              </a>
+              <a
+                href="https://www.codechef.com/users/gam_pearl_90"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#f2f5f3] hover:text-[#c6f19d] transition-colors"
+              >
+                CodeChef
+              </a>
+            </div>
+
+            <div className="text-sm text-[#829087]">
+              <span>Delhi, India · 2026</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
