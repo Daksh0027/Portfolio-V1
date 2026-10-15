@@ -104,6 +104,11 @@ export default function Portfolio() {
 
       <main id="top">
         <section className="reference-hero">
+          <div className="hero-smoke" aria-hidden="true">
+            <span className="hero-smoke-layer hero-smoke-layer-one" />
+            <span className="hero-smoke-layer hero-smoke-layer-two" />
+            <span className="hero-smoke-layer hero-smoke-layer-three" />
+          </div>
           <div className="hero-eyebrow" data-hero-meta>
             <span className="live-mark" />
             Frontend developer &amp; competitive programmer

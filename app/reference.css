@@ -44,8 +44,16 @@
 .reference-grain { inset: 0; z-index: -1; opacity: 0.2; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
 
 .reference-hero, .reference-section, .reference-contact { max-width: 1440px; margin: 0 auto; padding-left: clamp(24px, 7vw, 112px); padding-right: clamp(24px, 7vw, 112px); }
-.reference-hero { min-height: min(820px, 88dvh); display: flex; flex-direction: column; justify-content: space-between; padding-top: clamp(64px, 11vh, 140px); padding-bottom: 44px; }
+.reference-hero { position: relative; min-height: min(820px, 88dvh); display: flex; flex-direction: column; justify-content: space-between; padding-top: clamp(64px, 11vh, 140px); padding-bottom: 44px; overflow: hidden; }
+.reference-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.7; background-image: linear-gradient(90deg, transparent calc(25% - 1px), var(--line) 25%, transparent calc(25% + 1px), transparent calc(50% - 1px), var(--line) 50%, transparent calc(50% + 1px), transparent calc(75% - 1px), var(--line) 75%, transparent calc(75% + 1px)); }
+.hero-smoke { position: absolute; z-index: 0; left: -8%; right: -8%; bottom: -18%; height: 62%; pointer-events: none; filter: blur(26px); transform: rotate(-2deg); }
+.hero-smoke-layer { position: absolute; display: block; width: 110%; height: 100%; border-radius: 48% 52% 0 0 / 22% 18% 0 0; background: radial-gradient(ellipse at 30% 74%, rgba(113, 190, 51, 0.54), transparent 47%), radial-gradient(ellipse at 72% 76%, rgba(184, 255, 105, 0.42), transparent 50%), linear-gradient(180deg, rgba(67, 116, 35, 0.12), rgba(12, 28, 8, 0.9)); animation: smokeFloat 14s ease-in-out infinite alternate; }
+.hero-smoke-layer-one { left: -4%; top: 13%; }
+.hero-smoke-layer-two { left: 10%; top: 2%; opacity: 0.76; transform: scaleX(1.08); animation-duration: 18s; animation-delay: -4s; }
+.hero-smoke-layer-three { left: -12%; top: 24%; opacity: 0.52; transform: scaleX(0.92); animation-duration: 22s; animation-delay: -8s; }
+@keyframes smokeFloat { from { transform: translate3d(-3%, 3%, 0) scaleX(0.97); } to { transform: translate3d(4%, -4%, 0) scaleX(1.04); } }
 .hero-eyebrow, .section-label, .project-type, .project-side, .hero-foot, .contact-bottom { font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; }
+.hero-eyebrow, .hero-display, .hero-statement { position: relative; z-index: 1; }
 .hero-eyebrow { display: flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 600; }
 .live-mark { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px rgba(184,255,105,0.12); }
 .hero-display { margin: auto calc(clamp(24px, 7vw, 112px) * -1) 0; overflow: hidden; }
@@ -113,6 +121,7 @@
   .reference-nav { grid-template-columns: 1fr auto; padding-top: 22px; padding-bottom: 22px; }
   .reference-nav nav { display: none; }
   .reference-hero { min-height: 760px; padding-top: 70px; }
+  .hero-smoke { left: -30%; right: -30%; bottom: -10%; height: 48%; filter: blur(20px); }
   .hero-display { margin-left: -24px; margin-right: -24px; }
   .hero-display h1 { font-size: clamp(70px, 22vw, 150px); }
   .hero-statement { display: block; margin: 40px 0 0; }
@@ -139,6 +148,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-smoke-layer { animation: none; }
   .reference-project { transition: none; }
   .reference-project:hover { transform: none; }
 }
