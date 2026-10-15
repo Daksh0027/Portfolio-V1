@@ -48,10 +48,14 @@
 .hero-eyebrow, .section-label, .project-type, .project-side, .hero-foot, .contact-bottom { font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; }
 .hero-eyebrow { display: flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 600; }
 .live-mark { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px rgba(184,255,105,0.12); }
-.hero-copy { max-width: 960px; margin-top: auto; margin-bottom: auto; }
-.hero-intro { margin: 0 0 22px; color: var(--muted); font-size: clamp(20px, 2vw, 28px); letter-spacing: -0.04em; }
-.hero-copy h1 { max-width: 950px; margin: 0; font-size: clamp(58px, 9.3vw, 144px); font-weight: 600; letter-spacing: -0.075em; line-height: 0.91; }
-.hero-summary { max-width: 390px; margin: 40px 0 0 34%; color: var(--muted); font-size: clamp(16px, 1.35vw, 20px); line-height: 1.5; }
+.hero-display { margin: auto calc(clamp(24px, 7vw, 112px) * -1) 0; overflow: hidden; }
+.hero-display h1 { margin: 0; white-space: nowrap; font-size: clamp(76px, 15.2vw, 235px); font-weight: 600; letter-spacing: -0.105em; line-height: 0.78; }
+.hero-display em { color: var(--ink); }
+.hero-statement { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; max-width: 640px; margin: 0 auto 0 16%; }
+.hero-statement p { max-width: 330px; margin: 0; font-size: clamp(21px, 2.3vw, 32px); font-weight: 500; letter-spacing: -0.06em; line-height: 0.98; }
+.hero-statement-meta { display: grid; gap: 8px; color: var(--muted); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; }
+.hero-statement-meta a { color: var(--ink); font-weight: 600; }
+.hero-statement-meta a span { color: var(--blue); }
 .hero-foot { display: flex; justify-content: space-between; gap: 24px; color: var(--muted); }
 .hero-foot a { color: var(--ink); font-weight: 600; }
 
@@ -69,24 +73,39 @@
 .section-heading { max-width: 1440px; margin: 0 auto 80px; }
 .section-heading h2 { margin-top: 60px; }
 .project-list { max-width: 1440px; margin: 0 auto; border-top: 1px solid var(--line); }
-.reference-project { display: grid; grid-template-columns: 8% 1fr 24%; gap: 28px; border-bottom: 1px solid var(--line); padding: 34px 0; transition: transform 240ms ease, padding 240ms ease; }
-.reference-project:hover { transform: translateX(10px); }
+.project-list-meta { display: flex; justify-content: space-between; padding: 16px 0 10px; color: var(--muted); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; }
+.reference-project { display: grid; grid-template-columns: 8% 1fr 34%; gap: 28px; min-height: 280px; border-bottom: 1px solid var(--line); padding: 34px 0; transition: transform 240ms ease, background-color 240ms ease; }
+.reference-project:hover { transform: translateX(10px); background: linear-gradient(90deg, transparent, rgba(184,255,105,0.045)); }
 .project-number { color: var(--blue); font-size: 13px; font-weight: 600; }
 .project-type { color: var(--muted); margin: 0 0 14px; }
 .reference-project h3 { margin: 0; font-size: clamp(32px, 4vw, 60px); font-weight: 500; letter-spacing: -0.07em; line-height: 0.95; }
 .project-description { max-width: 520px; margin: 20px 0 0; color: var(--muted); font-size: 16px; line-height: 1.5; }
 .project-side { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; gap: 28px; color: var(--muted); line-height: 1.4; }
+.project-facts { display: grid; grid-template-columns: repeat(3, minmax(70px, 1fr)); gap: 20px; width: 100%; }
+.project-facts span { display: grid; gap: 8px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+.project-facts strong { color: var(--ink); font-size: 12px; font-weight: 500; letter-spacing: 0; text-transform: none; }
 .project-side a { color: var(--ink); font-weight: 600; text-transform: none; letter-spacing: 0; }
 .skills-section { display: grid; grid-template-columns: 22% 1fr; gap: 10%; }
 .skill-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 48px; max-width: 680px; }
 .skill-cloud span { border: 1px solid var(--line); border-radius: 999px; padding: 12px 18px; color: var(--muted); font-size: 14px; background: rgba(184,255,105,0.04); }
-.reference-contact { max-width: none; padding-top: 100px; padding-bottom: 40px; background: rgba(10, 17, 10, 0.76); }
-.contact-top, .contact-email, .contact-bottom { max-width: 1216px; margin-left: auto; margin-right: auto; }
+.reference-contact { max-width: none; padding-top: 40px; padding-bottom: 40px; background: rgba(10, 17, 10, 0.76); border-top: 1px solid var(--line); }
+.contact-top, .contact-bottom { max-width: 1216px; margin-left: auto; margin-right: auto; }
 .contact-top { display: flex; justify-content: space-between; gap: 32px; color: var(--muted); }
-.contact-top p { margin: 0; max-width: 300px; font-size: 16px; line-height: 1.4; }
-.contact-email { display: block; margin-top: 100px; font-size: clamp(48px, 10.8vw, 160px); font-weight: 500; letter-spacing: -0.09em; line-height: 0.86; overflow-wrap: anywhere; transition: color 220ms ease; }
-.contact-email:hover { color: var(--blue); }
-.contact-bottom { display: flex; justify-content: space-between; gap: 24px; margin-top: 150px; color: var(--muted); }
+.contact-top > span { font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; }
+.contact-grid { display: grid; grid-template-columns: 3fr 1.4fr; gap: 8%; max-width: 1216px; margin: 70px auto 0; }
+.contact-heading { margin: 0; font-size: clamp(78px, 12vw, 180px); font-weight: 500; letter-spacing: -0.1em; line-height: 0.75; }
+.contact-heading em { color: var(--ink); }
+.contact-note { margin: 90px 0 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+.contact-actions { padding-top: 8px; }
+.contact-pill { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 14px 18px; background: var(--ink); color: var(--paper) !important; font-size: 13px; font-weight: 600; }
+.contact-pill > span { width: 6px; height: 6px; background: var(--paper); }
+.contact-buttons { display: flex; gap: 10px; margin-top: 16px; }
+.contact-buttons a { border: 1px solid var(--line); border-radius: 999px; padding: 12px 15px; color: var(--ink); font-size: 12px; }
+.contact-buttons a:hover { border-color: var(--blue); color: var(--blue); }
+.contact-buttons span, .contact-social span { color: var(--blue); }
+.contact-social { display: inline-block; margin-top: 25px; border-bottom: 1px dotted var(--muted); padding-bottom: 5px; color: var(--ink); font-size: 14px; }
+.contact-signature { max-width: 1440px; margin: 150px auto 0; overflow: hidden; white-space: nowrap; color: var(--ink); font-size: clamp(62px, 14.4vw, 220px); font-weight: 600; letter-spacing: -0.11em; line-height: 0.72; }
+.contact-bottom { display: flex; justify-content: space-between; gap: 24px; margin-top: 62px; color: var(--muted); }
 .contact-bottom div { display: flex; gap: 24px; }
 .contact-bottom a:hover { color: var(--blue); }
 
@@ -94,20 +113,28 @@
   .reference-nav { grid-template-columns: 1fr auto; padding-top: 22px; padding-bottom: 22px; }
   .reference-nav nav { display: none; }
   .reference-hero { min-height: 760px; padding-top: 70px; }
-  .hero-copy h1 { font-size: clamp(52px, 16vw, 100px); }
-  .hero-summary { margin-left: 0; margin-top: 28px; }
+  .hero-display { margin-left: -24px; margin-right: -24px; }
+  .hero-display h1 { font-size: clamp(70px, 22vw, 150px); }
+  .hero-statement { display: block; margin: 40px 0 0; }
+  .hero-statement p { margin-bottom: 28px; }
   .hero-foot { flex-wrap: wrap; line-height: 1.5; }
   .hero-foot a { width: 100%; }
   .about-content, .skills-section { display: block; }
   .about-detail { margin-top: 40px; }
   .fact-row { grid-template-columns: repeat(2, 1fr); margin-top: 80px; row-gap: 32px; }
   .section-heading h2 { margin-top: 42px; }
-  .reference-project { grid-template-columns: 40px 1fr; gap: 16px; }
+  .reference-project { grid-template-columns: 40px 1fr; gap: 16px; min-height: 0; }
   .project-side { grid-column: 2; align-items: flex-start; gap: 16px; margin-top: 4px; }
+  .project-facts { gap: 12px; }
   .contact-top { display: block; }
-  .contact-top p { margin-top: 32px; }
-  .contact-email { margin-top: 90px; font-size: clamp(43px, 13vw, 84px); }
-  .contact-bottom { display: block; margin-top: 100px; line-height: 1.8; }
+  .contact-top > span { display: block; margin-top: 14px; }
+  .contact-grid { display: block; margin-top: 80px; }
+  .contact-heading { font-size: clamp(76px, 24vw, 150px); }
+  .contact-note { margin-top: 58px; }
+  .contact-actions { margin-top: 56px; }
+  .contact-buttons { flex-wrap: wrap; }
+  .contact-signature { margin-top: 110px; font-size: 20vw; }
+  .contact-bottom { display: block; margin-top: 62px; line-height: 1.8; }
   .contact-bottom div { flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; }
 }
 

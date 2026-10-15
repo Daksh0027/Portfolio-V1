@@ -11,24 +11,33 @@ const projects = [
     number: "01",
     title: "ReSpectro",
     type: "Movie streaming & discovery",
+    role: "Frontend developer",
+    year: "2025",
+    metric: "Stack",
+    value: "React / Vite",
     description: "A responsive movie discovery platform with live TMDB data, authentication, and personalized watchlists powered by Appwrite.",
-    stack: "React / Vite / Appwrite",
     link: "https://respectro.vercel.app/",
   },
   {
     number: "02",
     title: "Gemini Clone",
     type: "Conversational AI interface",
+    role: "Frontend developer",
+    year: "2025",
+    metric: "Focus",
+    value: "AI interface",
     description: "A clean, responsive Gemini-inspired client with live API completions and session history handling.",
-    stack: "React / Gemini API",
     link: "https://bot-clone.netlify.app/",
   },
   {
     number: "03",
     title: "Library System",
     type: "Python transactional tool",
+    role: "Software developer",
+    year: "2024",
+    metric: "Focus",
+    value: "Reliable workflows",
     description: "A scalable command-line inventory and sales management system using Python and MySQL connectivity.",
-    stack: "Python / MySQL",
     link: "#contact",
   },
 ];
@@ -99,15 +108,16 @@ export default function Portfolio() {
             <span className="live-mark" />
             Frontend developer &amp; competitive programmer
           </div>
-          <div className="hero-copy">
-            <p className="hero-intro" data-hero-line>Hi, I&apos;m Daksh.</p>
-            <h1 data-hero-line>I build digital<br /><em>experiences</em> that work.</h1>
-            <p className="hero-summary" data-hero-meta>Information Technology undergraduate in Delhi, turning algorithmic thinking into fast, thoughtful interfaces and dependable web systems.</p>
+          <div className="hero-display" data-hero-line>
+            <h1>DAKSH<br /><em>SHASTRI</em></h1>
           </div>
-          <div className="hero-foot" data-hero-meta>
-            <span>Based in Delhi, India</span>
-            <span>Available for engineering roles</span>
-            <a href="#work">Scroll to explore <span>↓</span></a>
+          <div className="hero-statement" data-hero-meta>
+            <p>Building digital experiences that are <em>fast, thoughtful,</em> and made to work.</p>
+            <div className="hero-statement-meta">
+              <span>Based in Delhi, India</span>
+              <span>Available for engineering roles</span>
+              <a href="#work">Scroll to explore <span>↓</span></a>
+            </div>
           </div>
         </section>
 
@@ -134,16 +144,21 @@ export default function Portfolio() {
             <h2>Things I&apos;ve<br /><em>made.</em></h2>
           </div>
           <div className="project-list">
+            <div className="project-list-meta"><span>01 — 03</span><span>Selected work</span></div>
             {projects.map((project) => (
               <article className="reference-project" key={project.number} data-reveal>
-                <span className="project-number">{project.number}</span>
+                <span className="project-number">({project.number})</span>
                 <div className="project-main">
                   <p className="project-type">{project.type}</p>
                   <h3>{project.title}</h3>
                   <p className="project-description">{project.description}</p>
                 </div>
                 <div className="project-side">
-                  <span>{project.stack}</span>
+                  <div className="project-facts">
+                    <span>Role<strong>{project.role}</strong></span>
+                    <span>Year<strong>© {project.year}</strong></span>
+                    <span>{project.metric}<strong>{project.value}</strong></span>
+                  </div>
                   <a href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>View project <span>↗</span></a>
                 </div>
               </article>
@@ -164,9 +179,23 @@ export default function Portfolio() {
         <section id="contact" className="reference-contact">
           <div className="contact-top" data-reveal>
             <div className="section-label">04 / Contact</div>
-            <p>Have a project, an opportunity, or a good problem to solve?</p>
+            <span>Open to engineering roles / remote</span>
           </div>
-          <a href="mailto:dakshshastri0627@gmail.com" className="contact-email" data-reveal>dakshshastri0627<br /><em>@gmail.com</em></a>
+          <div className="contact-grid">
+            <div>
+              <h2 className="contact-heading" data-reveal><em>Let&apos;s</em><br />talk.</h2>
+              <p className="contact-note" data-reveal>Have a project, an opportunity, or a good problem to solve?</p>
+            </div>
+            <div className="contact-actions" data-reveal>
+              <a className="contact-pill" href="mailto:dakshshastri0627@gmail.com"><span />dakshshastri0627@gmail.com</a>
+              <div className="contact-buttons">
+                <a href="mailto:dakshshastri0627@gmail.com">Start a conversation <span>↗</span></a>
+                <a href="/bdaf8a32073c89456ece1fd6b2e6cab1.pdf">Download CV <span>↓</span></a>
+              </div>
+              <a className="contact-social" href="https://github.com/Daksh0027" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+            </div>
+          </div>
+          <div className="contact-signature" data-reveal>DAKSH SHASTRI</div>
           <div className="contact-bottom" data-reveal>
             <span>Delhi, India · 2026</span>
             <div>
