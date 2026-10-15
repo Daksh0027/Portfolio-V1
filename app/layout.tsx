@@ -26,7 +26,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
         <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
       </head>
-      <body className="min-h-[100dvh] bg-[#0c0e0d] text-[#f2f5f3] antialiased selection:bg-[#c6f19d] selection:text-[#0c0e0d]">
+      <body className="min-h-[100dvh] bg-[#050705] text-[#d8ffb0] antialiased selection:bg-[#b8ff69] selection:text-[#050705]">
         {children}
       </body>
     </html>

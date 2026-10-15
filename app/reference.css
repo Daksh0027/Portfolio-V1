@@ -1,13 +1,13 @@
 
 /* Reference-inspired blue light portfolio */
 .reference-page {
-  --paper: #f2f4f3;
-  --paper-soft: #e8eceb;
-  --ink: #0e1718;
-  --muted: #637074;
-  --line: rgba(14, 23, 24, 0.14);
-  --blue: #1d73e8;
-  --cyan: #7fdcff;
+  --paper: #050705;
+  --paper-soft: #0b100b;
+  --ink: #d8ffb0;
+  --muted: #8da47c;
+  --line: rgba(184, 255, 105, 0.18);
+  --blue: #b8ff69;
+  --cyan: #b8ff69;
   position: relative;
   min-height: 100dvh;
   overflow: hidden;
@@ -37,17 +37,17 @@
 .reference-nav-cta span, .reference-project a span, .hero-foot a span { color: var(--blue); }
 
 .reference-light, .reference-orb, .reference-grain { position: fixed; pointer-events: none; }
-.reference-light { inset: 0; z-index: -3; background: radial-gradient(circle at 50% 12%, rgba(255,255,255,0.95), transparent 42%), linear-gradient(135deg, #eef4f5 0%, #f5f7f5 45%, #e7eff2 100%); }
+.reference-light { inset: 0; z-index: -3; background: radial-gradient(circle at 50% 12%, rgba(41, 63, 25, 0.28), transparent 42%), linear-gradient(135deg, #050705 0%, #080d08 45%, #030503 100%); }
 .reference-orb { z-index: -2; border-radius: 50%; filter: blur(28px); mix-blend-mode: multiply; }
-.reference-orb-one { width: min(58vw, 820px); height: min(58vw, 820px); top: 8vh; right: -12vw; background: radial-gradient(circle at 38% 38%, rgba(73, 190, 255, 0.72), rgba(75, 144, 238, 0.28) 42%, rgba(75, 144, 238, 0) 72%); }
-.reference-orb-two { width: min(50vw, 680px); height: min(50vw, 680px); top: 42vh; left: -20vw; background: radial-gradient(circle at 55% 45%, rgba(115, 220, 255, 0.4), rgba(105, 165, 255, 0.12) 45%, transparent 72%); }
+.reference-orb-one { width: min(58vw, 820px); height: min(58vw, 820px); top: 8vh; right: -12vw; background: radial-gradient(circle at 38% 38%, rgba(184, 255, 105, 0.42), rgba(87, 148, 45, 0.18) 42%, rgba(87, 148, 45, 0) 72%); }
+.reference-orb-two { width: min(50vw, 680px); height: min(50vw, 680px); top: 42vh; left: -20vw; background: radial-gradient(circle at 55% 45%, rgba(184, 255, 105, 0.2), rgba(105, 165, 45, 0.08) 45%, transparent 72%); }
 .reference-grain { inset: 0; z-index: -1; opacity: 0.2; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
 
 .reference-hero, .reference-section, .reference-contact { max-width: 1440px; margin: 0 auto; padding-left: clamp(24px, 7vw, 112px); padding-right: clamp(24px, 7vw, 112px); }
 .reference-hero { min-height: min(820px, 88dvh); display: flex; flex-direction: column; justify-content: space-between; padding-top: clamp(64px, 11vh, 140px); padding-bottom: 44px; }
 .hero-eyebrow, .section-label, .project-type, .project-side, .hero-foot, .contact-bottom { font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; }
 .hero-eyebrow { display: flex; align-items: center; gap: 10px; color: var(--muted); font-weight: 600; }
-.live-mark { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px rgba(29,115,232,0.12); }
+.live-mark { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px rgba(184,255,105,0.12); }
 .hero-copy { max-width: 960px; margin-top: auto; margin-bottom: auto; }
 .hero-intro { margin: 0 0 22px; color: var(--muted); font-size: clamp(20px, 2vw, 28px); letter-spacing: -0.04em; }
 .hero-copy h1 { max-width: 950px; margin: 0; font-size: clamp(58px, 9.3vw, 144px); font-weight: 600; letter-spacing: -0.075em; line-height: 0.91; }
@@ -79,8 +79,8 @@
 .project-side a { color: var(--ink); font-weight: 600; text-transform: none; letter-spacing: 0; }
 .skills-section { display: grid; grid-template-columns: 22% 1fr; gap: 10%; }
 .skill-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 48px; max-width: 680px; }
-.skill-cloud span { border: 1px solid var(--line); border-radius: 999px; padding: 12px 18px; color: var(--muted); font-size: 14px; background: rgba(255,255,255,0.22); }
-.reference-contact { max-width: none; padding-top: 100px; padding-bottom: 40px; background: rgba(221, 235, 240, 0.55); }
+.skill-cloud span { border: 1px solid var(--line); border-radius: 999px; padding: 12px 18px; color: var(--muted); font-size: 14px; background: rgba(184,255,105,0.04); }
+.reference-contact { max-width: none; padding-top: 100px; padding-bottom: 40px; background: rgba(10, 17, 10, 0.76); }
 .contact-top, .contact-email, .contact-bottom { max-width: 1216px; margin-left: auto; margin-right: auto; }
 .contact-top { display: flex; justify-content: space-between; gap: 32px; color: var(--muted); }
 .contact-top p { margin: 0; max-width: 300px; font-size: 16px; line-height: 1.4; }

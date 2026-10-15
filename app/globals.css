@@ -2,13 +2,13 @@
 @import "./reference.css";
 
 :root {
-  --bg: #0c0e0d;
-  --surface: #131715;
-  --surface-2: #1b201d;
-  --ink: #f2f5f3;
-  --muted: #829087;
-  --accent: #c6f19d;
-  --accent-ink: #0c0e0d;
+  --bg: #050705;
+  --surface: #0b100b;
+  --surface-2: #152014;
+  --ink: #d8ffb0;
+  --muted: #8da47c;
+  --accent: #b8ff69;
+  --accent-ink: #050705;
   --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
