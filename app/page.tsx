@@ -5,7 +5,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollProgress from "@/components/ScrollProgress";
 import Marquee from "@/components/Marquee";
-import PixelCharacter from "@/components/PixelCharacter";
 import ParticleField from "@/components/ParticleField";
 
 if (typeof window !== "undefined") {
@@ -119,7 +118,6 @@ export default function Portfolio() {
         .from(".hero-kicker", { y: 16, opacity: 0, duration: 0.45 })
         .from(".hero-copy", { y: 22, opacity: 0, duration: 0.6 }, "-=0.15")
         .from(".hero-actions", { y: 18, opacity: 0, duration: 0.5 }, "-=0.3")
-        .from(".hero-character", { scale: 0.86, opacity: 0, duration: 0.6 }, "-=0.25")
         .from(monumentRef.current, { y: 36, opacity: 0, duration: 0.9 }, "-=0.25");
 
       if (monumentRef.current) {
@@ -263,15 +261,6 @@ export default function Portfolio() {
                 Send a message
               </a>
             </div>
-          </div>
-
-          <div className="hero-character absolute right-8 top-32 hidden border border-[#2a302d] bg-[#111412]/90 p-4 md:block lg:right-16">
-            <div className="mb-3 flex items-center justify-between gap-8 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#829087]">
-              <span>Player 01</span>
-              <span className="text-[#c6f19d]">Online</span>
-            </div>
-            <PixelCharacter pixelSize={5} inline minimal />
-            <div className="mt-3 border-t border-[#2a302d] pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-[#829087]">Daksh.exe / Delhi</div>
           </div>
 
           <div className="mt-20 md:mt-24 overflow-visible">
