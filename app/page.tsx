@@ -11,34 +11,34 @@ const projects = [
     number: "01",
     title: "ReSpectro",
     type: "Movie streaming & discovery",
-    role: "Frontend developer",
+    description: "A responsive movie discovery platform with live TMDB data, authentication, and personalized watchlists.",
+    role: "Frontend development",
     year: "2025",
-    metric: "Stack",
-    value: "React / Vite",
-    description: "A responsive movie discovery platform with live TMDB data, authentication, and personalized watchlists powered by Appwrite.",
+    tags: "React / Vite / Appwrite",
     link: "https://respectro.vercel.app/",
+    className: "project-gold",
   },
   {
     number: "02",
     title: "Gemini Clone",
     type: "Conversational AI interface",
-    role: "Frontend developer",
+    description: "A clean, responsive AI client with live completions and session history handling.",
+    role: "Frontend development",
     year: "2025",
-    metric: "Focus",
-    value: "AI interface",
-    description: "A clean, responsive Gemini-inspired client with live API completions and session history handling.",
+    tags: "React / Gemini API",
     link: "https://bot-clone.netlify.app/",
+    className: "project-blue",
   },
   {
     number: "03",
     title: "Library System",
     type: "Python transactional tool",
-    role: "Software developer",
+    description: "A reliable inventory and sales management system with a practical command-line workflow.",
+    role: "Software development",
     year: "2024",
-    metric: "Focus",
-    value: "Reliable workflows",
-    description: "A scalable command-line inventory and sales management system using Python and MySQL connectivity.",
+    tags: "Python / MySQL",
     link: "#contact",
+    className: "project-green",
   },
 ];
 
@@ -51,34 +51,19 @@ export default function Portfolio() {
     if (!pageRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const context = gsap.context(() => {
-      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
-      intro
-        .from("[data-nav]", { y: -16, opacity: 0, duration: 0.55 })
-        .from("[data-hero-line]", { y: 36, opacity: 0, duration: 0.8, stagger: 0.08 }, "-=0.2")
-        .from("[data-hero-meta]", { y: 20, opacity: 0, duration: 0.6 }, "-=0.45")
-        .from("[data-orb]", { scale: 0.8, opacity: 0, duration: 1.2 }, "-=0.8");
+      gsap.timeline({ defaults: { ease: "power3.out" } })
+        .from("[data-nav]", { y: -20, opacity: 0, duration: 0.6 })
+        .from("[data-hero-line]", { y: 55, opacity: 0, duration: 0.85, stagger: 0.08 }, "-=0.25")
+        .from("[data-hero-meta]", { y: 18, opacity: 0, duration: 0.65, stagger: 0.06 }, "-=0.45");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
-          y: 36,
+          y: 35,
           opacity: 0,
           duration: 0.8,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: element,
-            start: "top 86%",
-            once: true,
-          },
+          scrollTrigger: { trigger: element, start: "top 86%", once: true },
         });
-      });
-
-      gsap.to("[data-orb]", {
-        x: 36,
-        y: -24,
-        duration: 8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
       });
     }, pageRef);
 
@@ -88,83 +73,84 @@ export default function Portfolio() {
   return (
     <div ref={pageRef} className="reference-page">
       <div className="reference-light" aria-hidden="true" />
-      <div className="reference-orb reference-orb-one" data-orb aria-hidden="true" />
-      <div className="reference-orb reference-orb-two" aria-hidden="true" />
       <div className="reference-grain" aria-hidden="true" />
 
       <header className="reference-nav" data-nav>
-        <a href="#top" className="reference-logo">DS<span>.</span></a>
+        <a href="#top" className="reference-logo" aria-label="Daksh Shastri home"><span>D</span><b>AKSH</b><i>S</i><b>HASTRI</b></a>
         <nav aria-label="Primary navigation">
-          <a href="#about">About</a>
           <a href="#work">Work</a>
-          <a href="#contact">Contact</a>
+          <a href="#about">About</a>
+          <a href="#contact">Connect</a>
         </nav>
         <a className="reference-nav-cta" href="mailto:dakshshastri0627@gmail.com">Let&apos;s talk <span>↗</span></a>
       </header>
 
       <main id="top">
         <section className="reference-hero">
+          <div className="hero-grid-lines" aria-hidden="true" />
           <div className="hero-smoke" aria-hidden="true">
             <span className="hero-smoke-layer hero-smoke-layer-one" />
             <span className="hero-smoke-layer hero-smoke-layer-two" />
             <span className="hero-smoke-layer hero-smoke-layer-three" />
           </div>
-          <div className="hero-eyebrow" data-hero-meta>
-            <span className="live-mark" />
-            Frontend developer &amp; competitive programmer
+          <div className="hero-topline" data-hero-meta>
+            <span>© 2026</span>
+            <span>Based in Delhi, India</span>
+            <span>Frontend developer</span>
           </div>
-          <div className="hero-display" data-hero-line>
-            <h1>DAKSH<br /><em>SHASTRI</em></h1>
+          <div className="hero-wordmark" data-hero-line aria-label="Daksh Shastri">
+            <span>DAKSH</span>
+            <span>SHASTRI</span>
           </div>
-          <div className="hero-statement" data-hero-meta>
-            <p>Building digital experiences that are <em>fast, thoughtful,</em> and made to work.</p>
-            <div className="hero-statement-meta">
-              <span>Based in Delhi, India</span>
-              <span>Available for engineering roles</span>
-              <a href="#work">Scroll to explore <span>↓</span></a>
-            </div>
+          <div className="hero-copy" data-hero-meta>
+            <h1>Building digital <em>experiences</em> that make complex ideas feel simple.</h1>
+            <a href="#work">Explore selected work <span>↓</span></a>
           </div>
         </section>
 
+        <div className="reference-marquee" aria-hidden="true">
+          <div>Frontend development <span>✦</span> Competitive programming <span>✦</span> Product-minded engineering <span>✦</span> Frontend development <span>✦</span></div>
+        </div>
+
         <section id="about" className="reference-section about-section">
-          <div className="section-label" data-reveal>01 / About</div>
+          <div className="section-label" data-reveal>( About )</div>
           <div className="about-content" data-reveal>
-            <h2>I work where <em>clear thinking</em> meets useful software.</h2>
+            <h2>I turn thoughtful systems into <em>useful software.</em></h2>
             <div className="about-detail">
-              <p>I&apos;m currently studying Information Technology at Bhagwan Parshuram Institute of Technology and working as a Front-End Development Intern at Shree Ji Facility Services.</p>
-              <p>My edge is the combination of competitive programming discipline and a strong eye for interaction. I care about the details people feel: speed, hierarchy, accessibility, and the small moments that make a product feel considered.</p>
+              <p>I&apos;m an Information Technology undergraduate at Bhagwan Parshuram Institute of Technology, currently working as a Front-End Development Intern at Shree Ji Facility Services.</p>
+              <p>I bring competitive programming discipline to product work, with a focus on speed, clarity, accessibility, and interfaces that feel considered.</p>
             </div>
           </div>
           <div className="fact-row" data-reveal>
-            <div><strong>222</strong><span>LeetCode weekly contest rank</span></div>
-            <div><strong>295</strong><span>CodeChef global contest rank</span></div>
-            <div><strong>Pupil</strong><span>Codeforces rating</span></div>
-            <div><strong>2028</strong><span>B.Tech graduation target</span></div>
+            <div><strong>222</strong><span>LeetCode weekly rank</span></div>
+            <div><strong>295</strong><span>CodeChef global rank</span></div>
+            <div><strong>2028</strong><span>B.Tech graduation</span></div>
+            <div><strong>Delhi</strong><span>Current base</span></div>
           </div>
         </section>
 
-        <section id="work" className="reference-section work-section">
-          <div className="section-heading" data-reveal>
-            <div className="section-label">02 / Selected work</div>
-            <h2>Things I&apos;ve<br /><em>made.</em></h2>
+        <section id="work" className="work-section reference-section">
+          <div className="work-heading" data-reveal>
+            <div className="section-label">( Selected work )</div>
+            <h2>Projects built with<br /><em>purpose.</em></h2>
           </div>
           <div className="project-list">
-            <div className="project-list-meta"><span>01 — 03</span><span>Selected work</span></div>
             {projects.map((project) => (
-              <article className="reference-project" key={project.number} data-reveal>
-                <span className="project-number">({project.number})</span>
-                <div className="project-main">
-                  <p className="project-type">{project.type}</p>
+              <article className={`reference-project ${project.className}`} key={project.number} data-reveal>
+                <a className="project-visual" href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined} aria-label={`View ${project.title}`}>
+                  <span className="project-visual-title">{project.title}</span>
+                  <span className="project-visual-mark">{project.number}</span>
+                </a>
+                <div className="project-info">
+                  <div className="project-info-top"><span>({project.number})</span><span>{project.type}</span></div>
                   <h3>{project.title}</h3>
-                  <p className="project-description">{project.description}</p>
+                  <p>{project.description}</p>
+                  <a className="project-link" href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>View project <span>↗</span></a>
                 </div>
-                <div className="project-side">
-                  <div className="project-facts">
-                    <span>Role<strong>{project.role}</strong></span>
-                    <span>Year<strong>© {project.year}</strong></span>
-                    <span>{project.metric}<strong>{project.value}</strong></span>
-                  </div>
-                  <a href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>View project <span>↗</span></a>
+                <div className="project-meta">
+                  <span>Role<strong>{project.role}</strong></span>
+                  <span>Published<strong>© {project.year}</strong></span>
+                  <span>Built with<strong>{project.tags}</strong></span>
                 </div>
               </article>
             ))}
@@ -172,19 +158,17 @@ export default function Portfolio() {
         </section>
 
         <section className="reference-section skills-section" data-reveal>
-          <div className="section-label">03 / Toolkit</div>
+          <div className="section-label">( Capabilities )</div>
           <div>
             <h2>A practical<br /><em>toolkit.</em></h2>
-            <div className="skill-cloud">
-              {skills.map((skill) => <span key={skill}>{skill}</span>)}
-            </div>
+            <div className="skill-cloud">{skills.map((skill) => <span key={skill}>{skill}</span>)}</div>
           </div>
         </section>
 
         <section id="contact" className="reference-contact">
           <div className="contact-top" data-reveal>
-            <div className="section-label">04 / Contact</div>
-            <span>Open to engineering roles / remote</span>
+            <div className="section-label">( Contact )</div>
+            <span>Open to senior / remote</span>
           </div>
           <div className="contact-grid">
             <div>
@@ -202,12 +186,10 @@ export default function Portfolio() {
           </div>
           <div className="contact-signature" data-reveal>DAKSH SHASTRI</div>
           <div className="contact-bottom" data-reveal>
-            <span>Delhi, India · 2026</span>
-            <div>
-              <a href="https://github.com/Daksh0027" target="_blank" rel="noreferrer">GitHub ↗</a>
-              <a href="https://leetcode.com/u/Daksh0027" target="_blank" rel="noreferrer">LeetCode ↗</a>
-              <a href="/bdaf8a32073c89456ece1fd6b2e6cab1.pdf">Credentials ↗</a>
-            </div>
+            <div><span>Pages</span><a href="#top">Home</a><a href="#work">Work</a><a href="#contact">Contact</a></div>
+            <div><span>Social</span><a href="https://github.com/Daksh0027" target="_blank" rel="noreferrer">GitHub</a><a href="https://leetcode.com/u/Daksh0027" target="_blank" rel="noreferrer">LeetCode</a></div>
+            <div><span>Direct</span><a href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a><a href="/bdaf8a32073c89456ece1fd6b2e6cab1.pdf">CV (PDF)</a></div>
+            <div className="contact-terminal">Delhi — 2026<br />Built with curiosity<br />© Daksh Shastri</div>
           </div>
         </section>
       </main>
