@@ -1,152 +1,366 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import OrangeCanvas from "@/components/OrangeCanvas";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  { number: "01", name: "Project A", industry: "Healthcare", year: "2024", domain: "PROJECTA.COM", description: "A clearer digital experience for a healthcare team building trust at every touchpoint.", tags: "WEB DESIGN · BRAND IDENTITY · PRODUCT DESIGN", tone: "work-warm" },
-  { number: "02", name: "Project B", industry: "Web3", year: "2024", domain: "PROJECTB.COM", description: "A focused product identity and web system for a new kind of digital community.", tags: "BRAND STRATEGY · WEB DESIGN · DEVELOPMENT", tone: "work-blue" },
-  { number: "03", name: "Project C", industry: "AI Automation", year: "2025", domain: "PROJECTC.COM", description: "An approachable interface that makes powerful automation feel simple and human.", tags: "PRODUCT DESIGN · UX/UI · WEB DEVELOPMENT", tone: "work-red" },
-  { number: "04", name: "Project D", industry: "Cybersecurity", year: "2025", domain: "PROJECTD.COM", description: "A confident brand and responsive platform for a team protecting what matters.", tags: "WEB DESIGN · BRAND IDENTITY · MARKETING MATERIALS", tone: "work-violet" },
+  {
+    name: "ReSpectro",
+    category: "Entertainment",
+    year: "2025",
+    url: "https://respectro.vercel.app/",
+    description:
+      "A movie and series discovery platform with live TMDB data, Clerk authentication, and Appwrite-powered watchlists.",
+    technologies: "React · Vite · Appwrite · TMDB",
+    preview: "respectro",
+  },
+  {
+    name: "Gemini Clone",
+    category: "AI / Productivity",
+    year: "2025",
+    url: "https://bot-clone.netlify.app/",
+    description:
+      "A responsive AI interface with live Gemini API responses, streaming output, and conversation history.",
+    technologies: "React · Gemini API · CSS",
+    preview: "gemini",
+  },
+  {
+    name: "Library System",
+    category: "Operations / CLI",
+    year: "2024",
+    url: "https://github.com/Daksh0027",
+    description:
+      "A Python and MySQL management system for inventory, sales records, and store operations.",
+    technologies: "Python · MySQL",
+    preview: "library",
+  },
 ];
 
-const services = [
-  ["01", "Strategy", "Clear, actionable plans to align business vision with long-term goals and measurable success."],
-  ["02", "Brand Identity", "Memorable designs that capture the essence of your brand and connect with your audience."],
-  ["03", "Web Design", "Beautiful, user-friendly websites that create seamless experiences and elevate your business."],
-  ["04", "Web Development", "Webflow and Framer sites designed to grow with your business and perform at the highest level."],
-  ["05", "Web Apps", "Custom applications tailored to streamline operations and enhance user engagement."],
-  ["06", "UX/UI", "User-centered designs that enhance usability, streamline interactions, and elevate experience."],
-  ["07", "Pitch Decks", "Compelling presentations that tell your story, showcase value, and captivate investors."],
-  ["08", "Illustrations", "Unique and engaging visuals that enhance storytelling, captivate audiences, and bring ideas to life."],
+const socials = [
+  { label: "GitHub", href: "https://github.com/Daksh0027" },
+  { label: "LeetCode", href: "https://leetcode.com/u/Daksh0027" },
+  { label: "CodeChef", href: "https://www.codechef.com/users/gam_pearl_90" },
+  { label: "Codeforces", href: "https://codeforces.com" },
 ];
 
-const testimonials = [
-  ["Alex Morgan", "Founder, Company A", "The placeholder team brought clarity to a complex idea and gave us a system we could actually use."],
-  ["Jordan Lee", "Marketing Lead, Company B", "Every detail felt intentional. The new direction made our story easier to understand."],
-  ["Taylor Reed", "CEO, Company C", "A thoughtful partner from the first workshop through launch. The work made an immediate difference."],
-  ["Morgan Ellis", "Product Lead, Company D", "They found the simple answer inside a complicated problem and made it feel effortless."],
-  ["Casey Hart", "Founder, Company E", "The process was focused, collaborative, and far more strategic than we expected."],
-  ["Riley Chen", "Director, Company F", "The finished product feels distinct without losing any of the clarity our customers need."],
-  ["Sam Taylor", "Founder, Company G", "A rare mix of sharp thinking, strong taste, and the care to finish every last detail."],
-  ["Jamie Brooks", "COO, Company H", "We left with a brand and website that finally feel like the same company."],
-];
+function ProjectArtwork({ kind }: { kind: string }) {
+  if (kind === "respectro") {
+    return (
+      <div className="project-artwork respectro-art" data-ui="project-preview">
+        <div className="art-topbar">
+          <span className="art-brand">ReSpectro</span>
+          <span>Discover</span>
+          <span>Movies</span>
+          <span>Series</span>
+          <span className="art-avatar">D</span>
+        </div>
+        <div className="respectro-content">
+          <p>Find your next favourite</p>
+          <strong>Stories worth<br />staying up for.</strong>
+          <div className="art-poster-row" aria-hidden="true">
+            <span className="poster poster-one" />
+            <span className="poster poster-two" />
+            <span className="poster poster-three" />
+            <span className="poster poster-four" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-const tags = ["DESIGNER", "STRATEGIST", "BUILDER", "CURIOUS", "INDEPENDENT"];
+  if (kind === "gemini") {
+    return (
+      <div className="project-artwork gemini-art" data-ui="project-preview">
+        <div className="gemini-sidebar">
+          <span className="gemini-mark">G</span>
+          <span>＋</span>
+          <span>◷</span>
+        </div>
+        <div className="gemini-content">
+          <span className="gemini-greeting">Hello, Daksh</span>
+          <strong>Start with<br />an idea.</strong>
+          <div className="gemini-prompt">Ask anything <span>↑</span></div>
+        </div>
+      </div>
+    );
+  }
 
-export default function Portfolio() {
-  const pageRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
+  return (
+    <div className="project-artwork library-art" data-ui="project-preview">
+      <div className="library-topbar"><strong>Library System</strong><span>Inventory</span><span>Sales</span><span>Reports</span></div>
+      <div className="library-content">
+        <p>Inventory overview</p>
+        <strong>Keep every<br />record in order.</strong>
+        <div className="library-table" aria-hidden="true">
+          <span /><span /><span />
+          <span /><span /><span />
+          <span /><span /><span />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const lightLinePositions = [19, 40, 60, 80, 99.7];
+
+function FallingLineLights() {
+  const lineRefs = useRef<Array<HTMLSpanElement | null>>([]);
 
   useEffect(() => {
-    if (!pageRef.current) return;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const context = gsap.context(() => {
-      if (!reducedMotion) {
-        gsap.timeline({ defaults: { ease: "power3.out" } })
-          .from("[data-nav]", { y: -20, opacity: 0, duration: 0.6 })
-          .from("[data-hero-word]", { x: -70, opacity: 0, duration: 1 }, "-=0.2")
-          .from("[data-hero-copy]", { y: 30, opacity: 0, duration: 0.7 }, "-=0.45");
-        gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
-          gsap.from(element, { y: 45, opacity: 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: element, start: "top 84%", once: true } });
-        });
-      }
-    }, pageRef);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const lines = lineRefs.current;
+    const timers: number[] = [];
 
-    const hero = heroRef.current;
-    const handlePointer = (event: PointerEvent): void => {
-      if (!hero || reducedMotion) return;
-      const x = (event.clientX / window.innerWidth - 0.5) * 2;
-      const y = (event.clientY / window.innerHeight - 0.5) * 2;
-      hero.style.setProperty("--mouse-x", `${x * 3}%`);
-      hero.style.setProperty("--mouse-y", `${y * 3}%`);
+    const clearTimers = () => {
+      timers.forEach((timer) => window.clearTimeout(timer));
     };
-    window.addEventListener("pointermove", handlePointer);
-    return () => { window.removeEventListener("pointermove", handlePointer); context.revert(); };
+
+    const schedule = (index: number, delay: number) => {
+      timers[index] = window.setTimeout(() => {
+        lines[index]?.classList.add("is-falling");
+      }, delay);
+    };
+
+    const handleAnimationEnd = (index: number) => {
+      lines[index]?.classList.remove("is-falling");
+      if (!reducedMotion.matches) schedule(index, 1600 + Math.random() * 4400);
+    };
+    const animationEndHandlers = lines.map(
+      (_, index) => () => handleAnimationEnd(index),
+    );
+
+    const onMotionPreferenceChange = () => {
+      clearTimers();
+      lines.forEach((line, index) => {
+        line?.classList.remove("is-falling");
+        if (!reducedMotion.matches) schedule(index, Math.random() * 3000);
+      });
+    };
+
+    lines.forEach((line, index) => {
+      line?.addEventListener("animationend", animationEndHandlers[index]);
+      if (!reducedMotion.matches) schedule(index, Math.random() * 3000);
+    });
+    reducedMotion.addEventListener("change", onMotionPreferenceChange);
+
+    return () => {
+      clearTimers();
+      reducedMotion.removeEventListener("change", onMotionPreferenceChange);
+      lines.forEach((line, index) => {
+        line?.removeEventListener("animationend", animationEndHandlers[index]);
+        line?.classList.remove("is-falling");
+      });
+    };
   }, []);
 
   return (
+    <div className="hero-light-lines" aria-hidden="true">
+      {lightLinePositions.map((position, index) => (
+        <span
+          key={position}
+          ref={(line) => { lineRefs.current[index] = line; }}
+          className="hero-light-streak"
+          style={{ left: `${position}%` }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export default function Portfolio() {
+  const pageRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const page = pageRef.current;
+    if (!page) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const context = gsap.context(() => {
+      if (reducedMotion) return;
+
+      gsap.timeline({ defaults: { ease: "power3.out" } })
+        .from("[data-nav]", { y: -16, opacity: 0, duration: 0.6 })
+        .from("[data-hero-word]", { y: 42, opacity: 0, duration: 0.85 }, "-=0.18")
+        .from("[data-hero-copy]", { y: 22, opacity: 0, duration: 0.65 }, "-=0.42");
+
+      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
+        gsap.from(element, {
+          y: 26,
+          opacity: 0,
+          duration: 0.7,
+          ease: "power2.out",
+          scrollTrigger: { trigger: element, start: "top 88%", once: true },
+        });
+      });
+    }, page);
+
+    return () => context.revert();
+  }, []);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
     <div ref={pageRef} className="portfolio-page">
+      <OrangeCanvas />
       <header className="site-nav" data-nav>
-        <a className="site-wordmark" href="#top">YOUR NAME</a>
-        <nav aria-label="Primary navigation">
-          <a href="#works">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#testimonials">Testimonials</a>
+        <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">
+          <span className="site-wordmark-initials" aria-hidden="true">DS</span>
+          <span className="site-wordmark-full" aria-hidden="true">Daksh Shastri</span>
+        </a>
+        <nav className="hero-nav-links" aria-label="Main navigation">
+          <a href="#works">Work</a>
+          <a href="#approach">Approach</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
         </nav>
-        <a className="connect-button" href="#contact">Connect <span>↗</span></a>
-        <button className="menu-button" type="button" aria-label="Open menu"><span /><span /></button>
+        <button
+          className={`menu-button${menuOpen ? " is-open" : ""}`}
+          type="button"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          aria-controls="site-menu"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+        </button>
+        <nav
+          id="site-menu"
+          className={`menu-panel${menuOpen ? " is-open" : ""}`}
+          aria-label="Main navigation"
+          aria-hidden={!menuOpen}
+          inert={!menuOpen}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") setMenuOpen(false);
+          }}
+        >
+          <a href="#works" onClick={closeMenu}>Selected work</a>
+          <a href="#about" onClick={closeMenu}>About</a>
+          <a href="#contact" onClick={closeMenu}>Contact</a>
+        </nav>
       </header>
 
       <main id="top">
-        <section ref={heroRef} className="hero-section">
-          <div className="hero-columns" aria-hidden="true" />
-          <div className="hero-gradient" aria-hidden="true"><span /><span /><span /></div>
-          <div className="hero-name" data-hero-word><span>YOUR</span><span>NAME</span></div>
+        <section className="hero-section" aria-labelledby="hero-title">
+          <div className="hero-grid" aria-hidden="true" />
+          <FallingLineLights />
+          <div className="hero-bottom-glass" aria-hidden="true" />
+          <h1 id="hero-title" className="hero-name" data-hero-word>Daksh Shastri</h1>
           <div className="hero-content" data-hero-copy>
-            <h1>Crafting digital <em>experiences</em> that elevate SaaS &amp; AI innovators.</h1>
-            <div className="hero-meta"><span>© 2026</span><span>BASED IN [CITY]</span><span>DESIGNER</span></div>
+            <p className="hero-statement">Thoughtful interfaces for the real world.</p>
+            <div className="hero-meta">
+              <span>Based in Delhi, India</span>
+              <span>Frontend developer</span>
+              <span>Competitive programmer</span>
+            </div>
           </div>
         </section>
 
-        <section id="works" className="works-section light-section">
-          <div className="section-divider-heading" data-reveal>SELECTED WORKS</div>
-          <div className="work-mosaic" data-reveal aria-label="Project preview gallery">
-            {Array.from({ length: 12 }, (_, index) => <div className={`mosaic-tile mosaic-${index + 1}`} key={index}><span>{String(index + 1).padStart(2, "0")}</span></div>)}
+        <section id="works" className="works-section" aria-labelledby="works-title">
+          <div className="works-heading" data-reveal>
+            <h2 id="works-title">Selected work</h2>
+            <p>Useful things, built with care.</p>
           </div>
           <div className="project-list">
             {projects.map((project) => (
-              <article className="project-row" key={project.number} data-reveal>
-                <a className={`project-image ${project.tone}`} href="#contact" aria-label={`View ${project.name}`}><span>{project.name}</span><b>{project.number}</b><i>↗</i></a>
-                <div className="project-copy">
-                  <div className="project-title-line"><span>({project.number})</span><h3>{project.name}</h3></div>
-                  <p>{project.description}</p>
-                  <a className="text-link" href="#contact">View project <span>↗</span></a>
+              <article className="project-row" key={project.name} data-reveal>
+                <a
+                  className={`project-image project-image-${project.preview}`}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${project.name}`}
+                >
+                  <ProjectArtwork kind={project.preview} />
+                  <span className="project-open" aria-hidden="true">↗</span>
+                </a>
+                <div className="project-info">
+                  <div className="project-copy">
+                    <div className="project-title-line">
+                      <h3>{project.name}</h3>
+                      <span>{project.year}</span>
+                    </div>
+                    <p>{project.description}</p>
+                  </div>
+                  <div className="project-meta">
+                    <span>{project.category}</span>
+                    <span>{project.technologies}</span>
+                    <a href={project.url} target="_blank" rel="noopener noreferrer">View project <span>↗</span></a>
+                  </div>
                 </div>
-                <div className="project-details"><span>Live site<strong>{project.domain}</strong></span><span>Industry<strong>{project.industry}</strong></span><span>Published<strong>© {project.year}</strong></span><span>Deliverables<strong>{project.tags}</strong></span></div>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="services" className="services-section dark-section">
-          <div className="section-divider-heading services-heading" data-reveal>SERVICES</div>
-          <div className="services-grid-lines" aria-hidden="true" />
-          <div className="services-list">
-            {services.map(([number, name, description]) => <article className="service-row" key={number} data-reveal><span>{number}</span><h3>{name}</h3><p>{description}</p></article>)}
+        <section id="approach" className="approach-section" aria-labelledby="approach-title">
+          <div className="section-grid" aria-hidden="true" />
+          <div className="approach-content" data-reveal>
+            <h2 id="approach-title">Algorithms meet<br /><em>the real world.</em></h2>
+            <p className="approach-copy">
+              Competitive programming trained me to look for the right solution under real constraints.
+              I bring that same focus to interfaces: make them clear, responsive, and dependable.
+            </p>
+            <div className="achievement-list">
+              <div><strong>Specialist</strong><span>Codeforces</span></div>
+              <div><strong>222</strong><span>LeetCode Weekly Contest 451</span></div>
+              <div><strong>295</strong><span>CodeChef Starters 190</span></div>
+            </div>
           </div>
         </section>
 
-        <section className="process-section light-section" data-reveal>
-          <div className="section-label">( How I work )</div>
-          <div className="process-list">
-            <div><span>STRATEGY</span><p>We start with a discovery survey and workshop to define the mission, keywords, and market position. Then we map the structure, audience, and user flow.</p></div>
-            <div><span>IDENTITY</span><p>I shape the visual identity through typography, color, graphics, and a flexible set of rules that can move across the website, product, and marketing.</p></div>
-            <div><span>LAUNCH</span><p>Every detail is refined before the work ships. I build in the chosen platform or hand off a clear system your team can keep moving with.</p></div>
+        <section id="about" className="about-section" aria-labelledby="about-title">
+          <div className="section-grid" aria-hidden="true" />
+          <div className="about-inner">
+            <div className="about-heading" data-reveal>
+              <h2 id="about-title">Built for<br />people.</h2>
+            </div>
+            <div className="about-copy" data-reveal>
+              <p>
+                I&apos;m a B.Tech Information Technology student at Bhagwan Parshuram Institute of Technology
+                in Delhi, and a Front End Development Intern at Shree Ji Facility Services.
+              </p>
+              <p>
+                I enjoy moving between problem-solving and product work: shaping an interface, making
+                it accessible, and getting the details right in the browser.
+              </p>
+              <div className="about-facts">
+                <div><span>Studying</span><strong>Information Technology · 2024–2028</strong></div>
+                <div><span>Working</span><strong>Front End Development Intern</strong></div>
+                <div><span>Based</span><strong>Delhi, India</strong></div>
+              </div>
+            </div>
+          </div>
+          <div id="skills" className="skills-row" data-reveal>
+            <div><span>Languages</span><p>C++ · C · Python · JavaScript</p></div>
+            <div><span>Development</span><p>React · HTML · CSS · Node.js</p></div>
+            <div><span>Tools</span><p>GitHub · MySQL · Vercel</p></div>
+          </div>
+          <p className="about-footnote" data-reveal>
+            Smart India Hackathon ’24 · Cyber Security CTF · Public Relations Associate
+          </p>
+        </section>
+
+        <section id="contact" className="contact-section" aria-labelledby="contact-title">
+          <div className="section-grid" aria-hidden="true" />
+          <h2 id="contact-title" data-reveal>Let&apos;s make<br />it work.</h2>
+          <div className="contact-bottom">
+            <a className="contact-button" href="mailto:dakshshastri0627@gmail.com">Start a conversation <span>↗</span></a>
+            <div className="social-links" aria-label="Social profiles">
+              {socials.map((social) => (
+                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>
+              ))}
+            </div>
+            <span className="copyright">© 2026 Daksh Shastri</span>
           </div>
         </section>
-
-        <section id="about" className="about-page-section dark-section">
-          <div className="section-label">( About YOUR NAME )</div>
-          <div className="section-divider-heading about-heading" data-reveal>ABOUT YOUR NAME</div>
-          <div className="about-stat-row" data-reveal><div><strong>$[X]M+</strong><span>Total seed funding raised</span></div><div><strong>[X]x</strong><span>Increased revenue by</span></div><div><strong>[X]%</strong><span>Increased website traffic by</span></div></div>
-          <div className="about-overlap" data-reveal><h2>Designing for<br /><em>impact and clarity.</em></h2><div><p>I believe good design is less about decoration and more about creating the shortest path between an idea and the person who needs it.</p><p>My practice brings strategy, identity, and digital product thinking into one clear direction. The result is work that feels distinctive and works hard.</p></div></div>
-          <div className="background-block" data-reveal><div><h3>From marketing<br />to design freedom</h3><p>I started close to the audience, learning how people make decisions and what makes a message stay with them.</p><p>That perspective still guides the way I build brands: with enough character to be remembered and enough structure to grow.</p><p>Today, I work independently with ambitious teams building what comes next.</p></div><div className="portrait-placeholder" aria-label="Portrait placeholder"><span>PORTRAIT<br />PLACEHOLDER</span></div></div>
-          <div className="personal-block" data-reveal><h3>How curiosity shapes<br />my perspective</h3><p>Outside of work, I look for new places, good conversations, and anything that makes me see a familiar problem from a different angle.</p></div>
-          <div className="personality-tags">{tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-          <p className="featured-line">Featured in — PLACEHOLDER PUBLICATION · PLACEHOLDER AWARD · PLACEHOLDER GALLERY</p>
-        </section>
-
-        <section id="testimonials" className="testimonials-section dark-section">
-          <div className="section-label">( Kind words )</div><h2 data-reveal>Don&apos;t just take<br /><em>my word for it.</em></h2><p className="testimonials-subtitle">Happy customers</p>
-          <div className="testimonial-scatter">{testimonials.map(([name, role, quote], index) => <article className={`testimonial-card testimonial-card-${index + 1}`} key={name} data-reveal><div className="testimonial-portrait" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div><span className="testimonial-logo">COMPANY {String.fromCharCode(65 + index)}</span><strong>{name}</strong><small>{role}</small><p>“{quote}”</p></article>)}</div>
-        </section>
-
-        <section id="contact" className="cta-section"><div className="cta-gradient" aria-hidden="true" /><a className="cta-button" href="mailto:hello@example.com">Book discovery call <span>↗</span></a><h2>GET IN<br />TOUCH</h2></section>
       </main>
-
-      <footer className="site-footer dark-section"><div className="footer-wordmark">YOUR NAME</div><div className="footer-links"><div><span>Explore</span><a href="#works">Work</a><a href="#services">Services</a><a href="#about">About</a><a href="#testimonials">Testimonials</a></div><div><span>Connect</span><a href="mailto:hello@example.com">Email</a><a href="#contact">Coaching</a><a href="#contact">Privacy</a></div><div><span>Social</span><a href="#contact">LinkedIn</a><a href="#contact">Instagram</a><a href="#contact">YouTube</a></div></div><div className="footer-bottom"><span>© 2026</span><span>YOUR NAME — INDEPENDENT DESIGNER</span></div></footer>
     </div>
   );
 }

@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "YOUR NAME — Independent Brand & Web Designer",
-  description: "YOUR NAME is an independent brand and web designer helping SaaS and AI companies communicate with clarity.",
+  title: "Daksh Shastri — Frontend Developer & Competitive Programmer",
+  description: "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
   openGraph: {
-    title: "YOUR NAME — Independent Brand & Web Designer",
-    description: "Independent brand and web design for SaaS and AI companies.",
+    title: "Daksh Shastri — Frontend Developer",
+    description: "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "YOUR NAME — Independent Brand & Web Designer",
-    description: "Independent brand and web design for SaaS and AI companies.",
+    title: "Daksh Shastri — Frontend Developer",
+    description: "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
   },
   icons: {
     icon: "/favicon.svg",
