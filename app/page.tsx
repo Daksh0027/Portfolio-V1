@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import OrangeCanvas from "@/components/OrangeCanvas";
+import Capabilities from "@/components/Capabilities";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
@@ -214,9 +215,8 @@ export default function Portfolio() {
         </a>
         <nav className="hero-nav-links" aria-label="Main navigation">
           <a href="#works">Work</a>
-          <a href="#approach">Approach</a>
+          <a href="#capabilities">Capabilities</a>
           <a href="#about">About</a>
-          <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
         </nav>
         <button
@@ -241,6 +241,7 @@ export default function Portfolio() {
           }}
         >
           <a href="#works" onClick={closeMenu}>Selected work</a>
+          <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
           <a href="#about" onClick={closeMenu}>About</a>
           <a href="#contact" onClick={closeMenu}>Contact</a>
         </nav>
@@ -248,16 +249,19 @@ export default function Portfolio() {
 
       <main id="top">
         <section className="hero-section" aria-labelledby="hero-title">
-          <div className="hero-grid" aria-hidden="true" />
           <FallingLineLights />
-          <div className="hero-bottom-glass" aria-hidden="true" />
+          <div className="hero-grid-lines" aria-hidden="true">
+            <span className="hero-grid-line" />
+            <span className="hero-grid-line" />
+            <span className="hero-grid-line" />
+          </div>
           <h1 id="hero-title" className="hero-name" data-hero-word>Daksh Shastri</h1>
           <div className="hero-content" data-hero-copy>
-            <p className="hero-statement">Thoughtful interfaces for the real world.</p>
+            <p className="hero-statement">Building digital experiences<br />with logic and feeling.</p>
             <div className="hero-meta">
+              <span>© 2026</span>
               <span>Based in Delhi, India</span>
-              <span>Frontend developer</span>
-              <span>Competitive programmer</span>
+              <span>Frontend Developer</span>
             </div>
           </div>
         </section>
@@ -265,82 +269,84 @@ export default function Portfolio() {
         <section id="works" className="works-section" aria-labelledby="works-title">
           <div className="works-heading" data-reveal>
             <h2 id="works-title">Selected work</h2>
-            <p>Useful things, built with care.</p>
+          </div>
+          <div className="works-index" aria-hidden="true">
+            {projects.map((project) => <span key={project.name}>{project.category}</span>)}
+            <span>Recent projects</span>
           </div>
           <div className="project-list">
-            {projects.map((project) => (
-              <article className="project-row" key={project.name} data-reveal>
-                <a
-                  className={`project-image project-image-${project.preview}`}
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Open ${project.name}`}
-                >
-                  <ProjectArtwork kind={project.preview} />
-                  <span className="project-open" aria-hidden="true">↗</span>
-                </a>
-                <div className="project-info">
-                  <div className="project-copy">
-                    <div className="project-title-line">
-                      <h3>{project.name}</h3>
-                      <span>{project.year}</span>
-                    </div>
-                    <p>{project.description}</p>
-                  </div>
-                  <div className="project-meta">
-                    <span>{project.category}</span>
-                    <span>{project.technologies}</span>
-                    <a href={project.url} target="_blank" rel="noopener noreferrer">View project <span>↗</span></a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+            {projects.map((project) => {
+              // Map project preview to case study slug
+              const slug = project.preview === "respectro" ? "respectro" :
+                           project.preview === "gemini" ? "gemini-clone" :
+                           "library-system";
 
-        <section id="approach" className="approach-section" aria-labelledby="approach-title">
-          <div className="section-grid" aria-hidden="true" />
-          <div className="approach-content" data-reveal>
-            <h2 id="approach-title">Algorithms meet<br /><em>the real world.</em></h2>
-            <p className="approach-copy">
-              Competitive programming trained me to look for the right solution under real constraints.
-              I bring that same focus to interfaces: make them clear, responsive, and dependable.
-            </p>
-            <div className="achievement-list">
-              <div><strong>Specialist</strong><span>Codeforces</span></div>
-              <div><strong>222</strong><span>LeetCode Weekly Contest 451</span></div>
-              <div><strong>295</strong><span>CodeChef Starters 190</span></div>
-            </div>
+              return (
+                <article className="project-row" key={project.name} data-reveal>
+                  <a
+                    className={`project-image project-image-${project.preview}`}
+                    href={`/works/${slug}`}
+                    aria-label={`Open ${project.name}`}
+                  >
+                    <ProjectArtwork kind={project.preview} />
+                    <span className="project-open" aria-hidden="true">↗</span>
+                  </a>
+                  <div className="project-info">
+                    <div className="project-copy">
+                      <div className="project-title-line">
+                        <h3>{project.name}</h3>
+                        <span className="project-year">{project.year}</span>
+                      </div>
+                      <p>{project.description}</p>
+                    </div>
+                    <div className="project-meta">
+                      <span className="project-category">{project.category}</span>
+                      <span className="project-tech">{project.technologies}</span>
+                      <a href={`/works/${slug}`}>View project <span>↗</span></a>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
         <section id="about" className="about-section" aria-labelledby="about-title">
           <div className="section-grid" aria-hidden="true" />
+          <h2 id="about-title" className="about-display" data-reveal>About Daksh</h2>
+          <div className="about-roles" data-reveal aria-label="A few things about me">
+            <span>Student</span>
+            <span>Developer</span>
+            <span>Problem solver</span>
+            <span>Delhi, India</span>
+          </div>
           <div className="about-inner">
-            <div className="about-heading" data-reveal>
-              <h2 id="about-title">Built for<br />people.</h2>
+            <div className="about-portrait" data-reveal aria-label="Daksh Shastri monogram">
+              <span className="about-monogram" aria-hidden="true">DS</span>
+              <span className="about-portrait-caption">Daksh Shastri<br />Frontend developer</span>
             </div>
             <div className="about-copy" data-reveal>
               <p>
-                I&apos;m a B.Tech Information Technology student at Bhagwan Parshuram Institute of Technology
-                in Delhi, and a Front End Development Intern at Shree Ji Facility Services.
+                I build thoughtful, high-performance interfaces where complex ideas feel clear and natural to use.
               </p>
               <p>
-                I enjoy moving between problem-solving and product work: shaping an interface, making
-                it accessible, and getting the details right in the browser.
+                I’m pursuing a B.Tech in Information Technology and bring the same precision I’ve developed through
+                competitive programming to frontend engineering, interaction, and accessibility.
               </p>
               <div className="about-facts">
-                <div><span>Studying</span><strong>Information Technology · 2024–2028</strong></div>
-                <div><span>Working</span><strong>Front End Development Intern</strong></div>
-                <div><span>Based</span><strong>Delhi, India</strong></div>
+                <div><span className="label">Academic</span><strong>Information Technology · 2024–2028</strong></div>
+                <div><span className="label">Focus</span><strong>Frontend Engineering &amp; Interaction Design</strong></div>
+                <div><span className="label">Location</span><strong>Delhi, India</strong></div>
+              </div>
+              <div className="achievement-list">
+                <div><strong>Specialist</strong><span className="label">Codeforces</span></div>
+                <div><strong>222</strong><span className="label">LeetCode · Contest 451</span></div>
+                <div><strong>295</strong><span className="label">CodeChef · Starters 190</span></div>
               </div>
             </div>
           </div>
-          <div id="skills" className="skills-row" data-reveal>
-            <div><span>Languages</span><p>C++ · C · Python · JavaScript</p></div>
-            <div><span>Development</span><p>React · HTML · CSS · Node.js</p></div>
-            <div><span>Tools</span><p>GitHub · MySQL · Vercel</p></div>
+          <div className="about-capabilities" data-reveal>
+            <Capabilities />
           </div>
           <p className="about-footnote" data-reveal>
             Smart India Hackathon ’24 · Cyber Security CTF · Public Relations Associate
@@ -349,18 +355,38 @@ export default function Portfolio() {
 
         <section id="contact" className="contact-section" aria-labelledby="contact-title">
           <div className="section-grid" aria-hidden="true" />
-          <h2 id="contact-title" data-reveal>Let&apos;s make<br />it work.</h2>
+          <h2 id="contact-title" data-reveal>Get in Touch</h2>
+          <div className="contact-whispers" aria-hidden="true">
+            <span>Let&apos;s chat</span>
+            <span>Let&apos;s chat</span>
+            <span>Let&apos;s chat</span>
+            <span>Let&apos;s chat</span>
+            <span>Let&apos;s chat</span>
+          </div>
           <div className="contact-bottom">
             <a className="contact-button" href="mailto:dakshshastri0627@gmail.com">Start a conversation <span>↗</span></a>
-            <div className="social-links" aria-label="Social profiles">
-              {socials.map((social) => (
-                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>
-              ))}
-            </div>
-            <span className="copyright">© 2026 Daksh Shastri</span>
+            <p>Have an idea in mind?<br />I&apos;d love to hear about it.</p>
           </div>
         </section>
       </main>
+      <footer className="site-footer">
+        <a className="footer-name" href="#top" aria-label="Daksh Shastri, back to top">Daksh<br />Shastri</a>
+        <nav className="footer-nav" aria-label="Footer navigation">
+          <a href="#works">Work</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a className="footer-email" href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a>
+        <div className="footer-bottom">
+          <span className="copyright">© 2026 Daksh Shastri</span>
+          <div className="social-links" aria-label="Social profiles">
+            {socials.map((social) => (
+              <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>
+            ))}
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
