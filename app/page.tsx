@@ -1,595 +1,178 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ScrollProgress from "@/components/ScrollProgress";
-import Marquee from "@/components/Marquee";
-import ParticleField from "@/components/ParticleField";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
-const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#";
+const projects = [
+  {
+    number: "01",
+    title: "ReSpectro",
+    type: "Movie streaming & discovery",
+    description: "A responsive movie discovery platform with live TMDB data, authentication, and personalized watchlists powered by Appwrite.",
+    stack: "React / Vite / Appwrite",
+    link: "https://respectro.vercel.app/",
+  },
+  {
+    number: "02",
+    title: "Gemini Clone",
+    type: "Conversational AI interface",
+    description: "A clean, responsive Gemini-inspired client with live API completions and session history handling.",
+    stack: "React / Gemini API",
+    link: "https://bot-clone.netlify.app/",
+  },
+  {
+    number: "03",
+    title: "Library System",
+    type: "Python transactional tool",
+    description: "A scalable command-line inventory and sales management system using Python and MySQL connectivity.",
+    stack: "Python / MySQL",
+    link: "#contact",
+  },
+];
 
-function useScramble(target: string, trigger: boolean, delay = 0) {
-  const [display, setDisplay] = useState(target);
-  useEffect(() => {
-    if (!trigger) return;
-    let iter = 0;
-    const id = setTimeout(() => {
-      const iv = setInterval(() => {
-        iter += 1;
-        setDisplay(
-          target.split("").map((ch, i) => {
-            if (ch === " ") return " ";
-            if (i < iter / 1.5) return ch;
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          }).join("")
-        );
-        if (iter >= target.length * 1.8) {
-          clearInterval(iv);
-          setDisplay(target);
-        }
-      }, 28);
-      return () => clearInterval(iv);
-    }, delay);
-    return () => clearTimeout(id);
-  }, [trigger, target, delay]);
-  return display;
-}
-
-function AnimatedCounter({ value, label }: { value: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  const [display, setDisplay] = useState(value);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } },
-      { threshold: 0.5 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!visible) return;
-    const num = parseInt(value.replace(/\D/g, ""), 10);
-    if (isNaN(num)) {
-      let iter = 0;
-      const iv = setInterval(() => {
-        iter++;
-        setDisplay(
-          value.split("").map((ch, i) => {
-            if (i < iter / 1.2) return ch;
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          }).join("")
-        );
-        if (iter >= value.length * 2) { clearInterval(iv); setDisplay(value); }
-      }, 35);
-      return () => clearInterval(iv);
-    }
-    const prefix = value.replace(/[\d,]+.*/, "");
-    const suffix2 = value.replace(/^[^0-9]*[\d,]+/, "");
-    let start = 0;
-    const total = 60;
-    const iv = setInterval(() => {
-      start++;
-      const v = Math.round((start / total) * num);
-      setDisplay(prefix + v + suffix2);
-      if (start >= total) { clearInterval(iv); setDisplay(value); }
-    }, 18);
-    return () => clearInterval(iv);
-  }, [visible, value]);
-
-  return (
-    <div ref={ref}>
-      <div className="stat-number text-3xl md:text-5xl font-bold text-[#c6f19d]" style={{ fontVariantNumeric: "tabular-nums" }}>
-        {display}
-      </div>
-      <p className="mt-3 text-sm text-[#829087]">{label}</p>
-    </div>
-  );
-}
+const skills = ["React", "TypeScript", "JavaScript", "C++", "Python", "Node.js", "MySQL", "Tailwind CSS"];
 
 export default function Portfolio() {
-  const monumentRef = useRef<HTMLHeadingElement>(null);
-  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [heroVisible, setHeroVisible] = useState(false);
-  const heroTagline = useScramble(
-    "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
-    heroVisible,
-    200
-  );
+  const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (!pageRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const ctx = gsap.context(() => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const context = gsap.context(() => {
+      const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
+      intro
+        .from("[data-nav]", { y: -16, opacity: 0, duration: 0.55 })
+        .from("[data-hero-line]", { y: 36, opacity: 0, duration: 0.8, stagger: 0.08 }, "-=0.2")
+        .from("[data-hero-meta]", { y: 20, opacity: 0, duration: 0.6 }, "-=0.45")
+        .from("[data-orb]", { scale: 0.8, opacity: 0, duration: 1.2 }, "-=0.8");
 
-      const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-      heroTimeline
-        .from(".hero-kicker", { y: 16, opacity: 0, duration: 0.45 })
-        .from(".hero-copy", { y: 22, opacity: 0, duration: 0.6 }, "-=0.15")
-        .from(".hero-actions", { y: 18, opacity: 0, duration: 0.5 }, "-=0.3")
-        .from(monumentRef.current, { y: 36, opacity: 0, duration: 0.9 }, "-=0.25");
-
-      if (monumentRef.current) {
-        gsap.to(monumentRef.current, {
-          scale: 0.94,
-          transformOrigin: "left bottom",
-          ease: "none",
-          scrollTrigger: {
-            trigger: "#hero",
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      }
-
-      sectionsRef.current.forEach((section) => {
-        if (!section) return;
-        const elements = section.querySelectorAll(".animate-rise, .animate-rise-1, .animate-rise-2, .animate-rise-3");
-        gsap.from(elements, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            end: "top 20%",
-            toggleActions: "play none none none"
-          },
-          y: 24,
+      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
+        gsap.from(element, {
+          y: 36,
           opacity: 0,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: "power2.out"
-        });
-      });
-
-      const statElements = document.querySelectorAll(".stat-number");
-      statElements.forEach((stat) => {
-        gsap.from(stat, {
+          duration: 0.8,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: stat,
-            start: "top 85%"
+            trigger: element,
+            start: "top 86%",
+            once: true,
           },
-          scale: 0.9,
-          opacity: 0,
-          duration: 0.6,
-          ease: "back.out(1.7)"
         });
       });
 
-      document.querySelectorAll("h2[data-wipe]").forEach((heading) => {
-        gsap.fromTo(
-          heading,
-          { backgroundSize: "0% 3px" },
-          {
-            backgroundSize: "100% 3px",
-            duration: 0.9,
-            ease: "power3.inOut",
-            scrollTrigger: {
-              trigger: heading,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
+      gsap.to("[data-orb]", {
+        x: 36,
+        y: -24,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
+    }, pageRef);
 
-      const emailLink = document.querySelector('[data-email]');
-      if (emailLink) {
-        emailLink.addEventListener('mouseenter', () => {
-          gsap.to(emailLink, { scale: 1.02, duration: 0.3, ease: "power2.out" });
-        });
-        emailLink.addEventListener('mouseleave', () => {
-          gsap.to(emailLink, { scale: 1, duration: 0.3, ease: "power2.out" });
-        });
-      }
-    });
-
-    return () => ctx.revert();
+    return () => context.revert();
   }, []);
-
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setHeroVisible(true); obs.disconnect(); } },
-      { threshold: 0.2 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const addToSectionsRef = (el: HTMLElement | null) => {
-    if (el && !sectionsRef.current.includes(el)) {
-      sectionsRef.current.push(el);
-    }
-  };
 
   return (
-    <div className="w-full bg-[#0c0e0d] text-[#f2f5f3]">
-      <ParticleField />
-      <ScrollProgress />
-      <header className="sticky top-0 z-50 w-full bg-[#0c0e0d]/90 backdrop-blur-md border-b border-[#1b201d] px-6 md:px-12 py-5 flex items-center justify-between relative">
-        <div className="flex items-center gap-6">
-          <a href="#hero" className="text-base font-semibold tracking-tight text-[#f2f5f3] hover:text-[#c6f19d] transition-colors">
-            Daksh Shastri
-          </a>
-          <span className="hidden sm:inline-block text-sm text-[#829087]">
-            Delhi, India · Available for Engineering Roles
-          </span>
-        </div>
+    <div ref={pageRef} className="reference-page">
+      <div className="reference-light" aria-hidden="true" />
+      <div className="reference-orb reference-orb-one" data-orb aria-hidden="true" />
+      <div className="reference-orb reference-orb-two" aria-hidden="true" />
+      <div className="reference-grain" aria-hidden="true" />
 
-        <nav className="flex items-center gap-6 text-sm">
-          <a href="#work" className="text-[#829087] hover:text-[#f2f5f3] transition-colors">
-            Work
-          </a>
-          <a href="#credentials" className="text-[#829087] hover:text-[#f2f5f3] transition-colors">
-            Record
-          </a>
-          <a href="#contact" className="text-[#829087] hover:text-[#c6f19d] transition-colors">
-            Contact
-          </a>
+      <header className="reference-nav" data-nav>
+        <a href="#top" className="reference-logo">DS<span>.</span></a>
+        <nav aria-label="Primary navigation">
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
         </nav>
+        <a className="reference-nav-cta" href="mailto:dakshshastri0627@gmail.com">Let&apos;s talk <span>↗</span></a>
       </header>
 
-      <main className="w-full relative z-10">
-        {/* HERO */}
-        <section id="hero" ref={heroRef} className="hero-grid relative min-h-[82dvh] overflow-hidden px-6 md:px-12 pt-10 pb-12 md:pt-16">
-          <div className="hero-kicker flex items-center justify-between border-b border-[#2a302d] pb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#829087]">
-            <span>01 / Frontend systems</span>
-            <span className="hidden sm:inline-flex items-center gap-2 text-[#c6f19d]"><i className="status-dot" /> Available for roles</span>
+      <main id="top">
+        <section className="reference-hero">
+          <div className="hero-eyebrow" data-hero-meta>
+            <span className="live-mark" />
+            Frontend developer &amp; competitive programmer
           </div>
-
-          <div className="relative z-10 mt-14 max-w-2xl">
-            <p className="hero-copy max-w-xl text-xl leading-[1.45] text-[#f2f5f3] md:text-2xl">
-              {heroTagline}
-            </p>
-            <div className="hero-actions mt-7 flex flex-wrap gap-3 items-center">
-              <a href="#work" className="pixel-button px-6 py-3 bg-[#c6f19d] text-[#0c0e0d] text-sm font-semibold tracking-wide hover:bg-[#ffffff] transition-colors">
-                Inspect selected work
-              </a>
-              <a href="#contact" className="pixel-button pixel-button-muted px-6 py-3 text-sm font-medium text-[#f2f5f3] hover:bg-[#1b201d] transition-colors">
-                Send a message
-              </a>
-            </div>
+          <div className="hero-copy">
+            <p className="hero-intro" data-hero-line>Hi, I&apos;m Daksh.</p>
+            <h1 data-hero-line>I build digital<br /><em>experiences</em> that work.</h1>
+            <p className="hero-summary" data-hero-meta>Information Technology undergraduate in Delhi, turning algorithmic thinking into fast, thoughtful interfaces and dependable web systems.</p>
           </div>
-
-          <div className="mt-20 md:mt-24 overflow-visible">
-            <h1 ref={monumentRef} className="hero-wordmark relative z-10 whitespace-nowrap text-[clamp(4rem,13.5vw,12.5rem)] font-bold uppercase leading-[0.82] tracking-[-0.065em] text-[#f2f5f3] select-none">
-              DAKSH<br />SHASTRI
-            </h1>
-          </div>
-          <div className="pointer-events-none absolute bottom-6 right-6 hidden font-mono text-[10px] uppercase tracking-[0.16em] text-[#829087] md:block">Scroll to inspect ↓</div>
-        </section>
-
-        <Marquee
-          items={["React", "Next.js", "TypeScript", "C++", "Competitive Programming", "BPIT Delhi", "Frontend Engineering", "Node.js", "Appwrite", "MySQL"]}
-          speed={30}
-        />
-
-        {/* INTRO & STATS */}
-        <section ref={addToSectionsRef} className="px-6 md:px-12 py-24 bg-[#141715]/80 backdrop-blur-sm">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
-            <div className="md:col-span-6 animate-rise">
-              <h2 data-wipe className="text-[clamp(2.25rem,4.5vw,4.5rem)] font-bold tracking-tight leading-[1.02] text-[#f2f5f3]"
-                style={{
-                  backgroundImage: "linear-gradient(#c6f19d, #c6f19d)",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "0 100%",
-                  backgroundSize: "0% 3px",
-                  paddingBottom: 4,
-                }}
-              >
-                Algorithmic Rigor in Production
-              </h2>
-            </div>
-            <div className="md:col-span-6 animate-rise-1">
-              <p className="text-lg md:text-xl text-[#f2f5f3] leading-relaxed">
-                Information Technology undergraduate at Bhagwan Parshuram Institute of Technology and front-end development intern at Shree Ji Facility Services. Translating contest-grade problem solving into responsive, accessible web architecture.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-12 animate-rise-2">
-            <AnimatedCounter value="CF Pupil" label="Codeforces Competitive Rating" />
-            <AnimatedCounter value="Rank 222" label="LeetCode Weekly Contest 451 (Global)" />
-            <AnimatedCounter value="Rank 295" label="CodeChef Starters 190 (Global)" />
-            <AnimatedCounter value="Intern"   label="Frontend at Shree Ji Facility Services" />
+          <div className="hero-foot" data-hero-meta>
+            <span>Based in Delhi, India</span>
+            <span>Available for engineering roles</span>
+            <a href="#work">Scroll to explore <span>↓</span></a>
           </div>
         </section>
 
-        <Marquee
-          items={["Selected Work", "Open Source", "Production Interfaces", "Algorithms", "ReSpectro", "Gemini Clone", "Python Systems", "Live Demos Available"]}
-          speed={22}
-          accent
-        />
+        <section id="about" className="reference-section about-section">
+          <div className="section-label" data-reveal>01 / About</div>
+          <div className="about-content" data-reveal>
+            <h2>I work where <em>clear thinking</em> meets useful software.</h2>
+            <div className="about-detail">
+              <p>I&apos;m currently studying Information Technology at Bhagwan Parshuram Institute of Technology and working as a Front-End Development Intern at Shree Ji Facility Services.</p>
+              <p>My edge is the combination of competitive programming discipline and a strong eye for interaction. I care about the details people feel: speed, hierarchy, accessibility, and the small moments that make a product feel considered.</p>
+            </div>
+          </div>
+          <div className="fact-row" data-reveal>
+            <div><strong>222</strong><span>LeetCode weekly contest rank</span></div>
+            <div><strong>295</strong><span>CodeChef global contest rank</span></div>
+            <div><strong>Pupil</strong><span>Codeforces rating</span></div>
+            <div><strong>2028</strong><span>B.Tech graduation target</span></div>
+          </div>
+        </section>
 
-        {/* WORK */}
-        <section ref={addToSectionsRef} id="work" className="px-6 md:px-12 py-24 bg-[#141715]/80 backdrop-blur-sm">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4 animate-rise">
+        <section id="work" className="reference-section work-section">
+          <div className="section-heading" data-reveal>
+            <div className="section-label">02 / Selected work</div>
+            <h2>Things I&apos;ve<br /><em>made.</em></h2>
+          </div>
+          <div className="project-list">
+            {projects.map((project) => (
+              <article className="reference-project" key={project.number} data-reveal>
+                <span className="project-number">{project.number}</span>
+                <div className="project-main">
+                  <p className="project-type">{project.type}</p>
+                  <h3>{project.title}</h3>
+                  <p className="project-description">{project.description}</p>
+                </div>
+                <div className="project-side">
+                  <span>{project.stack}</span>
+                  <a href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} rel={project.link.startsWith("http") ? "noreferrer" : undefined}>View project <span>↗</span></a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="reference-section skills-section" data-reveal>
+          <div className="section-label">03 / Toolkit</div>
+          <div>
+            <h2>A practical<br /><em>toolkit.</em></h2>
+            <div className="skill-cloud">
+              {skills.map((skill) => <span key={skill}>{skill}</span>)}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="reference-contact">
+          <div className="contact-top" data-reveal>
+            <div className="section-label">04 / Contact</div>
+            <p>Have a project, an opportunity, or a good problem to solve?</p>
+          </div>
+          <a href="mailto:dakshshastri0627@gmail.com" className="contact-email" data-reveal>dakshshastri0627<br /><em>@gmail.com</em></a>
+          <div className="contact-bottom" data-reveal>
+            <span>Delhi, India · 2026</span>
             <div>
-              <h2 data-wipe className="text-[clamp(2.5rem,6vw,6rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
-                style={{
-                  backgroundImage: "linear-gradient(#c6f19d, #c6f19d)",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "0 100%",
-                  backgroundSize: "0% 3px",
-                  paddingBottom: 4,
-                }}
-              >
-                Selected Work
-              </h2>
-              <p className="mt-4 text-base md:text-lg text-[#f2f5f3]">
-                Production interfaces, conversational AI clients, and scalable transactional engines.
-              </p>
-            </div>
-            <a
-              href="https://github.com/Daksh0027"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-[#c6f19d] hover:underline"
-            >
-              All Repositories on GitHub →
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* ReSpectro */}
-            <div data-project-card className="lg:col-span-12 bg-[#0c0e0d] p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center animate-rise-1 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
-              <div className="md:col-span-6 flex flex-col justify-between h-full">
-                <div>
-                  <h3 className="text-3xl font-bold text-[#f2f5f3]">
-                    ReSpectro <span className="text-sm font-normal text-[#829087] ml-2">2025–2026</span>
-                  </h3>
-                  <p className="text-base text-[#829087] mt-1 font-medium">Movie Streaming & Discovery Platform</p>
-                  <p className="text-base text-[#f2f5f3] mt-6 leading-relaxed">
-                    Responsive movie discovery and catalog streaming platform built with React and Vite. Integrated with TMDB API for live data feeds, Clerk for authentication, and Appwrite backend for user watchlists.
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">React</span>
-                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Vite</span>
-                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Appwrite</span>
-                    <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">TMDB API</span>
-                  </div>
-                </div>
-                <div className="mt-8">
-                  <a
-                    href="https://respectro.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-5 py-2.5 bg-[#1b201d] text-sm text-[#c6f19d] hover:bg-[#c6f19d] hover:text-[#0c0e0d] font-semibold transition-colors"
-                  >
-                    Open Live Demo →
-                  </a>
-                </div>
-              </div>
-
-              <div className="md:col-span-6 bg-[#141715] p-5">
-                <div className="flex items-center justify-between pb-3 text-sm text-[#829087]">
-                  <span>respectro.vercel.app</span>
-                  <span className="text-[#c6f19d]">Streaming Live</span>
-                </div>
-                <div className="grid grid-cols-2 gap-3 mt-2">
-                  <div className="bg-[#1b201d] p-4">
-                    <div className="text-sm font-bold text-[#f2f5f3]">Dune: Part Two</div>
-                    <div className="text-sm text-[#829087] mt-1">Sci-Fi · 8.6 Rating</div>
-                  </div>
-                  <div className="bg-[#1b201d] p-4">
-                    <div className="text-sm font-bold text-[#f2f5f3]">Oppenheimer</div>
-                    <div className="text-sm text-[#829087] mt-1">History · 8.9 Rating</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Gemini Clone */}
-            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-2 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
-              <div>
-                <h3 className="text-2xl font-bold text-[#f2f5f3]">
-                  Gemini Clone <span className="text-sm font-normal text-[#829087] ml-2">2025–Present</span>
-                </h3>
-                <p className="text-sm text-[#829087] mt-1 font-medium">Conversational AI Agent Interface</p>
-                <p className="text-base text-[#f2f5f3] mt-4 leading-relaxed">
-                  Clean frontend clone of Google Gemini built in React with minimalist CSS architecture. Fully functional and driven by live Gemini API streaming completions with session history handling.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">React</span>
-                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Gemini API</span>
-                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">CSS</span>
-                </div>
-
-                <div className="mt-6 bg-[#141715] p-4 text-sm">
-                  <div className="text-sm text-[#829087] mb-2">Prompt Input Stream</div>
-                  <p className="text-sm text-[#f2f5f3] bg-[#0c0e0d] p-3">
-                    Analyze time complexity of topological sorting on directed acyclic graph.
-                  </p>
-                </div>
-              </div>
-              <div className="mt-8 pt-6">
-                <a
-                  href="https://bot-clone.netlify.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-5 py-2.5 bg-[#1b201d] text-sm text-[#c6f19d] hover:bg-[#c6f19d] hover:text-[#0c0e0d] font-semibold transition-colors"
-                >
-                  Open Live Demo →
-                </a>
-              </div>
-            </div>
-
-            {/* Library System */}
-            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-3 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
-              <div>
-                <h3 className="text-2xl font-bold text-[#f2f5f3]">
-                  Library System <span className="text-sm font-normal text-[#829087] ml-2">2024</span>
-                </h3>
-                <p className="text-sm text-[#829087] mt-1 font-medium">Inventory & Sales Ledger Engine</p>
-                <p className="text-base text-[#f2f5f3] mt-4 leading-relaxed">
-                  Scalable store management system in Python and MySQL. Handles multi-branch inventory tracking, sales recording, and automated receipt validation through an interactive command-line interface.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">Python</span>
-                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">MySQL</span>
-                  <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">CLI</span>
-                </div>
-
-                <div className="mt-6 bg-[#141715] p-4 text-sm">
-                  <div className="text-sm text-[#829087] mb-2">SQL Transaction Schema</div>
-                  <pre className="text-sm text-[#c6f19d] bg-[#0c0e0d] p-3 overflow-x-auto">
-                    <code>SELECT id, stock FROM inventory WHERE branch_id = 1;</code>
-                  </pre>
-                </div>
-              </div>
-              <div className="mt-8 pt-6">
-                <a
-                  href="https://github.com/Daksh0027"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-5 py-2.5 bg-[#1b201d] text-sm text-[#c6f19d] hover:bg-[#c6f19d] hover:text-[#0c0e0d] font-semibold transition-colors"
-                >
-                  View Source Repository →
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <Marquee
-          items={["Verified Record", "Competitive Programming", "Technical Competencies", "Certifications", "Hackathons", "CTF Contests", "Academic Background"]}
-          speed={26}
-        />
-
-        {/* CREDENTIALS */}
-        <section ref={addToSectionsRef} id="credentials" className="px-6 md:px-12 py-24 bg-[#141715]/80 backdrop-blur-sm">
-          <div className="mb-16 animate-rise">
-            <h2 data-wipe className="text-[clamp(2.5rem,5vw,5rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
-              style={{
-                backgroundImage: "linear-gradient(#c6f19d, #c6f19d)",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "0 100%",
-                backgroundSize: "0% 3px",
-                paddingBottom: 4,
-              }}
-            >
-              Verified Technical Record
-            </h2>
-            <p className="mt-4 text-base md:text-lg text-[#f2f5f3]">
-              Languages, frameworks, competitive milestones, and certifications.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-rise-1">
-            <div>
-              <h3 className="text-xl font-bold text-[#f2f5f3] mb-6">Technical Competencies</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base font-medium text-[#f2f5f3]">Languages</span>
-                  <span className="text-sm text-[#829087]">C++, C, C#, Python, JavaScript, TypeScript</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base font-medium text-[#f2f5f3]">Frontend Architecture</span>
-                  <span className="text-sm text-[#829087]">React, Next.js, Vite, Tailwind CSS, HTML & CSS</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base font-medium text-[#f2f5f3]">Backend & Storage</span>
-                  <span className="text-sm text-[#829087]">Node.js, Django, Flask, MySQL, Appwrite</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base font-medium text-[#f2f5f3]">DevOps & Tooling</span>
-                  <span className="text-sm text-[#829087]">Git, GitHub, Vercel, Netlify, Linux</span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold text-[#f2f5f3] mb-6">Contest & Achievement Record</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base text-[#f2f5f3]">LeetCode Weekly Contest 451</span>
-                  <span className="text-sm font-semibold text-[#c6f19d]">Global Rank 222</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base text-[#f2f5f3]">CodeChef Starters 190</span>
-                  <span className="text-sm font-semibold text-[#c6f19d]">Global Rank 295</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base text-[#f2f5f3]">Codeforces</span>
-                  <span className="text-sm font-semibold text-[#c6f19d]">Pupil Division</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base text-[#f2f5f3]">Smart India Hackathon &apos;24</span>
-                  <span className="text-sm text-[#829087]">Qualified to Mentor Round</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base text-[#f2f5f3]">Cyber Security CTF at MAIT</span>
-                  <span className="text-sm text-[#829087]">13th Place</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
-                  <span className="text-base text-[#f2f5f3]">IP Addressing & Subnetting</span>
-                  <span className="text-sm text-[#829087]">GeeksforGeeks Certification</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CONTACT */}
-        <section ref={addToSectionsRef} id="contact" className="min-h-[85dvh] px-6 md:px-12 py-24 bg-[#0c0e0d] flex flex-col justify-between">
-          <div className="animate-rise">
-            <p className="text-xl md:text-2xl text-[#f2f5f3] max-w-xl font-normal leading-relaxed">
-              Open for engineering roles, technical internships, and collaborative software projects. Based in Delhi — available worldwide.
-            </p>
-          </div>
-
-          <div className="my-16 animate-rise-1">
-            <a
-              data-email
-              href="mailto:dakshshastri0627@gmail.com"
-              className="block text-[clamp(1.75rem,5.5vw,5.5rem)] font-bold text-[#f2f5f3] hover:text-[#c6f19d] transition-colors tracking-tight break-all"
-            >
-              dakshshastri0627@gmail.com
-            </a>
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-12 animate-rise-2">
-            <div className="flex items-center gap-6 text-sm font-medium">
-              <a
-                href="https://github.com/Daksh0027"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#f2f5f3] hover:text-[#c6f19d] transition-colors"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://leetcode.com/u/Daksh0027"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#f2f5f3] hover:text-[#c6f19d] transition-colors"
-              >
-                LeetCode
-              </a>
-              <a
-                href="https://www.codechef.com/users/gam_pearl_90"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#f2f5f3] hover:text-[#c6f19d] transition-colors"
-              >
-                CodeChef
-              </a>
-            </div>
-
-            <div className="text-sm text-[#829087]">
-              <span>Delhi, India · 2026</span>
+              <a href="https://github.com/Daksh0027" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <a href="https://leetcode.com/u/Daksh0027" target="_blank" rel="noreferrer">LeetCode ↗</a>
+              <a href="/bdaf8a32073c89456ece1fd6b2e6cab1.pdf">Credentials ↗</a>
             </div>
           </div>
         </section>
