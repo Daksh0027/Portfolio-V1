@@ -170,6 +170,78 @@ html {
   }
 }
 
+.hero-grid {
+  background-image: linear-gradient(rgba(198, 241, 157, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(198, 241, 157, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: 0 0;
+}
+
+.hero-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--bg) 0%, transparent 18%, transparent 82%, var(--bg) 100%);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(198, 241, 157, 0.12);
+}
+
+.pixel-button {
+  position: relative;
+  border: 1px solid transparent;
+  transition: transform 220ms ease, background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+
+.pixel-button::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  transition: transform 220ms ease;
+}
+
+.pixel-button:hover {
+  transform: translate(-2px, -2px);
+}
+
+.pixel-button:hover::after {
+  transform: translate(2px, 2px);
+}
+
+.pixel-button-muted {
+  background: var(--surface);
+  border-color: var(--surface-2);
+}
+
+[data-project-card] {
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 300ms ease, background-color 300ms ease;
+}
+
+[data-project-card]:hover {
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-button,
+  [data-project-card] {
+    transition: none;
+  }
+
+  .pixel-button:hover,
+  [data-project-card]:hover {
+    transform: none;
+  }
+}
+
 /* Blueprint Map interface container */
 [data-ui="blueprint-map"] {
   position: relative;

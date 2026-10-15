@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollProgress from "@/components/ScrollProgress";
 import Marquee from "@/components/Marquee";
+import PixelCharacter from "@/components/PixelCharacter";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -110,21 +111,27 @@ export default function Portfolio() {
     if (typeof window === "undefined") return;
 
     const ctx = gsap.context(() => {
-      gsap.from(".animate-rise", {
-        y: 32,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "power3.out"
-      });
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+      heroTimeline
+        .from(".hero-kicker", { y: 16, opacity: 0, duration: 0.45 })
+        .from(".hero-copy", { y: 22, opacity: 0, duration: 0.6 }, "-=0.15")
+        .from(".hero-actions", { y: 18, opacity: 0, duration: 0.5 }, "-=0.3")
+        .from(".hero-character", { scale: 0.86, opacity: 0, duration: 0.6 }, "-=0.25")
+        .from(monumentRef.current, { y: 36, opacity: 0, duration: 0.9 }, "-=0.25");
 
       if (monumentRef.current) {
-        gsap.from(monumentRef.current, {
-          y: 40,
-          opacity: 0,
-          duration: 1,
-          delay: 0.3,
-          ease: "power4.out"
+        gsap.to(monumentRef.current, {
+          scale: 0.94,
+          transformOrigin: "left bottom",
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
         });
       }
 
@@ -236,32 +243,41 @@ export default function Portfolio() {
 
       <main className="w-full">
         {/* HERO */}
-        <section id="hero" ref={heroRef} className="min-h-[78dvh] px-6 md:px-12 flex flex-col justify-start pt-16 pb-14">
-          <div className="max-w-3xl">
-            <p className="text-xl md:text-2xl text-[#f2f5f3] font-normal leading-relaxed animate-rise">
+        <section id="hero" ref={heroRef} className="hero-grid relative min-h-[82dvh] overflow-hidden px-6 md:px-12 pt-10 pb-12 md:pt-16">
+          <div className="hero-kicker flex items-center justify-between border-b border-[#2a302d] pb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#829087]">
+            <span>01 / Frontend systems</span>
+            <span className="hidden sm:inline-flex items-center gap-2 text-[#c6f19d]"><i className="status-dot" /> Available for roles</span>
+          </div>
+
+          <div className="relative z-10 mt-14 max-w-2xl">
+            <p className="hero-copy max-w-xl text-xl leading-[1.45] text-[#f2f5f3] md:text-2xl">
               {heroTagline}
             </p>
-            <div className="mt-8 flex flex-wrap gap-4 items-center animate-rise-1">
-              <a
-                href="#work"
-                className="px-6 py-3 bg-[#c6f19d] text-[#0c0e0d] text-sm font-semibold tracking-wide hover:bg-[#ffffff] transition-colors"
-              >
-                Inspect Selected Work
+            <div className="hero-actions mt-7 flex flex-wrap gap-3 items-center">
+              <a href="#work" className="pixel-button px-6 py-3 bg-[#c6f19d] text-[#0c0e0d] text-sm font-semibold tracking-wide hover:bg-[#ffffff] transition-colors">
+                Inspect selected work
               </a>
-              <a
-                href="#contact"
-                className="px-6 py-3 bg-[#141715] text-[#f2f5f3] text-sm font-medium hover:bg-[#1b201d] transition-colors"
-              >
-                Send Message
+              <a href="#contact" className="pixel-button pixel-button-muted px-6 py-3 text-sm font-medium text-[#f2f5f3] hover:bg-[#1b201d] transition-colors">
+                Send a message
               </a>
             </div>
           </div>
 
-          <div className="mt-24 md:mt-28 flex items-end gap-6 md:gap-10">
-            <h1 ref={monumentRef} className="text-[clamp(3.5rem,13vw,12.5rem)] font-bold tracking-[-0.04em] leading-[0.88] text-[#f2f5f3] select-none break-words">
+          <div className="hero-character absolute right-8 top-32 hidden border border-[#2a302d] bg-[#111412]/90 p-4 md:block lg:right-16">
+            <div className="mb-3 flex items-center justify-between gap-8 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#829087]">
+              <span>Player 01</span>
+              <span className="text-[#c6f19d]">Online</span>
+            </div>
+            <PixelCharacter pixelSize={5} inline minimal />
+            <div className="mt-3 border-t border-[#2a302d] pt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-[#829087]">Daksh.exe / Delhi</div>
+          </div>
+
+          <div className="mt-20 md:mt-24 overflow-visible">
+            <h1 ref={monumentRef} className="hero-wordmark relative z-10 whitespace-nowrap text-[clamp(4rem,13.5vw,12.5rem)] font-bold uppercase leading-[0.82] tracking-[-0.065em] text-[#f2f5f3] select-none">
               DAKSH<br />SHASTRI
             </h1>
           </div>
+          <div className="pointer-events-none absolute bottom-6 right-6 hidden font-mono text-[10px] uppercase tracking-[0.16em] text-[#829087] md:block">Scroll to inspect ↓</div>
         </section>
 
         <Marquee
@@ -337,7 +353,7 @@ export default function Portfolio() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* ReSpectro */}
-            <div className="lg:col-span-12 bg-[#0c0e0d] p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center animate-rise-1 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
+            <div data-project-card className="lg:col-span-12 bg-[#0c0e0d] p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center animate-rise-1 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
               <div className="md:col-span-6 flex flex-col justify-between h-full">
                 <div>
                   <h3 className="text-3xl font-bold text-[#f2f5f3]">
@@ -385,7 +401,7 @@ export default function Portfolio() {
             </div>
 
             {/* Gemini Clone */}
-            <div className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-2 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
+            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-2 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
               <div>
                 <h3 className="text-2xl font-bold text-[#f2f5f3]">
                   Gemini Clone <span className="text-sm font-normal text-[#829087] ml-2">2025–Present</span>
@@ -420,7 +436,7 @@ export default function Portfolio() {
             </div>
 
             {/* Library System */}
-            <div className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-3 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
+            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-3 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
               <div>
                 <h3 className="text-2xl font-bold text-[#f2f5f3]">
                   Library System <span className="text-sm font-normal text-[#829087] ml-2">2024</span>

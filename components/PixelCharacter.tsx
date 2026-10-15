@@ -50,13 +50,12 @@ function buildPixels(): PixelDef[] {
 const PIXELS = buildPixels();
 
 interface Props {
-  /** pixel size of each cell */
   pixelSize?: number;
-  /** if true: fully assembled on mount with pop-in, no scroll build */
   inline?: boolean;
+  minimal?: boolean;
 }
 
-export default function PixelCharacter({ pixelSize = 12, inline = false }: Props) {
+export default function PixelCharacter({ pixelSize = 12, inline = false, minimal = false }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const pixelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const labelRef = useRef<HTMLDivElement>(null);
@@ -148,8 +147,7 @@ export default function PixelCharacter({ pixelSize = 12, inline = false }: Props
         flexShrink: 0,
       }}
     >
-      {/* Speech bubble */}
-      <div
+      {!minimal && <div
         ref={speechRef}
         style={{
           background: "#c6f19d",
@@ -169,7 +167,7 @@ export default function PixelCharacter({ pixelSize = 12, inline = false }: Props
         HELLO WORLD!
         <br />
         <span style={{ fontSize: 8, opacity: 0.65 }}>{ inline ? "ready to code" : "scroll → full form" }</span>
-      </div>
+      </div>}
 
       {/* Sprite */}
       <div
@@ -200,8 +198,7 @@ export default function PixelCharacter({ pixelSize = 12, inline = false }: Props
         ))}
       </div>
 
-      {/* Name tag */}
-      <div
+      {!minimal && <div
         ref={labelRef}
         style={{
           marginTop: 4,
@@ -214,17 +211,16 @@ export default function PixelCharacter({ pixelSize = 12, inline = false }: Props
         }}
       >
         DAKSH.EXE
-      </div>
+      </div>}
 
-      {/* Shadow */}
-      <div
+      {!minimal && <div
         style={{
           width: W * pixelSize * 0.55,
           height: 4,
           background: "radial-gradient(ellipse, rgba(198,241,157,0.2) 0%, transparent 70%)",
           marginTop: 2,
         }}
-      />
+      />}
     </div>
   );
 }
