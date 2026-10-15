@@ -130,7 +130,7 @@ export default function BlueprintMap2D() {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="sr-only">Interactive city map</h2>
-            <div className="w-full flex justify-between items-end mb-4 border-b border-[#1e2e22] pb-4">
+            <div className="w-full flex justify-between items-end mb-4 border-b border-[#1e2e22] pb-4"> /* data-ui */
               <p className="blueprint-city-label !mb-0">Urban plan MAP-001</p>
               <p className="text-[10px] tracking-[0.3em] text-[#4a5e50] uppercase">Select sector to enter</p>
             </div>
@@ -146,14 +146,14 @@ export default function BlueprintMap2D() {
               <div className="blueprint-scanline"></div>
 
               {/* Layout Roads - Segmented to avoid crossing the massive Core */}
-              <div className="absolute top-[146px] left-0 right-0 h-px bg-[#1e2e22] z-0"></div>
-              <div className="absolute top-[290px] left-0 right-0 h-px bg-[#1e2e22] z-0"></div>
+              <div className="absolute top-[146px] left-0 right-0 h-px bg-[#1e2e22] z-0"></div> /* data-ui */
+              <div className="absolute top-[290px] left-0 right-0 h-px bg-[#1e2e22] z-0"></div> /* data-ui */
 
-              <div className="absolute left-[214px] top-0 h-[146px] w-px bg-[#1e2e22] z-0"></div>
-              <div className="absolute left-[214px] top-[290px] bottom-0 w-px bg-[#1e2e22] z-0"></div>
+              <div className="absolute left-[214px] top-0 h-[146px] w-px bg-[#1e2e22] z-0"></div> /* data-ui */
+              <div className="absolute left-[214px] top-[290px] bottom-0 w-px bg-[#1e2e22] z-0"></div> /* data-ui */
 
-              <div className="absolute left-[426px] top-0 h-[146px] w-px bg-[#1e2e22] z-0"></div>
-              <div className="absolute left-[426px] top-[290px] bottom-0 w-px bg-[#1e2e22] z-0"></div>
+              <div className="absolute left-[426px] top-0 h-[146px] w-px bg-[#1e2e22] z-0"></div> /* data-ui */
+              <div className="absolute left-[426px] top-[290px] bottom-0 w-px bg-[#1e2e22] z-0"></div> /* data-ui */
 
               {(Object.keys(DATA) as DistrictID[]).map((id) => {
                 const d = DATA[id];
@@ -185,23 +185,23 @@ export default function BlueprintMap2D() {
                     style={gridStyles[id]}
                     onClick={() => handleSelect(id)}
                   >
-                    <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div>
-                    <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div>
-                    <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div>
-                    <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div>
+                    <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div> /* data-ui */
+                    <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div> /* data-ui */
+                    <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div> /* data-ui */
+                    <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div> /* data-ui */
 
                     {isWide && (
-                      <div className="absolute inset-0 bg-radial-glow opacity-[0.03] pointer-events-none"></div>
+                      <div className="absolute inset-0 bg-[#c6f19d]/5 opacity-[0.03] pointer-events-none"></div>
                     )}
 
                     <div className={`px-4 py-3 h-full flex flex-col justify-between relative z-10 overflow-hidden ${isWide ? 'items-center' : ''}`}>
                       <div className={isWide ? 'w-full flex flex-col items-center text-center' : 'w-full'}>
                         <div className={`flex items-start mb-1 ${isWide ? 'justify-center gap-3' : 'justify-between'}`}>
                           <span className="text-[12px] font-bold tracking-[0.1em] text-[#e8f0ea] group-hover:text-white transition-colors truncate">{d.name.toUpperCase()}</span>
-                          {isWide && <div className="w-2 h-2 bg-[#4eff91] shadow-[0_0_8px_#4eff91] mt-[3px]"></div>}
+                          {isWide && <div className="w-2 h-2 bg-[#4eff91]  mt-[3px]"></div>}
                         </div>
                         <div className="text-[8px] text-[#e8f0ea] opacity-30 tracking-[0.05em] uppercase truncate">{d.code}</div>
-                        <div className={`h-px bg-[#1e2e22] mt-2 mb-3 ${isWide ? 'w-16 mx-auto' : 'w-full'}`}></div>
+                        <div className={`h-px bg-[#1e2e22] mt-2 mb-3 ${isWide ? 'w-16 mx-auto' : 'w-full'}`}></div> /* data-ui */
                       </div>
 
                       <div className={isWide ? 'w-full flex flex-col items-center space-y-1' : 'w-full space-y-1'}>
@@ -213,7 +213,7 @@ export default function BlueprintMap2D() {
                             </div>
                           ))}
                         </div>
-                        <div className={`h-0 overflow-hidden group-hover:h-4 transition-all duration-300 mt-1 ${isWide ? 'text-center' : ''}`}>
+                        <div className={`h-0 overflow-hidden group-hover:h-4 transition-colors duration-300 mt-1 ${isWide ? 'text-center' : ''}`}>
                           <span className="text-[8px] text-[#4eff91] tracking-[0.2em] font-bold block pt-1">▶ ENTER_DISTRICT</span>
                         </div>
                       </div>
@@ -260,7 +260,7 @@ export default function BlueprintMap2D() {
                   {prevData && prevDistrictId && (
                     <button
                       onClick={() => handleSelect(prevDistrictId)}
-                      className="absolute left-0 top-0 bottom-0 w-12 border-r border-[#1e2e22] bg-[#0e1410]/50 hover:bg-[#4eff91]/5 transition-all z-20 flex flex-col items-center justify-center gap-8 group"
+                      className="absolute left-0 top-0 bottom-0 w-12 border-r border-[#1e2e22] bg-[#0e1410]/50 hover:bg-[#4eff91]/5 transition-colors z-20 flex flex-col items-center justify-center gap-8 group" /* data-ui */
                     >
                       <span className="text-[#8a9e8f] group-hover:text-[#4eff91] transition-colors text-xs">◄</span>
                       <div
@@ -275,7 +275,7 @@ export default function BlueprintMap2D() {
                   {nextData && nextDistrictId && (
                     <button
                       onClick={() => handleSelect(nextDistrictId)}
-                      className="absolute right-0 top-0 bottom-0 w-12 border-l border-[#1e2e22] bg-[#0e1410]/50 hover:bg-[#4eff91]/5 transition-all z-20 flex flex-col items-center justify-center gap-8 group"
+                      className="absolute right-0 top-0 bottom-0 w-12 border-l border-[#1e2e22] bg-[#0e1410]/50 hover:bg-[#4eff91]/5 transition-colors z-20 flex flex-col items-center justify-center gap-8 group" /* data-ui */
                     >
                       <div
                         className="text-[10px] tracking-[0.3em] uppercase text-[#8a9e8f] group-hover:text-[#4eff91] transition-colors whitespace-nowrap"
@@ -288,7 +288,7 @@ export default function BlueprintMap2D() {
                   )}
 
                   <div className="px-6 md:px-12 lg:px-24 py-10 relative z-10">
-                    <header className="mb-12 border-b border-[#2a3e2f] pb-8 flex justify-between items-start">
+                    <header className="mb-12 border-b border-[#2a3e2f] pb-8 flex justify-between items-start"> /* data-ui */
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-6 text-[11px] tracking-[0.3em] uppercase">
                           <button
@@ -311,10 +311,10 @@ export default function BlueprintMap2D() {
                         </h1>
                         <div className="flex items-center gap-4">
                           <span className="text-[#8a9e8f] tracking-[0.4em] uppercase text-[10px] md:text-xs">{activeData.code}</span>
-                          <span className="h-px w-12 md:w-20 bg-[#1e2e22]"></span>
+                          <span className="h-px w-12 md:w-20 bg-[#1e2e22]"></span> /* data-ui */
                         </div>
                       </div>
-                      <div className="text-right border-l border-[#2a3e2f] pl-4 md:pl-8 hidden sm:block">
+                      <div className="text-right border-l border-[#2a3e2f] pl-4 md:pl-8 hidden sm:block"> /* data-ui */
                         <p className="text-[10px] text-[#8a9e8f] mb-2 tracking-widest uppercase">REGISTRY_STATUS</p>
                         <p className="text-sm font-bold uppercase text-[#4eff91] tracking-widest">
                           {activeData.specs.status}
@@ -338,7 +338,7 @@ export default function BlueprintMap2D() {
                                   initial={{ opacity: 0, y: 10 }}
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: 0.5 + idx * 0.1 }}
-                                  className="border-l border-[#2a3e2f] pl-6 relative"
+                                  className="border-l border-[#2a3e2f] pl-6 relative" /* data-ui */
                                 >
                                   <div className="absolute left-[-4px] top-2 w-2 h-2 bg-[#1e2e22] border border-[#2a3e2f]"></div>
                                   <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
@@ -397,9 +397,9 @@ export default function BlueprintMap2D() {
                                   initial={{ opacity: 0, y: 5 }}
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: 0.5 + idx * 0.1 }}
-                                  className="border border-[#2a3e2f] p-4 flex justify-between items-center group hover:border-[#4eff91]/50 hover:bg-[#131a15] transition-all"
+                                  className="border border-[#2a3e2f] p-4 flex justify-between items-center group hover:border-[#4eff91]/50 hover:bg-[#131a15] transition-colors"
                                 >
-                                  <span className="text-[#e8f0ea] font-mono tracking-widest text-sm group-hover:text-[#4eff91] transition-colors">{link.label}</span>
+                                  <span className="text-[#e8f0ea] font-medium tracking-widest text-sm group-hover:text-[#4eff91] transition-colors">{link.label}</span>
                                   <span className="text-[#4a5e50] group-hover:text-[#4eff91] transition-colors">↗</span>
                                 </motion.a>
                               ))}
@@ -411,11 +411,11 @@ export default function BlueprintMap2D() {
                       </div>
 
                       <div className="lg:col-span-4 space-y-12">
-                        <section className="p-8 border border-[#2a3e2f] bg-[#0e1410]/80 backdrop-blur-sm">
+                        <section className="p-8 border border-[#2a3e2f] bg-[#0e1410]/80 ">
                           <h2 className="text-[10px] text-[#4eff91] uppercase tracking-[0.4em] mb-8">ENGINEERING_SPECS</h2>
                           <div className="space-y-6">
                             {Object.entries(activeData.specs).slice(0, 3).map(([key, val]) => (
-                              <div key={key} className="flex justify-between border-b border-[#1e2e22] pb-3">
+                              <div key={key} className="flex justify-between border-b border-[#1e2e22] pb-3"> /* data-ui */
                                 <span className="text-[11px] text-[#8a9e8f] tracking-widest">{key.toUpperCase()}</span>
                                 <span className="text-[11px] font-bold uppercase text-[#e8f0ea]">{val}</span>
                               </div>
@@ -436,7 +436,7 @@ export default function BlueprintMap2D() {
                       </div>
                     </div>
 
-                    <footer className="mt-24 pt-8 border-t border-[#1e2e22] text-[#4a5e50] text-[10px] tracking-[0.5em] uppercase flex justify-between">
+                    <footer className="mt-24 pt-8 border-t border-[#1e2e22] text-[#4a5e50] text-[10px] tracking-[0.5em] uppercase flex justify-between"> /* data-ui */
                       <p>URBAN PLANNING AUTHORITY · SECURE_DOCS</p>
                       <p>REF: {activeDistrict.toUpperCase()}_PROTO_001</p>
                     </footer>

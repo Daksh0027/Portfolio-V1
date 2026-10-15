@@ -1,26 +1,16 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Geist } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
-});
 
 export const metadata: Metadata = {
-  title: 'DR4KEN.me',
-  description: 'A portfolio by Daksh Shastri. Full-stack systems. Every interface load-bearing.',
+  title: "Daksh Shastri · Frontend Developer & Systems Engineer",
+  description: "Portfolio of Daksh Shastri. Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
   openGraph: {
-    title: 'DR4KEN.me',
-    description: 'A portfolio by Daksh Shastri. Full-stack systems. Every interface load-bearing.',
-    type: 'website',
+    title: "Daksh Shastri · Portfolio",
+    description: "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
+    type: "website",
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: "/favicon.svg",
   },
 };
 
@@ -30,9 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("scroll-smooth", jetbrainsMono.variable, "font-sans", geist.variable)} suppressHydrationWarning>
-      <body className="min-h-screen bg-[var(--app-bg)] text-[var(--app-text)] font-mono antialiased flex flex-col selection:bg-[var(--app-stamp)] selection:text-[var(--app-stamptext)]">
-
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-[100dvh] bg-[#0c0e0d] text-[#f2f5f3] antialiased selection:bg-[#c6f19d] selection:text-[#0c0e0d]">
         {children}
       </body>
     </html>

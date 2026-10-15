@@ -1,0 +1,1760 @@
+{
+ "url": "http://localhost:3001",
+ "at": "2026-10-15T03:49:28.272Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 8,
+   "filled": [
+    0.31,
+    0.62,
+    0.54,
+    0.4,
+    0.44,
+    0.6,
+    0.41,
+    0.29
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 6424,
+     "screens": 7.1,
+     "words": 684,
+     "img": 4,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 3,
+     "uiAbuse": false,
+     "realPictures": 2,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "jantar-mantar-delhi-photographed-by-madan-mahatt",
+      "humayun-s-tomb-delhi.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [
+      "http://localhost:3001/assets/jama-masjid-mosque-delhi.jpg",
+      "http://localhost:3001/assets/metcalfe-house-delhi.jpg"
+     ],
+     "emoji": []
+    },
+    "hero": {
+     "text": "DAKSH SHASTRI",
+     "words": 2,
+     "chars": 13,
+     "lines": 2,
+     "size": 187.2,
+     "vw": 13,
+     "font": "General Sans",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 0.88,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.93,
+     "top": 507,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "DAKSH SHASTRI",
+     "words": 2,
+     "lines": 2,
+     "size": 187.2,
+     "font": "General Sans"
+    },
+    "headings": [
+     {
+      "text": "DAKSH SHASTRI",
+      "words": 2,
+      "chars": 13,
+      "lines": 2,
+      "size": 187.2,
+      "vw": 13,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.88,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.93,
+      "top": 507,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Algorithmic Rigor in Production",
+      "words": 4,
+      "chars": 31,
+      "lines": 2,
+      "size": 64.8,
+      "vw": 4.5,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 996,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "CF Pupil",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 1208,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Rank 222",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.21,
+      "top": 1208,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Rank 295",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 1208,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Intern",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.21,
+      "top": 1208,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Interactive Execution Testbed",
+      "words": 3,
+      "chars": 29,
+      "lines": 2,
+      "size": 54.7,
+      "vw": 3.8,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 1480,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Selected Work",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 86.4,
+      "vw": 6,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 2469,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ReSpectro 2025–2026",
+      "words": 2,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 2.1,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.42,
+      "top": 2711,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Architectural Foundations",
+      "words": 2,
+      "chars": 25,
+      "lines": 2,
+      "size": 72,
+      "vw": 5,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 3763,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Verified Technical Record",
+      "words": 3,
+      "chars": 25,
+      "lines": 1,
+      "size": 72,
+      "vw": 5,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.93,
+      "top": 4915,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "dakshshastri0627@gmail.com",
+      "words": 1,
+      "chars": 26,
+      "lines": 1,
+      "size": 79.2,
+      "vw": 5.5,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.93,
+      "top": 5950,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "General Sans",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.07,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      18,
+      20,
+      24,
+      30,
+      48,
+      55,
+      65,
+      72,
+      79,
+      86,
+      187
+     ],
+     "sizeCount": 13,
+     "notLoaded": [],
+     "body": {
+      "font": "General Sans",
+      "size": 14,
+      "leading": 1.43,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.4
+     },
+     "measureChars": 192,
+     "max": {
+      "size": 187.2,
+      "vw": 13,
+      "font": "General Sans",
+      "text": "DAKSHSHASTRI"
+     },
+     "monoShare": 0.07,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0c0e0d",
+     "bodyBgHsl": {
+      "h": 150,
+      "s": 0.08,
+      "l": 0.05
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#0c0e0d",
+       "top": 0,
+       "hsl": {
+        "h": 150,
+        "s": 0.08,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#141715",
+       "top": 900,
+       "hsl": {
+        "h": 140,
+        "s": 0.07,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#f2f5f3",
+       "share": 0.62
+      },
+      {
+       "color": "#829087",
+       "share": 0.25
+      },
+      {
+       "color": "#c6f19d",
+       "share": 0.07
+      },
+      {
+       "color": "#e3e2da",
+       "share": 0.06
+      },
+      {
+       "color": "#0c0e0d",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1b201d",
+      "hsl": {
+       "h": 144,
+       "s": 0.08,
+       "l": 0.12
+      },
+      "fg": "#c6f19d"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 3,
+     "radius": 0,
+     "height": 40,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Blueprint Map",
+      "Inspect Selected Work",
+      "Send Message"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 72,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "general sans"
+    ]
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 9,
+   "filled": [
+    0.24,
+    0.81,
+    0.49,
+    0.55,
+    0.45,
+    0.74,
+    0.59,
+    0.29,
+    0.33
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 8498,
+     "screens": 8.3,
+     "words": 684,
+     "img": 4,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 3,
+     "uiAbuse": false,
+     "realPictures": 2,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "jantar-mantar-delhi-photographed-by-madan-mahatt",
+      "humayun-s-tomb-delhi.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [
+      "http://localhost:3001/assets/jama-masjid-mosque-delhi.jpg",
+      "http://localhost:3001/assets/metcalfe-house-delhi.jpg"
+     ],
+     "emoji": []
+    },
+    "hero": {
+     "text": "DAKSH SHASTRI",
+     "words": 2,
+     "chars": 13,
+     "lines": 2,
+     "size": 99.8,
+     "vw": 13,
+     "font": "General Sans",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 0.88,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.88,
+     "top": 794,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "DAKSH SHASTRI",
+     "words": 2,
+     "lines": 2,
+     "size": 99.8,
+     "font": "General Sans"
+    },
+    "headings": [
+     {
+      "text": "DAKSH SHASTRI",
+      "words": 2,
+      "chars": 13,
+      "lines": 2,
+      "size": 99.8,
+      "vw": 13,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.88,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 794,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Algorithmic Rigor in Production",
+      "words": 4,
+      "chars": 31,
+      "lines": 2,
+      "size": 36,
+      "vw": 4.7,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1130,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "CF Pupil",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1470,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Rank 222",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.41,
+      "top": 1470,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Rank 295",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1598,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Intern",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 48,
+      "vw": 6.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.41,
+      "top": 1598,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Interactive Execution Testbed",
+      "words": 3,
+      "chars": 29,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 1870,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Selected Work",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 46.1,
+      "vw": 6,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 3160,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ReSpectro 2025–2026",
+      "words": 2,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 3.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 3390,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Architectural Foundations",
+      "words": 2,
+      "chars": 25,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 5102,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Verified Technical Record",
+      "words": 3,
+      "chars": 25,
+      "lines": 1,
+      "size": 40,
+      "vw": 5.2,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 6544,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "dakshshastri0627@gmail.com",
+      "words": 1,
+      "chars": 26,
+      "lines": 1,
+      "size": 42.2,
+      "vw": 5.5,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 7957,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "General Sans",
+       "share": 0.93,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.07,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      18,
+      20,
+      24,
+      30,
+      32,
+      36,
+      40,
+      42,
+      46,
+      48,
+      100
+     ],
+     "sizeCount": 13,
+     "notLoaded": [],
+     "body": {
+      "font": "General Sans",
+      "size": 14,
+      "leading": 1.43,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 16.4
+     },
+     "measureChars": 96,
+     "max": {
+      "size": 99.8,
+      "vw": 13,
+      "font": "General Sans",
+      "text": "DAKSHSHASTRI"
+     },
+     "monoShare": 0.07,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0c0e0d",
+     "bodyBgHsl": {
+      "h": 150,
+      "s": 0.08,
+      "l": 0.05
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#0c0e0d",
+       "top": 0,
+       "hsl": {
+        "h": 150,
+        "s": 0.08,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#141715",
+       "top": 1034,
+       "hsl": {
+        "h": 140,
+        "s": 0.07,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#f2f5f3",
+       "share": 0.62
+      },
+      {
+       "color": "#829087",
+       "share": 0.25
+      },
+      {
+       "color": "#c6f19d",
+       "share": 0.07
+      },
+      {
+       "color": "#e3e2da",
+       "share": 0.06
+      },
+      {
+       "color": "#0c0e0d",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1b201d",
+      "hsl": {
+       "h": 144,
+       "s": 0.08,
+       "l": 0.12
+      },
+      "fg": "#c6f19d"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 3,
+     "radius": 0,
+     "height": 40,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Blueprint Map",
+      "Inspect Selected Work",
+      "Send Message"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 3342
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 5992
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 92,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "general sans"
+    ]
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.32,
+    0.61,
+    0.56,
+    0.54,
+    0.47,
+    0.35,
+    0.54,
+    0.51,
+    0.45,
+    0.56,
+    0.38,
+    0.33
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 509,
+     "h": 1100
+    },
+    "page": {
+     "height": 10045,
+     "screens": 9.1,
+     "words": 677,
+     "img": 4,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 3,
+     "uiAbuse": false,
+     "realPictures": 2,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "jantar-mantar-delhi-photographed-by-madan-mahatt",
+      "humayun-s-tomb-delhi.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [
+      "http://localhost:3001/assets/jama-masjid-mosque-delhi.jpg",
+      "http://localhost:3001/assets/metcalfe-house-delhi.jpg"
+     ],
+     "emoji": []
+    },
+    "hero": {
+     "text": "DAKSH SHASTRI",
+     "words": 2,
+     "chars": 13,
+     "lines": 2,
+     "size": 56,
+     "vw": 11,
+     "font": "General Sans",
+     "weight": 700,
+     "tracking": -0.04,
+     "leading": 0.88,
+     "upper": true,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.67,
+     "top": 706,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "DAKSH SHASTRI",
+     "words": 2,
+     "lines": 2,
+     "size": 56,
+     "font": "General Sans"
+    },
+    "headings": [
+     {
+      "text": "DAKSH SHASTRI",
+      "words": 2,
+      "chars": 13,
+      "lines": 2,
+      "size": 56,
+      "vw": 11,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.04,
+      "leading": 0.88,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 706,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Algorithmic Rigor in Production",
+      "words": 4,
+      "chars": 31,
+      "lines": 2,
+      "size": 36,
+      "vw": 7.1,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 964,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "CF Pupil",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 30,
+      "vw": 5.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.29,
+      "top": 1355,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Rank 222",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 30,
+      "vw": 5.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.29,
+      "top": 1355,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Rank 295",
+      "words": 2,
+      "chars": 8,
+      "lines": 1,
+      "size": 30,
+      "vw": 5.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.29,
+      "top": 1491,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Intern",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 30,
+      "vw": 5.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.29,
+      "top": 1491,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Interactive Execution Testbed",
+      "words": 3,
+      "chars": 29,
+      "lines": 2,
+      "size": 32,
+      "vw": 6.3,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 1771,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Selected Work",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 40,
+      "vw": 7.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 3148,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "ReSpectro 2025–2026",
+      "words": 2,
+      "chars": 19,
+      "lines": 1,
+      "size": 30,
+      "vw": 5.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.55,
+      "top": 3384,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Gemini Clone 2025–Present",
+      "words": 3,
+      "chars": 25,
+      "lines": 1,
+      "size": 24,
+      "vw": 4.7,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.55,
+      "top": 4136,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Library System 2024",
+      "words": 3,
+      "chars": 19,
+      "lines": 1,
+      "size": 24,
+      "vw": 4.7,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.33,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.55,
+      "top": 4776,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Architectural Foundations",
+      "words": 2,
+      "chars": 25,
+      "lines": 2,
+      "size": 40,
+      "vw": 7.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.25,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 5504,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Academic Background & College Society",
+      "words": 5,
+      "chars": 37,
+      "lines": 2,
+      "size": 24,
+      "vw": 4.7,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.38,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 7124,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Verified Technical Record",
+      "words": 3,
+      "chars": 25,
+      "lines": 2,
+      "size": 40,
+      "vw": 7.9,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 7858,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "dakshshastri0627@gmail.com",
+      "words": 1,
+      "chars": 26,
+      "lines": 2,
+      "size": 28,
+      "vw": 5.5,
+      "font": "General Sans",
+      "weight": 700,
+      "tracking": -0.025,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.67,
+      "top": 9452,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 15,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "General Sans",
+       "share": 0.92,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.08,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      18,
+      20,
+      24,
+      28,
+      30,
+      32,
+      36,
+      40,
+      56
+     ],
+     "sizeCount": 11,
+     "notLoaded": [],
+     "body": {
+      "font": "General Sans",
+      "size": 16,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 17.6
+     },
+     "measureChars": 49,
+     "max": {
+      "size": 56,
+      "vw": 11,
+      "font": "General Sans",
+      "text": "DAKSHSHASTRI"
+     },
+     "monoShare": 0.08,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.01,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0c0e0d",
+     "bodyBgHsl": {
+      "h": 150,
+      "s": 0.08,
+      "l": 0.05
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#0c0e0d",
+       "top": 0,
+       "hsl": {
+        "h": 150,
+        "s": 0.08,
+        "l": 0.05
+       }
+      },
+      {
+       "color": "#141715",
+       "top": 868,
+       "hsl": {
+        "h": 140,
+        "s": 0.07,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#f2f5f3",
+       "share": 0.62
+      },
+      {
+       "color": "#829087",
+       "share": 0.24
+      },
+      {
+       "color": "#c6f19d",
+       "share": 0.07
+      },
+      {
+       "color": "#e3e2da",
+       "share": 0.06
+      },
+      {
+       "color": "#0c0e0d",
+       "share": 0
+      }
+     ],
+     "button": {
+      "bg": "#1b201d",
+      "hsl": {
+       "h": 144,
+       "s": 0.08,
+       "l": 0.12
+      },
+      "fg": "#c6f19d"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 3,
+     "radius": 0,
+     "height": 40,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Blueprint Map",
+      "Inspect Selected Work",
+      "Send Message"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 4,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 6,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 868
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 3352
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 92,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "general sans"
+    ]
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "13 different font sizes (14, 16, 18, 20, 24, 30, 48, 55, 65, 72, 79, 86, 187).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "body-size",
+   "width": 1440,
+   "message": "Body text is 14px (the size most of the running text is set in).",
+   "fix": "Body copy 16–20px. Map small sizes from blueprints onto your body step.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "few-pictures",
+   "width": 1440,
+   "message": "Only 2 picture(s) on the page (2 photographs, footage or raster images, 0 interface fragments). Drawings in SVG do not count.",
+   "fix": "Find real pictures of the subject's world with scripts/assets.mjs (photographs, archival images, maps, engravings, footage), download them to assets/ and give them room: a hero picture, one per section that has a subject, a full-width band. At least four, usually six to twelve."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "measure",
+   "width": 1440,
+   "message": "Longest paragraph runs about 192 characters per line.",
+   "fix": "Cap paragraphs at 45–75 characters (max-width: 60ch).",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "broken-image",
+   "width": 1440,
+   "message": "Broken image(s): http://localhost:3001/assets/jama-masjid-mosque-delhi.jpg, http://localhost:3001/assets/metcalfe-house-delhi.jpg",
+   "fix": "Fix the URL or replace the asset.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Only 0 element(s) moved while the page loaded and scrolled.",
+   "fix": "Build the motion layer (SKILL.md step 9, references/motion.md): the signature move, an entrance for the parts of every section, feedback on every control, and one moving picture. Transform and opacity only, with a reduced-motion fallback."
+  },
+  {
+   "level": "WARN",
+   "id": "card-rows",
+   "width": 768,
+   "message": "2 rows of identical boxed cards.",
+   "fix": "Vary the composition; not every section is a card grid.",
+   "alsoAt": [
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\desktop-fold.jpg",
+   "pages": [
+    "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\desktop-page-01.jpg",
+    "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\desktop-page-02.jpg"
+   ]
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\tablet-fold.jpg",
+   "pages": [
+    "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\tablet-page-01.jpg",
+    "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\tablet-page-02.jpg"
+   ]
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\mobile-fold.jpg",
+   "pages": [
+    "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\mobile-page-01.jpg",
+    "C:\\Users\\DR4KEN\\Documents\\keld\\.taste-skill\\inspect\\mobile-page-02.jpg"
+   ]
+  }
+ ]
+}

@@ -185,7 +185,7 @@ export default function ParticleField({ activeSection }: ParticleFieldProps) {
     if (!octx) return;
 
     const fontSize = Math.min(W / activeSection.length * 1.4, 160);
-    octx.font = `700 ${fontSize}px 'JetBrains Mono', monospace`;
+    octx.font = `700 ${fontSize}px 'General Sans', -apple-system, sans-serif`;
     octx.textAlign = 'center';
     octx.textBaseline = 'middle';
     octx.fillStyle = '#ffffff';
