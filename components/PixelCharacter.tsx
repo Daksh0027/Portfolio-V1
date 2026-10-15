@@ -72,7 +72,8 @@ export default function PixelCharacter({ pixelSize = 12, inline = false, minimal
     if (inline) {
       // ── INLINE MODE: pop in assembled, stagger rows fast ──────────────────
       gsap.set(pixels, { opacity: 0, scale: 0 });
-      gsap.set([labelRef.current, speechRef.current], { opacity: 0 });
+      if (labelRef.current) gsap.set(labelRef.current, { opacity: 0 });
+      if (speechRef.current) gsap.set(speechRef.current, { opacity: 0 });
 
       const sorted = [...pixels].sort(
         (a, b) => parseInt(a.dataset.row ?? "0") - parseInt(b.dataset.row ?? "0")
@@ -86,13 +87,14 @@ export default function PixelCharacter({ pixelSize = 12, inline = false, minimal
         duration: 0.4,
         stagger: { each: 0.008, from: "start" },
         ease: "back.out(1.5)",
-      })
-        .to(
-          speechRef.current,
-          { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.5)" },
-          "-=0.1"
-        )
-        .to(labelRef.current, { opacity: 1, duration: 0.25 }, "-=0.05");
+      });
+
+      if (speechRef.current) {
+        tl.to(speechRef.current, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2.5)" }, "-=0.1");
+      }
+      if (labelRef.current) {
+        tl.to(labelRef.current, { opacity: 1, duration: 0.25 }, "-=0.05");
+      }
 
       // idle bob
       gsap.to(containerRef.current, {
@@ -106,7 +108,8 @@ export default function PixelCharacter({ pixelSize = 12, inline = false, minimal
     } else {
       // ── SCROLL MODE: pixels assemble as page scrolls ──────────────────────
       gsap.set(pixels, { opacity: 0, scale: 0 });
-      gsap.set([labelRef.current, speechRef.current], { opacity: 0, scale: 0.7 });
+      if (labelRef.current) gsap.set(labelRef.current, { opacity: 0, scale: 0.7 });
+      if (speechRef.current) gsap.set(speechRef.current, { opacity: 0, scale: 0.7 });
 
       const sorted = [...pixels].sort(
         (a, b) => parseInt(a.dataset.row ?? "0") - parseInt(b.dataset.row ?? "0")
@@ -126,9 +129,9 @@ export default function PixelCharacter({ pixelSize = 12, inline = false, minimal
         duration: 0.6,
         stagger: { each: 0.015, from: "start" },
         ease: "back.out(1.4)",
-      }, 0)
-        .to(labelRef.current,   { opacity: 1, y: 0, scale: 1, duration: 0.3 }, 0.65)
-        .to(speechRef.current,  { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2)" }, 0.82);
+      }, 0);
+      if (labelRef.current) tl.to(labelRef.current, { opacity: 1, y: 0, scale: 1, duration: 0.3 }, 0.65);
+      if (speechRef.current) tl.to(speechRef.current, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2)" }, 0.82);
 
       gsap.to(containerRef.current, {
         y: -6, duration: 1.4, repeat: -1, yoyo: true, ease: "sine.inOut",
