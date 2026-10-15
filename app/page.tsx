@@ -3,9 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
-import PixelCharacter from "@/components/PixelCharacter";
 import PixelCat from "@/components/PixelCat";
 import Marquee from "@/components/Marquee";
 
@@ -13,7 +11,6 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// ─── Scramble hook ────────────────────────────────────────────────────────────
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#";
 
 function useScramble(target: string, trigger: boolean, delay = 0) {
@@ -43,7 +40,6 @@ function useScramble(target: string, trigger: boolean, delay = 0) {
   return display;
 }
 
-// ─── Animated counter ─────────────────────────────────────────────────────────
 function AnimatedCounter({ value, label }: { value: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -62,10 +58,8 @@ function AnimatedCounter({ value, label }: { value: string; label: string }) {
 
   useEffect(() => {
     if (!visible) return;
-    // numeric value? tick up
     const num = parseInt(value.replace(/\D/g, ""), 10);
     if (isNaN(num)) {
-      // text — just scramble it
       let iter = 0;
       const iv = setInterval(() => {
         iter++;
@@ -79,7 +73,6 @@ function AnimatedCounter({ value, label }: { value: string; label: string }) {
       }, 35);
       return () => clearInterval(iv);
     }
-    // numeric counter
     const prefix = value.replace(/[\d,]+.*/, "");
     const suffix2 = value.replace(/^[^0-9]*[\d,]+/, "");
     let start = 0;
@@ -98,18 +91,16 @@ function AnimatedCounter({ value, label }: { value: string; label: string }) {
       <div className="stat-number text-3xl md:text-5xl font-bold text-[#c6f19d]" style={{ fontVariantNumeric: "tabular-nums" }}>
         {display}
       </div>
-      <p className="mt-3 text-sm text-[#f2f5f3]">{label}</p>
+      <p className="mt-3 text-sm text-[#829087]">{label}</p>
     </div>
   );
 }
-
 
 export default function Portfolio() {
   const monumentRef = useRef<HTMLHeadingElement>(null);
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroVisible, setHeroVisible] = useState(false);
-
   const [catPixelSize, setCatPixelSize] = useState(9);
   const [catTransform, setCatTransform] = useState({ x: 0, y: 0 });
 
@@ -119,7 +110,6 @@ export default function Portfolio() {
     200
   );
 
-  // Position the pixel cat on top of the first "D" in the name
   useEffect(() => {
     if (typeof window === "undefined") return;
     const h1 = monumentRef.current;
@@ -127,34 +117,17 @@ export default function Portfolio() {
 
     const positionCat = () => {
       const fontSize = parseFloat(getComputedStyle(h1).fontSize);
-      // Scale cat pixel size with the font
       const px = Math.max(4, Math.round(fontSize / 16));
       setCatPixelSize(px);
-
-      // The cat is 12 cols wide × 18 rows tall
-      const catW = 12 * px;
       const catH = 18 * px;
-
-      // The "D" cap height is roughly 0.72 × fontSize
-      // The h1 has leading-[0.88], so line height = 0.88 × fontSize
-      // We want the cat's bottom to sit right at the top of the D's cap,
-      // slightly overlapping. Position so cat bottom ≈ cap top.
-      // The D starts at the top of the line box. With leading 0.88, the
-      // gap above cap height ≈ (0.88 - 0.72) / 2 × fontSize ≈ 0.08 × fontSize
-      const capTopOffset = (0.88 - 0.72) / 2 * fontSize; // gap above the D
-      // Place cat so its bottom edge sits just above the D cap top,
-      // with a slight overlap for the "sitting on" effect
-      const y = capTopOffset - catH + px * 2; // overlap 2 pixels into the D
-      // Center the cat horizontally on the D's left stroke.
-      // The D's stroke starts near x=0 of the h1; center cat over first ~2 strokes
-      const x = px * 2; // nudge right so cat sits on the D, not floating left
-
+      const capTopOffset = (0.88 - 0.72) / 2 * fontSize;
+      const y = capTopOffset - catH + px * 2;
+      const x = px * 2;
       setCatTransform({ x, y });
     };
 
     positionCat();
     window.addEventListener("resize", positionCat);
-    // Re-measure after fonts load
     const fontTimer = setTimeout(positionCat, 300);
     return () => {
       window.removeEventListener("resize", positionCat);
@@ -165,9 +138,7 @@ export default function Portfolio() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Hero entrance animation
     const ctx = gsap.context(() => {
-      // Stagger hero content
       gsap.from(".animate-rise", {
         y: 32,
         opacity: 0,
@@ -176,7 +147,6 @@ export default function Portfolio() {
         ease: "power3.out"
       });
 
-      // Monument name reveal
       if (monumentRef.current) {
         gsap.from(monumentRef.current, {
           y: 40,
@@ -187,12 +157,9 @@ export default function Portfolio() {
         });
       }
 
-      // Section scroll animations
       sectionsRef.current.forEach((section) => {
         if (!section) return;
-        
         const elements = section.querySelectorAll(".animate-rise, .animate-rise-1, .animate-rise-2, .animate-rise-3");
-        
         gsap.from(elements, {
           scrollTrigger: {
             trigger: section,
@@ -208,7 +175,6 @@ export default function Portfolio() {
         });
       });
 
-      // Stats counter animation
       const statElements = document.querySelectorAll(".stat-number");
       statElements.forEach((stat) => {
         gsap.from(stat, {
@@ -223,9 +189,6 @@ export default function Portfolio() {
         });
       });
 
-
-
-      // Section heading line wipe — a green underline sweeps in
       document.querySelectorAll("h2[data-wipe]").forEach((heading) => {
         gsap.fromTo(
           heading,
@@ -243,88 +206,20 @@ export default function Portfolio() {
         );
       });
 
-      // 3-D tilt on project cards (mouse-follow)
-      const cards = document.querySelectorAll("[data-project-card]");
-      cards.forEach((card) => {
-        const el = card as HTMLElement;
-        el.addEventListener("mousemove", (e: MouseEvent) => {
-          const rect = el.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          const rx = ((e.clientY - cy) / (rect.height / 2)) * 6;
-          const ry = ((e.clientX - cx) / (rect.width / 2)) * -6;
-          gsap.to(el, {
-            rotateX: rx,
-            rotateY: ry,
-            transformPerspective: 800,
-            duration: 0.4,
-            ease: "power2.out",
-          });
-        });
-        el.addEventListener("mouseleave", () => {
-          gsap.to(el, {
-            rotateX: 0,
-            rotateY: 0,
-            duration: 0.6,
-            ease: "elastic.out(1, 0.4)",
-          });
-        });
-      });
-
-
-      const magneticButtons = document.querySelectorAll('[data-magnetic]');
-      magneticButtons.forEach((button) => {
-        const element = button as HTMLElement;
-        
-        element.addEventListener('mousemove', (e: MouseEvent) => {
-          const rect = element.getBoundingClientRect();
-          const x = e.clientX - rect.left - rect.width / 2;
-          const y = e.clientY - rect.top - rect.height / 2;
-          
-          gsap.to(element, {
-            x: x * 0.3,
-            y: y * 0.3,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        });
-        
-        element.addEventListener('mouseleave', () => {
-          gsap.to(element, {
-            x: 0,
-            y: 0,
-            duration: 0.4,
-            ease: "elastic.out(1, 0.5)"
-          });
-        });
-      });
-
-      // Email signature effect - characters split and animate
       const emailLink = document.querySelector('[data-email]');
       if (emailLink) {
         emailLink.addEventListener('mouseenter', () => {
-          gsap.to(emailLink, {
-            scale: 1.02,
-            duration: 0.3,
-            ease: "power2.out"
-          });
+          gsap.to(emailLink, { scale: 1.02, duration: 0.3, ease: "power2.out" });
         });
-        
         emailLink.addEventListener('mouseleave', () => {
-          gsap.to(emailLink, {
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.out"
-          });
+          gsap.to(emailLink, { scale: 1, duration: 0.3, ease: "power2.out" });
         });
       }
-
     });
 
     return () => ctx.revert();
   }, []);
 
-  // trigger hero scramble once
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
@@ -344,10 +239,8 @@ export default function Portfolio() {
 
   return (
     <div className="w-full bg-[#0c0e0d] text-[#f2f5f3]">
-      <CustomCursor />
       <ScrollProgress />
-      {/* TOP NAVIGATION BAR */}
-      <header className="sticky top-0 z-50 w-full bg-[#0c0e0d] px-6 md:px-12 py-5 flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full bg-[#0c0e0d]/95 backdrop-blur-sm border-b border-[#1b201d] px-6 md:px-12 py-5 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <a href="#hero" className="text-base font-semibold tracking-tight text-[#f2f5f3] hover:text-[#c6f19d] transition-colors">
             Daksh Shastri
@@ -371,22 +264,20 @@ export default function Portfolio() {
       </header>
 
       <main className="w-full">
-        {/* HERO SECTION — THE NAME AS A MONUMENT */}
+        {/* HERO */}
         <section id="hero" ref={heroRef} className="min-h-[92dvh] px-6 md:px-12 flex flex-col justify-between pt-12 pb-16">
           <div className="max-w-3xl">
-            <p className="text-xl md:text-2xl text-[#f2f5f3] font-normal leading-relaxed animate-rise" style={{ fontVariantNumeric: "normal" }}>
+            <p className="text-xl md:text-2xl text-[#f2f5f3] font-normal leading-relaxed animate-rise">
               {heroTagline}
             </p>
             <div className="mt-8 flex flex-wrap gap-4 items-center animate-rise-1">
               <a
-                data-magnetic
                 href="#work"
                 className="px-6 py-3 bg-[#c6f19d] text-[#0c0e0d] text-sm font-semibold tracking-wide hover:bg-[#ffffff] transition-colors"
               >
                 Inspect Selected Work
               </a>
               <a
-                data-magnetic
                 href="#contact"
                 className="px-6 py-3 bg-[#141715] text-[#f2f5f3] text-sm font-medium hover:bg-[#1b201d] transition-colors"
               >
@@ -396,11 +287,8 @@ export default function Portfolio() {
           </div>
 
           <div className="mt-16 md:mt-24 flex items-end gap-6 md:gap-10">
-            {/* ── name monument ── */}
             <div className="relative">
-              {/* 8-bit cat sitting on top of the D, tail hanging down */}
               <div
-                id="cat-perch"
                 style={{
                   position: "absolute",
                   top: 0,
@@ -416,24 +304,15 @@ export default function Portfolio() {
                 DAKSH<br />SHASTRI
               </h1>
             </div>
-
-            {/* ── inline pixel character ── */}
-            <div className="hidden md:flex pb-2" style={{ alignSelf: "flex-end" }}>
-              <PixelCharacter
-                pixelSize={10}
-                inline={true}
-              />
-            </div>
           </div>
         </section>
 
-        {/* MARQUEE DIVIDER */}
         <Marquee
           items={["React", "Next.js", "TypeScript", "C++", "Competitive Programming", "BPIT Delhi", "Frontend Engineering", "Node.js", "Appwrite", "MySQL"]}
           speed={30}
         />
 
-        {/* SECTION 1: INTRO & MEASURABLE FACTS */}
+        {/* INTRO & STATS */}
         <section ref={addToSectionsRef} className="px-6 md:px-12 py-24 bg-[#141715]">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
             <div className="md:col-span-6 animate-rise">
@@ -456,7 +335,6 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Editorial Statistics Grid (Unboxed) */}
           <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-12 animate-rise-2">
             <AnimatedCounter value="CF Pupil" label="Codeforces Competitive Rating" />
             <AnimatedCounter value="Rank 222" label="LeetCode Weekly Contest 451 (Global)" />
@@ -465,14 +343,14 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* ACCENT MARQUEE */}
         <Marquee
           items={["Selected Work", "Open Source", "Production Interfaces", "Algorithms", "ReSpectro", "Gemini Clone", "Python Systems", "Live Demos Available"]}
           speed={22}
           accent
         />
 
-        {/* SECTION 3: WORK — SELECTED PROJECTS WITH INTERFACE FRAGMENTS */}        <section ref={addToSectionsRef} id="work" className="px-6 md:px-12 py-24 bg-[#141715]">
+        {/* WORK */}
+        <section ref={addToSectionsRef} id="work" className="px-6 md:px-12 py-24 bg-[#141715]">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4 animate-rise">
             <div>
               <h2 data-wipe className="text-[clamp(2.5rem,6vw,6rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
@@ -500,10 +378,9 @@ export default function Portfolio() {
             </a>
           </div>
 
-          {/* Asymmetric Project Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Featured Project 1: ReSpectro (Spans 12 columns) */}
-            <div data-project-card className="lg:col-span-12 bg-[#0c0e0d] p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center animate-rise-1">
+            {/* ReSpectro */}
+            <div className="lg:col-span-12 bg-[#0c0e0d] p-8 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center animate-rise-1 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
               <div className="md:col-span-6 flex flex-col justify-between h-full">
                 <div>
                   <h3 className="text-3xl font-bold text-[#f2f5f3]">
@@ -522,7 +399,6 @@ export default function Portfolio() {
                 </div>
                 <div className="mt-8">
                   <a
-                    data-magnetic
                     href="https://respectro.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -533,8 +409,7 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Interface Fragment for ReSpectro */}
-              <div data-ui="respectro-preview" className="md:col-span-6 bg-[#141715] p-5">
+              <div className="md:col-span-6 bg-[#141715] p-5">
                 <div className="flex items-center justify-between pb-3 text-sm text-[#829087]">
                   <span>respectro.vercel.app</span>
                   <span className="text-[#c6f19d]">Streaming Live</span>
@@ -552,8 +427,8 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Project 2: Gemini Clone (6 columns) */}
-            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-2">
+            {/* Gemini Clone */}
+            <div className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-2 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
               <div>
                 <h3 className="text-2xl font-bold text-[#f2f5f3]">
                   Gemini Clone <span className="text-sm font-normal text-[#829087] ml-2">2025–Present</span>
@@ -568,8 +443,7 @@ export default function Portfolio() {
                   <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">CSS</span>
                 </div>
 
-                {/* Interface Fragment for Gemini */}
-                <div data-ui="gemini-preview" className="mt-6 bg-[#141715] p-4 text-sm">
+                <div className="mt-6 bg-[#141715] p-4 text-sm">
                   <div className="text-sm text-[#829087] mb-2">Prompt Input Stream</div>
                   <p className="text-sm text-[#f2f5f3] bg-[#0c0e0d] p-3">
                     Analyze time complexity of topological sorting on directed acyclic graph.
@@ -578,7 +452,6 @@ export default function Portfolio() {
               </div>
               <div className="mt-8 pt-6">
                 <a
-                  data-magnetic
                   href="https://bot-clone.netlify.app/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -589,8 +462,8 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Project 3: Library System (6 columns) */}
-            <div data-project-card className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-3">
+            {/* Library System */}
+            <div className="lg:col-span-6 bg-[#0c0e0d] p-8 flex flex-col justify-between animate-rise-3 border border-[#1b201d] hover:border-[#2a302d] transition-colors">
               <div>
                 <h3 className="text-2xl font-bold text-[#f2f5f3]">
                   Library System <span className="text-sm font-normal text-[#829087] ml-2">2024</span>
@@ -605,8 +478,7 @@ export default function Portfolio() {
                   <span className="text-sm px-3 py-1 bg-[#1b201d] text-[#f2f5f3]">CLI</span>
                 </div>
 
-                {/* Interface Fragment for Library Engine */}
-                <div data-ui="library-preview" className="mt-6 bg-[#141715] p-4 text-sm">
+                <div className="mt-6 bg-[#141715] p-4 text-sm">
                   <div className="text-sm text-[#829087] mb-2">SQL Transaction Schema</div>
                   <pre className="text-sm text-[#c6f19d] bg-[#0c0e0d] p-3 overflow-x-auto">
                     <code>SELECT id, stock FROM inventory WHERE branch_id = 1;</code>
@@ -627,13 +499,12 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* MARQUEE DIVIDER */}
         <Marquee
           items={["Verified Record", "Competitive Programming", "Technical Competencies", "Certifications", "Hackathons", "CTF Contests", "Academic Background"]}
           speed={26}
         />
 
-        {/* SECTION 5: TECHNICAL ARSENAL & CREDENTIALS TABLE */}
+        {/* CREDENTIALS */}
         <section ref={addToSectionsRef} id="credentials" className="px-6 md:px-12 py-24 bg-[#141715]">
           <div className="mb-16 animate-rise">
             <h2 data-wipe className="text-[clamp(2.5rem,5vw,5rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
@@ -653,63 +524,61 @@ export default function Portfolio() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 animate-rise-1">
-            {/* Table 1: Competencies */}
             <div>
               <h3 className="text-xl font-bold text-[#f2f5f3] mb-6">Technical Competencies</h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base font-medium text-[#f2f5f3]">Languages</span>
-                  <span className="text-sm text-[#f2f5f3]">C++, C, C#, Python, JavaScript, TypeScript</span>
+                  <span className="text-sm text-[#829087]">C++, C, C#, Python, JavaScript, TypeScript</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base font-medium text-[#f2f5f3]">Frontend Architecture</span>
-                  <span className="text-sm text-[#f2f5f3]">React, Next.js, Vite, Tailwind CSS, HTML & CSS</span>
+                  <span className="text-sm text-[#829087]">React, Next.js, Vite, Tailwind CSS, HTML & CSS</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base font-medium text-[#f2f5f3]">Backend & Storage</span>
-                  <span className="text-sm text-[#f2f5f3]">Node.js, Django, Flask, MySQL, Appwrite</span>
+                  <span className="text-sm text-[#829087]">Node.js, Django, Flask, MySQL, Appwrite</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base font-medium text-[#f2f5f3]">DevOps & Tooling</span>
-                  <span className="text-sm text-[#f2f5f3]">Git, GitHub, Vercel, Netlify, Linux</span>
+                  <span className="text-sm text-[#829087]">Git, GitHub, Vercel, Netlify, Linux</span>
                 </div>
               </div>
             </div>
 
-            {/* Table 2: Milestones */}
             <div>
               <h3 className="text-xl font-bold text-[#f2f5f3] mb-6">Contest & Achievement Record</h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base text-[#f2f5f3]">LeetCode Weekly Contest 451</span>
                   <span className="text-sm font-semibold text-[#c6f19d]">Global Rank 222</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base text-[#f2f5f3]">CodeChef Starters 190</span>
                   <span className="text-sm font-semibold text-[#c6f19d]">Global Rank 295</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base text-[#f2f5f3]">Codeforces</span>
                   <span className="text-sm font-semibold text-[#c6f19d]">Pupil Division</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base text-[#f2f5f3]">Smart India Hackathon &apos;24</span>
-                  <span className="text-sm text-[#f2f5f3]">Qualified to Mentor Round</span>
+                  <span className="text-sm text-[#829087]">Qualified to Mentor Round</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base text-[#f2f5f3]">Cyber Security CTF at MAIT</span>
-                  <span className="text-sm text-[#f2f5f3]">13th Place</span>
+                  <span className="text-sm text-[#829087]">13th Place</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-[#0c0e0d]">
+                <div className="flex justify-between items-center p-4 bg-[#0c0e0d] border border-[#1b201d]">
                   <span className="text-base text-[#f2f5f3]">IP Addressing & Subnetting</span>
-                  <span className="text-sm text-[#f2f5f3]">GeeksforGeeks Certification</span>
+                  <span className="text-sm text-[#829087]">GeeksforGeeks Certification</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* SECTION 6: CONTACT — EMAIL AS DISPLAY TYPE */}
+        {/* CONTACT */}
         <section ref={addToSectionsRef} id="contact" className="min-h-[85dvh] px-6 md:px-12 py-24 bg-[#0c0e0d] flex flex-col justify-between">
           <div className="animate-rise">
             <p className="text-xl md:text-2xl text-[#f2f5f3] max-w-xl font-normal leading-relaxed">

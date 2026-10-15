@@ -30,19 +30,6 @@ body {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
   min-height: 100dvh;
-  cursor: none;
-}
-
-/* Show default cursor on mobile */
-@media (max-width: 768px) {
-  body {
-    cursor: auto;
-  }
-  
-  .custom-cursor,
-  .custom-cursor-dot {
-    display: none !important;
-  }
 }
 
 @keyframes enterRise {
@@ -145,18 +132,12 @@ button:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
-  cursor: none;
 }
 
 /* Smooth link hover effects */
 a {
   position: relative;
   transition: color 0.3s ease;
-  cursor: none;
-}
-
-button {
-  cursor: none;
 }
 
 /* Parallax container */
