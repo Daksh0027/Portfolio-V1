@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollProgress from "@/components/ScrollProgress";
 import Marquee from "@/components/Marquee";
 import PixelCharacter from "@/components/PixelCharacter";
+import ParticleField from "@/components/ParticleField";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -217,8 +218,9 @@ export default function Portfolio() {
 
   return (
     <div className="w-full bg-[#0c0e0d] text-[#f2f5f3]">
+      <ParticleField />
       <ScrollProgress />
-      <header className="sticky top-0 z-50 w-full bg-[#0c0e0d]/95 backdrop-blur-sm border-b border-[#1b201d] px-6 md:px-12 py-5 flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full bg-[#0c0e0d]/90 backdrop-blur-md border-b border-[#1b201d] px-6 md:px-12 py-5 flex items-center justify-between relative">
         <div className="flex items-center gap-6">
           <a href="#hero" className="text-base font-semibold tracking-tight text-[#f2f5f3] hover:text-[#c6f19d] transition-colors">
             Daksh Shastri
@@ -241,7 +243,7 @@ export default function Portfolio() {
         </nav>
       </header>
 
-      <main className="w-full">
+      <main className="w-full relative z-10">
         {/* HERO */}
         <section id="hero" ref={heroRef} className="hero-grid relative min-h-[82dvh] overflow-hidden px-6 md:px-12 pt-10 pb-12 md:pt-16">
           <div className="hero-kicker flex items-center justify-between border-b border-[#2a302d] pb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#829087]">
@@ -286,7 +288,7 @@ export default function Portfolio() {
         />
 
         {/* INTRO & STATS */}
-        <section ref={addToSectionsRef} className="px-6 md:px-12 py-24 bg-[#141715]">
+        <section ref={addToSectionsRef} className="px-6 md:px-12 py-24 bg-[#141715]/80 backdrop-blur-sm">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
             <div className="md:col-span-6 animate-rise">
               <h2 data-wipe className="text-[clamp(2.25rem,4.5vw,4.5rem)] font-bold tracking-tight leading-[1.02] text-[#f2f5f3]"
@@ -323,7 +325,7 @@ export default function Portfolio() {
         />
 
         {/* WORK */}
-        <section ref={addToSectionsRef} id="work" className="px-6 md:px-12 py-24 bg-[#141715]">
+        <section ref={addToSectionsRef} id="work" className="px-6 md:px-12 py-24 bg-[#141715]/80 backdrop-blur-sm">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4 animate-rise">
             <div>
               <h2 data-wipe className="text-[clamp(2.5rem,6vw,6rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
@@ -478,7 +480,7 @@ export default function Portfolio() {
         />
 
         {/* CREDENTIALS */}
-        <section ref={addToSectionsRef} id="credentials" className="px-6 md:px-12 py-24 bg-[#141715]">
+        <section ref={addToSectionsRef} id="credentials" className="px-6 md:px-12 py-24 bg-[#141715]/80 backdrop-blur-sm">
           <div className="mb-16 animate-rise">
             <h2 data-wipe className="text-[clamp(2.5rem,5vw,5rem)] font-bold tracking-tight text-[#f2f5f3] leading-none"
               style={{
