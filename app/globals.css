@@ -30,6 +30,7 @@ body {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
   min-height: 100dvh;
+  cursor: auto;
 }
 
 @keyframes enterRise {

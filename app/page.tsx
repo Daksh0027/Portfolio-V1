@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ScrollProgress from "@/components/ScrollProgress";
-import PixelCat from "@/components/PixelCat";
 import Marquee from "@/components/Marquee";
 
 if (typeof window !== "undefined") {
@@ -101,39 +100,11 @@ export default function Portfolio() {
   const sectionsRef = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroVisible, setHeroVisible] = useState(false);
-  const [catPixelSize, setCatPixelSize] = useState(9);
-  const [catTransform, setCatTransform] = useState({ x: 0, y: 0 });
-
   const heroTagline = useScramble(
     "Frontend developer and competitive programmer building load-bearing web systems in Delhi.",
     heroVisible,
     200
   );
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const h1 = monumentRef.current;
-    if (!h1) return;
-
-    const positionCat = () => {
-      const fontSize = parseFloat(getComputedStyle(h1).fontSize);
-      const px = Math.max(4, Math.round(fontSize / 16));
-      setCatPixelSize(px);
-      const catH = 18 * px;
-      const capTopOffset = (0.88 - 0.72) / 2 * fontSize;
-      const y = capTopOffset - catH + px * 2;
-      const x = px * 2;
-      setCatTransform({ x, y });
-    };
-
-    positionCat();
-    window.addEventListener("resize", positionCat);
-    const fontTimer = setTimeout(positionCat, 300);
-    return () => {
-      window.removeEventListener("resize", positionCat);
-      clearTimeout(fontTimer);
-    };
-  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -265,7 +236,7 @@ export default function Portfolio() {
 
       <main className="w-full">
         {/* HERO */}
-        <section id="hero" ref={heroRef} className="min-h-[92dvh] px-6 md:px-12 flex flex-col justify-between pt-12 pb-16">
+        <section id="hero" ref={heroRef} className="min-h-[78dvh] px-6 md:px-12 flex flex-col justify-start pt-16 pb-14">
           <div className="max-w-3xl">
             <p className="text-xl md:text-2xl text-[#f2f5f3] font-normal leading-relaxed animate-rise">
               {heroTagline}
@@ -286,24 +257,10 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="mt-16 md:mt-24 flex items-end gap-6 md:gap-10">
-            <div className="relative">
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  zIndex: 10,
-                  transform: `translate(${catTransform.x}px, ${catTransform.y}px)`,
-                }}
-              >
-                <PixelCat pixelSize={catPixelSize} />
-              </div>
-
-              <h1 ref={monumentRef} className="text-[clamp(3.5rem,13vw,12.5rem)] font-bold tracking-[-0.04em] leading-[0.88] text-[#f2f5f3] select-none break-words">
-                DAKSH<br />SHASTRI
-              </h1>
-            </div>
+          <div className="mt-24 md:mt-28 flex items-end gap-6 md:gap-10">
+            <h1 ref={monumentRef} className="text-[clamp(3.5rem,13vw,12.5rem)] font-bold tracking-[-0.04em] leading-[0.88] text-[#f2f5f3] select-none break-words">
+              DAKSH<br />SHASTRI
+            </h1>
           </div>
         </section>
 
