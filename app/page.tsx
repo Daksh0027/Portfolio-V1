@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import OrangeCanvas from "@/components/OrangeCanvas";
+import AmberFlow from "@/components/AmberFlow";
 import Capabilities from "@/components/Capabilities";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
@@ -207,7 +207,7 @@ export default function Portfolio() {
 
   return (
     <div ref={pageRef} className="portfolio-page">
-      <OrangeCanvas />
+      <AmberFlow />
       <header className="site-nav" data-nav>
         <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">
           <span className="site-wordmark-initials" aria-hidden="true">DS</span>
