@@ -257,7 +257,7 @@ export default function Portfolio() {
           </div>
           <h1 id="hero-title" className="hero-name" data-hero-word>Daksh Shastri</h1>
           <div className="hero-content" data-hero-copy>
-            <p className="hero-statement">Building digital experiences<br />with logic and feeling.</p>
+            <p className="hero-statement">Thoughtful interfaces for the real world.</p>
             <div className="hero-meta">
               <span>© 2026</span>
               <span>Based in Delhi, India</span>
@@ -268,7 +268,8 @@ export default function Portfolio() {
 
         <section id="works" className="works-section" aria-labelledby="works-title">
           <div className="works-heading" data-reveal>
-            <h2 id="works-title">Selected work</h2>
+            <h2 id="works-title">Selected Works</h2>
+            <p>Useful things, built with care.</p>
           </div>
           <div className="works-index" aria-hidden="true">
             {projects.map((project) => <span key={project.name}>{project.category}</span>)}
