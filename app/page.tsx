@@ -217,6 +217,7 @@ export default function Portfolio() {
           <a href="#works">Work</a>
           <a href="#capabilities">Services</a>
           <a href="#about">About</a>
+          <a href="#testimonials">Testimonials</a>
           <a href="#contact">Connect</a>
         </nav>
         <button
@@ -243,6 +244,7 @@ export default function Portfolio() {
           <a href="#works" onClick={closeMenu}>Selected work</a>
           <a href="#capabilities" onClick={closeMenu}>Services</a>
           <a href="#about" onClick={closeMenu}>About</a>
+          <a href="#testimonials" onClick={closeMenu}>Testimonials</a>
           <a href="#contact" onClick={closeMenu}>Connect</a>
         </nav>
       </header>
@@ -251,6 +253,7 @@ export default function Portfolio() {
         <section className="hero-section" aria-labelledby="hero-title">
           <FallingLineLights />
           <div className="hero-grid-lines" aria-hidden="true">
+            <span className="hero-grid-line" />
             <span className="hero-grid-line" />
             <span className="hero-grid-line" />
             <span className="hero-grid-line" />
@@ -376,6 +379,7 @@ export default function Portfolio() {
           <a href="#works">Work</a>
           <a href="#capabilities">Services</a>
           <a href="#about">About</a>
+          <a href="#testimonials">Testimonials</a>
           <a href="#contact">Connect</a>
         </nav>
         <a className="footer-email" href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a>

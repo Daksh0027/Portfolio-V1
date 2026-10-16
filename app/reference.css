@@ -2237,3 +2237,40 @@
     width: 76%;
   }
 }
+
+/* Exact reference hero proportions */
+.portfolio-page > canvas.hero-glow {
+  z-index: 1;
+}
+
+.hero-section {
+  background: transparent;
+}
+
+.hero-grid-lines {
+  padding: 0 19%;
+}
+
+.hero-nav-links {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.hero-nav-links a,
+.hero-nav-links a:first-child {
+  justify-self: center;
+}
+
+.hero-nav-links a:last-child {
+  justify-self: end;
+}
+
+@media (min-width: 761px) {
+  .hero-name {
+    transform: scaleX(1.18);
+    transform-origin: left top;
+  }
+
+  .hero-content {
+    bottom: clamp(78px, 15vh, 130px);
+  }
+}
