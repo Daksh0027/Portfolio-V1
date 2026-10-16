@@ -2172,3 +2172,68 @@
     font-size: clamp(4rem, 16vw, 7rem);
   }
 }
+
+/* Full-height reference hero */
+@media (min-width: 761px) {
+  .hero-section {
+    min-height: 100svh;
+    justify-content: flex-start;
+    background: #000;
+  }
+
+  .hero-name {
+    display: block;
+    top: 22px;
+    left: 4px;
+    width: max-content;
+    padding: 0;
+    font-size: clamp(4rem, 10.4vw, 10rem);
+    letter-spacing: -.09em;
+    line-height: .84;
+    text-align: left;
+  }
+
+  .hero-content {
+    top: auto;
+    bottom: clamp(88px, 20vh, 180px);
+    left: 19%;
+    width: min(560px, 58%);
+    gap: 10px;
+  }
+
+  .hero-statement {
+    max-width: 520px;
+    font-size: clamp(23px, 2.6vw, 37px);
+    letter-spacing: -.055em;
+    line-height: .95;
+  }
+
+  .hero-meta {
+    width: min(500px, 100%);
+    color: rgba(255,255,255,.85);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-section {
+    min-height: max(680px, 100svh);
+    background: #000;
+  }
+
+  .hero-name {
+    display: block;
+    top: 48px;
+    left: 12px;
+    width: max-content;
+    padding: 0;
+    font-size: clamp(3.4rem, 17vw, 7rem);
+    line-height: .84;
+  }
+
+  .hero-content {
+    top: auto;
+    bottom: 14vh;
+    left: 12%;
+    width: 76%;
+  }
+}

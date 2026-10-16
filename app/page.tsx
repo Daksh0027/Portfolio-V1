@@ -215,9 +215,9 @@ export default function Portfolio() {
         </a>
         <nav className="hero-nav-links" aria-label="Main navigation">
           <a href="#works">Work</a>
-          <a href="#capabilities">Capabilities</a>
+          <a href="#capabilities">Services</a>
           <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#contact">Connect</a>
         </nav>
         <button
           className={`menu-button${menuOpen ? " is-open" : ""}`}
@@ -241,9 +241,9 @@ export default function Portfolio() {
           }}
         >
           <a href="#works" onClick={closeMenu}>Selected work</a>
-          <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
+          <a href="#capabilities" onClick={closeMenu}>Services</a>
           <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
+          <a href="#contact" onClick={closeMenu}>Connect</a>
         </nav>
       </header>
 
@@ -374,9 +374,9 @@ export default function Portfolio() {
         <a className="footer-name" href="#top" aria-label="Daksh Shastri, back to top">Daksh<br />Shastri</a>
         <nav className="footer-nav" aria-label="Footer navigation">
           <a href="#works">Work</a>
-          <a href="#capabilities">Capabilities</a>
+          <a href="#capabilities">Services</a>
           <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#contact">Connect</a>
         </nav>
         <a className="footer-email" href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a>
         <div className="footer-bottom">
