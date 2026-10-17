@@ -205,6 +205,25 @@ export default function Portfolio() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    const title = document.querySelector<HTMLElement>(".hero-name");
+    if (!title) return;
+
+    const fit = () => {
+      title.style.fontSize = "10px";
+      const width = title.scrollWidth;
+      if (width > 0) {
+        const available = title.parentElement!.clientWidth - 4;
+        title.style.fontSize = `${(10 * available) / width}px`;
+      }
+    };
+
+    fit();
+    window.addEventListener("resize", fit);
+    document.fonts?.ready.then(fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
   return (
     <div ref={pageRef} className="portfolio-page">
       <AmberFlow />
