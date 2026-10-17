@@ -1327,13 +1327,79 @@
 }
 
 .works-section {
-  z-index: 2;
-  padding: clamp(90px, 12vw, 160px) var(--page-gutter) clamp(110px, 14vw, 190px);
-  background:
-    radial-gradient(ellipse 110% 520px at 78% -14px, rgba(255, 92, 0, 0.92) 0, rgba(255, 150, 82, 0.5) 43%, transparent 100%),
-    radial-gradient(ellipse 90% 430px at 6% 10px, rgba(180, 54, 9, 0.52) 0, rgba(226, 112, 51, 0.28) 47%, transparent 100%),
-    #f5f4f1;
-  color: #080808;
+  z-index: 10;
+  margin-top: calc(-1 * clamp(40px, 3.5vw, 56px));
+  border-radius: 40px 40px 0 0;
+  background: #0c0c0c;
+  color: #f7f7f5;
+}
+
+@media (min-width: 640px) {
+  .works-section {
+    border-radius: 50px 50px 0 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .works-section {
+    border-radius: 60px 60px 0 0;
+  }
+}
+
+@layer components {
+  .works-sticky-card {
+    top: calc(6rem + var(--card-offset, 0px));
+  }
+
+  @media (min-width: 768px) {
+    .works-sticky-card {
+      top: calc(8rem + var(--card-offset, 0px));
+    }
+  }
+
+  .works-card-number {
+    font-size: clamp(56px, 8vw, 120px);
+    font-weight: 650;
+    letter-spacing: -0.08em;
+    line-height: 0.8;
+  }
+
+  .works-card-category {
+    display: block;
+    color: #a6a6a6;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  .works-card-name {
+    margin-top: 6px;
+    font-size: clamp(24px, 3.4vw, 48px);
+    font-weight: 650;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .works-card-cta {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 12px 24px;
+    border: 2px solid #d7e2ea;
+    border-radius: 9999px;
+    color: #f7f7f5;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    transition: background 200ms ease, color 200ms ease;
+  }
+
+  .works-card-cta:hover {
+    background: #f7f7f5;
+    color: #0c0c0c;
+  }
 }
 
 .works-heading {
@@ -2265,7 +2331,6 @@
 
 .works-section {
   z-index: 2;
-  background: transparent;
 }
 
 @media (max-width: 760px) {

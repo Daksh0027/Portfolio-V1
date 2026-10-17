@@ -5,39 +5,45 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AmberFlow from "@/components/AmberFlow";
 import Capabilities from "@/components/Capabilities";
+import StickyWorks from "@/components/StickyWorks";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
+const stickyProjects: {
+  name: string;
+  category: string;
+  url: string;
+  images: [string, string, string];
+}[] = [
   {
     name: "ReSpectro",
-    category: "Entertainment",
-    year: "2025",
+    category: "Client",
     url: "https://respectro.vercel.app/",
-    description:
-      "A movie and series discovery platform with live TMDB data, Clerk authentication, and Appwrite-powered watchlists.",
-    technologies: "React · Vite · Appwrite · TMDB",
-    preview: "respectro",
+    images: [
+      "https://images.pexels.com/photos/1790556/pexels-photo-1790556.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/7991501/pexels-photo-7991501.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/8263369/pexels-photo-8263369.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    ],
   },
   {
     name: "Gemini Clone",
-    category: "AI / Productivity",
-    year: "2025",
+    category: "Personal",
     url: "https://bot-clone.netlify.app/",
-    description:
-      "A responsive AI interface with live Gemini API responses, streaming output, and conversation history.",
-    technologies: "React · Gemini API · CSS",
-    preview: "gemini",
+    images: [
+      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/14314636/pexels-photo-14314636.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/25626449/pexels-photo-25626449.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    ],
   },
   {
     name: "Library System",
-    category: "Operations / CLI",
-    year: "2024",
+    category: "Client",
     url: "https://github.com/Daksh0027",
-    description:
-      "A Python and MySQL management system for inventory, sales records, and store operations.",
-    technologies: "Python · MySQL",
-    preview: "library",
+    images: [
+      "https://images.pexels.com/photos/5225982/pexels-photo-5225982.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/30752162/pexels-photo-30752162.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/8045884/pexels-photo-8045884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    ],
   },
 ];
 
@@ -47,64 +53,6 @@ const socials = [
   { label: "CodeChef", href: "https://www.codechef.com/users/gam_pearl_90" },
   { label: "Codeforces", href: "https://codeforces.com" },
 ];
-
-function ProjectArtwork({ kind }: { kind: string }) {
-  if (kind === "respectro") {
-    return (
-      <div className="project-artwork respectro-art" data-ui="project-preview">
-        <div className="art-topbar">
-          <span className="art-brand">ReSpectro</span>
-          <span>Discover</span>
-          <span>Movies</span>
-          <span>Series</span>
-          <span className="art-avatar">D</span>
-        </div>
-        <div className="respectro-content">
-          <p>Find your next favourite</p>
-          <strong>Stories worth<br />staying up for.</strong>
-          <div className="art-poster-row" aria-hidden="true">
-            <span className="poster poster-one" />
-            <span className="poster poster-two" />
-            <span className="poster poster-three" />
-            <span className="poster poster-four" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (kind === "gemini") {
-    return (
-      <div className="project-artwork gemini-art" data-ui="project-preview">
-        <div className="gemini-sidebar">
-          <span className="gemini-mark">G</span>
-          <span>＋</span>
-          <span>◷</span>
-        </div>
-        <div className="gemini-content">
-          <span className="gemini-greeting">Hello, Daksh</span>
-          <strong>Start with<br />an idea.</strong>
-          <div className="gemini-prompt">Ask anything <span>↑</span></div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="project-artwork library-art" data-ui="project-preview">
-      <div className="library-topbar"><strong>Library System</strong><span>Inventory</span><span>Sales</span><span>Reports</span></div>
-      <div className="library-content">
-        <p>Inventory overview</p>
-        <strong>Keep every<br />record in order.</strong>
-        <div className="library-table" aria-hidden="true">
-          <span /><span /><span />
-          <span /><span /><span />
-          <span /><span /><span />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 const lightLinePositions = [19, 40, 60, 80, 99.7];
 
@@ -293,47 +241,9 @@ export default function Portfolio() {
 
         <section id="works" className="works-section" aria-labelledby="works-title">
           <div className="works-heading" data-reveal>
-            <h2 id="works-title" data-fit-text>Selected Works</h2>
+            <h2 id="works-title" data-fit-text>Project</h2>
           </div>
-          <div className="works-index" aria-hidden="true">
-            {projects.map((project) => <span key={project.name}>{project.category}</span>)}
-            <span>Recent projects</span>
-          </div>
-          <div className="project-list">
-            {projects.map((project) => {
-              // Map project preview to case study slug
-              const slug = project.preview === "respectro" ? "respectro" :
-                           project.preview === "gemini" ? "gemini-clone" :
-                           "library-system";
-
-              return (
-                <article className="project-row" key={project.name} data-reveal>
-                  <a
-                    className={`project-image project-image-${project.preview}`}
-                    href={`/works/${slug}`}
-                    aria-label={`Open ${project.name}`}
-                  >
-                    <ProjectArtwork kind={project.preview} />
-                    <span className="project-open" aria-hidden="true">↗</span>
-                  </a>
-                  <div className="project-info">
-                    <div className="project-copy">
-                      <div className="project-title-line">
-                        <h3>{project.name}</h3>
-                        <span className="project-year">{project.year}</span>
-                      </div>
-                      <p>{project.description}</p>
-                    </div>
-                    <div className="project-meta">
-                      <span className="project-category">{project.category}</span>
-                      <span className="project-tech">{project.technologies}</span>
-                      <a href={`/works/${slug}`}>View project <span>↗</span></a>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+          <StickyWorks projects={stickyProjects} />
         </section>
 
         <section id="about" className="about-section" aria-labelledby="about-title">
