@@ -204,7 +204,11 @@ export default function Portfolio() {
   return (
     <div ref={pageRef} className="portfolio-page">
       <AmberFlow />
-      <header ref={navRef} className="site-nav" data-nav>
+      <header
+        ref={navRef}
+        className={`site-nav${menuOpen ? " menu-open" : ""}`}
+        data-nav
+      >
         <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">DS</a>
         <nav className="hero-nav-links" aria-label="Main navigation">
           <a href="#works">Work</a>
