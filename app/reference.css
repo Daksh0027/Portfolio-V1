@@ -1524,14 +1524,14 @@
 .about-display {
   position: relative;
   z-index: 1;
+  width: 100%;
   margin: 0;
+  padding: 0 0.3vw;
   color: #f7f7f5;
-  font-size: clamp(5rem, 18vw, 17.5rem);
   font-weight: 650;
-  letter-spacing: -0.105em;
+  letter-spacing: -0.08em;
   line-height: 0.84;
   white-space: nowrap;
-  margin-left: calc(-1 * var(--page-gutter));
 }
 
 .about-roles {

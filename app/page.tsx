@@ -339,7 +339,7 @@ export default function Portfolio() {
 
         <section id="about" className="about-section" aria-labelledby="about-title">
           <div className="section-grid" aria-hidden="true" />
-          <h2 id="about-title" className="about-display" data-reveal>About Daksh</h2>
+          <h2 id="about-title" className="about-display" data-reveal data-fit-text>About Daksh</h2>
           <div className="about-roles" data-reveal aria-label="A few things about me">
             <span>Student</span>
             <span>Developer</span>
