@@ -123,6 +123,7 @@ function FallingLineLights() {
 export default function Portfolio() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const page = pageRef.current;
@@ -155,6 +156,28 @@ export default function Portfolio() {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY + 4 && y > 140) {
+        nav.classList.add("is-hidden");
+      } else if (y < lastY - 4 || y <= 140) {
+        nav.classList.remove("is-hidden");
+      }
+      lastY = y;
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (menuOpen) navRef.current?.classList.remove("is-hidden");
+  }, [menuOpen]);
+
+  useEffect(() => {
     const fit = () => {
       document.querySelectorAll<HTMLElement>("[data-fit-text]").forEach((title) => {
         const container = title.parentElement;
@@ -181,7 +204,7 @@ export default function Portfolio() {
   return (
     <div ref={pageRef} className="portfolio-page">
       <AmberFlow />
-      <header className="site-nav" data-nav>
+      <header ref={navRef} className="site-nav" data-nav>
         <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">DS</a>
         <nav className="hero-nav-links" aria-label="Main navigation">
           <a href="#works">Work</a>
