@@ -293,8 +293,7 @@ export default function Portfolio() {
 
         <section id="works" className="works-section" aria-labelledby="works-title">
           <div className="works-heading" data-reveal>
-            <h2 id="works-title">Selected Works</h2>
-            <p>Useful things, built with care.</p>
+            <h2 id="works-title" data-fit-text>Selected Works</h2>
           </div>
           <div className="works-index" aria-hidden="true">
             {projects.map((project) => <span key={project.name}>{project.category}</span>)}

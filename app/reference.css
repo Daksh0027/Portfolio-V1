@@ -395,24 +395,18 @@
 .works-heading {
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 30px;
+  display: block;
   margin: 0 0 clamp(50px, 8vw, 112px);
 }
 
 .works-heading h2 {
+  width: 100%;
   margin: 0;
-  font-size: clamp(58px, 12.8vw, 184px);
+  padding: 0 0.3vw;
   font-weight: 650;
-  letter-spacing: -0.11em;
+  letter-spacing: -0.08em;
   line-height: 0.8;
-}
-
-.works-heading p {
-  margin: 0 0 5px;
-  font-size: 16px;
+  white-space: nowrap;
 }
 
 .project-list {
@@ -1072,14 +1066,7 @@
   }
 
   .works-heading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 18px;
     margin-bottom: 56px;
-  }
-
-  .works-heading h2 {
-    font-size: clamp(54px, 13vw, 100px);
   }
 
   .project-row {
@@ -1355,19 +1342,11 @@
 }
 
 .works-heading h2 {
-  margin-left: calc(-1 * var(--page-gutter));
-  font-size: clamp(4rem, 17.5vw, 17rem);
+  padding: 0 0.3vw;
   font-weight: 650;
-  letter-spacing: -0.105em;
+  letter-spacing: -0.08em;
   line-height: 0.82;
   white-space: nowrap;
-}
-
-.works-heading p {
-  max-width: 220px;
-  margin: 0 0 7px;
-  font-size: 14px;
-  line-height: 1.35;
 }
 
 .works-index {
@@ -1870,19 +1849,6 @@
       #f5f4f1;
   }
 
-  .works-heading {
-    gap: 14px;
-  }
-
-  .works-heading h2 {
-    font-size: clamp(48px, 15.7vw, 96px);
-  }
-
-  .works-heading p {
-    max-width: 240px;
-    font-size: 13px;
-  }
-
   .works-index {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
@@ -2062,10 +2028,6 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .works-heading h2 {
-    font-size: 15.7vw;
-  }
-
   .project-image {
     min-height: 245px;
     padding: 12px;
@@ -2136,21 +2098,6 @@
   .works-heading {
     margin-bottom: 20px;
   }
-
-  .works-heading h2 {
-    margin-left: 0;
-    font-size: clamp(5rem, 8.7vw, 9rem);
-    letter-spacing: -.105em;
-    line-height: .82;
-  }
-
-  .works-heading p {
-    max-width: 220px;
-    margin: 2px 0 0 auto;
-    color: #343434;
-    font-size: 12px;
-    line-height: 1.35;
-  }
 }
 
 @media (max-width: 760px) {
@@ -2169,8 +2116,7 @@
 
   .works-heading h2 {
     font-size: clamp(4rem, 16vw, 7rem);
-  }
-}
+  }}
 
 /* Full-height reference hero */
 @media (min-width: 761px) {
