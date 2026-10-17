@@ -211,11 +211,12 @@ export default function Portfolio() {
       document.querySelectorAll<HTMLElement>("[data-fit-text]").forEach((title) => {
         const container = title.parentElement;
         if (!container) return;
+        const style = getComputedStyle(container);
+        const available = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
         title.style.padding = "0";
         title.style.width = "max-content";
         title.style.fontSize = "10px";
         const textWidth = title.offsetWidth;
-        const available = container.clientWidth;
         if (textWidth > 0 && available > 0) {
           title.style.fontSize = `${(10 * available) / textWidth}px`;
         }
@@ -380,10 +381,6 @@ export default function Portfolio() {
 
         <section id="contact" className="contact-section" aria-labelledby="contact-title">
           <div className="section-grid" aria-hidden="true" />
-          <div className="contact-status" data-reveal>
-            <span className="contact-status-dot" aria-hidden="true" />
-            Available for work
-          </div>
           <h2 id="contact-title" data-reveal data-fit-text>Get in Touch</h2>
           <div className="contact-whispers" aria-hidden="true">
             <span>Let&apos;s chat</span>
