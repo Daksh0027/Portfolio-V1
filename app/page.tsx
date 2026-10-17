@@ -209,15 +209,10 @@ export default function Portfolio() {
     <div ref={pageRef} className="portfolio-page">
       <AmberFlow />
       <header className="site-nav" data-nav>
-        <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">
-          <span className="site-wordmark-initials" aria-hidden="true">DS</span>
-          <span className="site-wordmark-full" aria-hidden="true">Daksh Shastri</span>
-        </a>
+        <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">DS</a>
         <nav className="hero-nav-links" aria-label="Main navigation">
           <a href="#works">Work</a>
           <a href="#capabilities">Services</a>
-          <a href="#about">About</a>
-          <a href="#testimonials">Testimonials</a>
           <a href="#contact">Connect</a>
         </nav>
         <button
@@ -243,8 +238,6 @@ export default function Portfolio() {
         >
           <a href="#works" onClick={closeMenu}>Selected work</a>
           <a href="#capabilities" onClick={closeMenu}>Services</a>
-          <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#testimonials" onClick={closeMenu}>Testimonials</a>
           <a href="#contact" onClick={closeMenu}>Connect</a>
         </nav>
       </header>
@@ -258,7 +251,11 @@ export default function Portfolio() {
             <span className="hero-grid-line" />
             <span className="hero-grid-line" />
           </div>
-          <h1 id="hero-title" className="hero-name" data-hero-word>Daksh Shastri</h1>
+          <h1 id="hero-title" className="hero-name" data-hero-word aria-label="Daksh Shastri">
+            {"DAKSH SHASTRI".split("").map((letter, index) => (
+              <span key={`${letter}-${index}`} aria-hidden="true">{letter === " " ? "\u00a0" : letter}</span>
+            ))}
+          </h1>
           <div className="hero-content" data-hero-copy>
             <p className="hero-statement">Thoughtful interfaces for the real world.</p>
             <div className="hero-meta">
@@ -378,8 +375,6 @@ export default function Portfolio() {
         <nav className="footer-nav" aria-label="Footer navigation">
           <a href="#works">Work</a>
           <a href="#capabilities">Services</a>
-          <a href="#about">About</a>
-          <a href="#testimonials">Testimonials</a>
           <a href="#contact">Connect</a>
         </nav>
         <a className="footer-email" href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a>

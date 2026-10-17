@@ -24,12 +24,12 @@ export default function AmberFlow() {
       if (reducedMotion) return;
 
       gsap.timeline({ repeat: -1, yoyo: true })
-        .to(blob, { xPercent: 2.5, yPercent: -1.5, scale: 1.035, duration: 8, ease: "sine.inOut" })
-        .to(wave, { xPercent: -2, yPercent: 2, scale: 1.045, duration: 10, ease: "sine.inOut" }, "<");
+        .to(blob, { xPercent: 2.5, yPercent: -1.5, scale: 1.035, duration: 2.8, ease: "sine.inOut" })
+        .to(wave, { xPercent: -2, yPercent: 2, scale: 1.045, duration: 3.6, ease: "sine.inOut" }, "<");
 
       gsap.to(flow, {
         yPercent: -1.2,
-        duration: 9,
+        duration: 4.2,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
