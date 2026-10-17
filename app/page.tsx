@@ -161,12 +161,12 @@ export default function Portfolio() {
         if (!container) return;
         const style = getComputedStyle(container);
         const available = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-        title.style.padding = "0";
+        title.style.padding = "0 0 0.16em";
         title.style.width = "max-content";
         title.style.fontSize = "10px";
-        const textWidth = title.offsetWidth;
+        const textWidth = title.getBoundingClientRect().width;
         if (textWidth > 0 && available > 0) {
-          title.style.fontSize = `${(10 * available) / textWidth}px`;
+          title.style.fontSize = `${(10 * available * 0.995) / textWidth}px`;
         }
         title.style.width = "100%";
       });
