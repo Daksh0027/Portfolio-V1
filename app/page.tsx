@@ -210,11 +210,15 @@ export default function Portfolio() {
     if (!title) return;
 
     const fit = () => {
+      title.style.padding = "0";
+      title.style.width = "max-content";
       title.style.fontSize = "10px";
-      const width = title.scrollWidth;
-      if (width > 0) {
-        const available = title.parentElement!.clientWidth - 4;
-        title.style.fontSize = `${(10 * available) / width}px`;
+      const container = title.parentElement;
+      if (!container) return;
+      const textWidth = title.offsetWidth;
+      const available = container.clientWidth;
+      if (textWidth > 0 && available > 0) {
+        title.style.fontSize = `${(10 * available) / textWidth}px`;
       }
     };
 
