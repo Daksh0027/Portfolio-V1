@@ -161,9 +161,9 @@ export default function Portfolio() {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      if (y > lastY + 4 && y > 140) {
+      if (y > lastY + 2 && y > 140) {
         nav.classList.add("is-hidden");
-      } else if (y < lastY - 4 || y <= 140) {
+      } else if (y < lastY - 2 || y <= 140) {
         nav.classList.remove("is-hidden");
       }
       lastY = y;
