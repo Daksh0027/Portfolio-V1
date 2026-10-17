@@ -207,20 +207,20 @@ export default function Portfolio() {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
-    const title = document.querySelector<HTMLElement>(".hero-name");
-    if (!title) return;
-
     const fit = () => {
-      title.style.padding = "0";
-      title.style.width = "max-content";
-      title.style.fontSize = "10px";
-      const container = title.parentElement;
-      if (!container) return;
-      const textWidth = title.offsetWidth;
-      const available = container.clientWidth;
-      if (textWidth > 0 && available > 0) {
-        title.style.fontSize = `${(10 * available) / textWidth}px`;
-      }
+      document.querySelectorAll<HTMLElement>("[data-fit-text]").forEach((title) => {
+        const container = title.parentElement;
+        if (!container) return;
+        title.style.padding = "0";
+        title.style.width = "max-content";
+        title.style.fontSize = "10px";
+        const textWidth = title.offsetWidth;
+        const available = container.clientWidth;
+        if (textWidth > 0 && available > 0) {
+          title.style.fontSize = `${(10 * available) / textWidth}px`;
+        }
+        title.style.width = "100%";
+      });
     };
 
     fit();
@@ -275,7 +275,7 @@ export default function Portfolio() {
             <span className="hero-grid-line" />
             <span className="hero-grid-line" />
           </div>
-          <h1 id="hero-title" className="hero-name" data-hero-word aria-label="Daksh Shastri">
+          <h1 id="hero-title" className="hero-name" data-hero-word data-fit-text aria-label="Daksh Shastri">
             {"DAKSH SHASTRI".split("").map((letter, index) => (
               <span key={`${letter}-${index}`} aria-hidden="true">{letter === " " ? "\u00a0" : letter}</span>
             ))}
@@ -384,7 +384,7 @@ export default function Portfolio() {
             <span className="contact-status-dot" aria-hidden="true" />
             Available for work
           </div>
-          <h2 id="contact-title" data-reveal>Get in Touch</h2>
+          <h2 id="contact-title" data-reveal data-fit-text>Get in Touch</h2>
           <div className="contact-whispers" aria-hidden="true">
             <span>Let&apos;s chat</span>
             <span>Let&apos;s chat</span>
@@ -393,8 +393,9 @@ export default function Portfolio() {
             <span>Let&apos;s chat</span>
           </div>
           <div className="contact-bottom">
-            <a className="contact-button" href="mailto:dakshshastri0627@gmail.com">Start a conversation <span>↗</span></a>
-            <p>Have an idea in mind?<br />I&apos;d love to hear about it.</p>
+            <a className="contact-cta" href="mailto:dakshshastri0627@gmail.com">
+              <span className="contact-cta-label">Book Discovery Call</span>
+            </a>
           </div>
         </section>
       </main>
