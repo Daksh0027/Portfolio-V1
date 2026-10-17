@@ -185,8 +185,9 @@ export default function Portfolio() {
       if (reducedMotion) return;
 
       gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-nav]", { y: -16, opacity: 0, duration: 0.6 })
-        .from("[data-hero-word]", { y: 42, opacity: 0, duration: 0.85 }, "-=0.18")
+        .from(".site-wordmark", { y: -12, opacity: 0, duration: 0.55 })
+        .from(".hero-nav-links a", { y: -12, opacity: 0, duration: 0.55, stagger: 0.09 }, "-=0.35")
+        .from("[data-hero-word]", { y: 42, opacity: 0, duration: 0.85 }, "-=0.25")
         .from("[data-hero-copy]", { y: 22, opacity: 0, duration: 0.65 }, "-=0.42");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
@@ -379,6 +380,10 @@ export default function Portfolio() {
 
         <section id="contact" className="contact-section" aria-labelledby="contact-title">
           <div className="section-grid" aria-hidden="true" />
+          <div className="contact-status" data-reveal>
+            <span className="contact-status-dot" aria-hidden="true" />
+            Available for work
+          </div>
           <h2 id="contact-title" data-reveal>Get in Touch</h2>
           <div className="contact-whispers" aria-hidden="true">
             <span>Let&apos;s chat</span>
