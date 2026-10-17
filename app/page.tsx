@@ -203,6 +203,7 @@ export default function Portfolio() {
 
   return (
     <div ref={pageRef} className="portfolio-page">
+      <div className="bottom-blur" aria-hidden="true" />
       <AmberFlow />
       <header
         ref={navRef}
