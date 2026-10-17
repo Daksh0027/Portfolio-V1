@@ -402,7 +402,8 @@
 .works-heading h2 {
   width: 100%;
   margin: 0;
-  padding: 0 0.3vw;
+  padding: 0 0.3vw 0.09em;
+  color: #0c0c0c;
   font-weight: 650;
   letter-spacing: -0.08em;
   line-height: 0.8;
@@ -1408,7 +1409,8 @@
 }
 
 .works-heading h2 {
-  padding: 0 0.3vw;
+  padding: 0 0.3vw 0.09em;
+  color: #0c0c0c;
   font-weight: 650;
   letter-spacing: -0.08em;
   line-height: 0.82;
