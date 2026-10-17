@@ -166,7 +166,7 @@ export default function Portfolio() {
         title.style.fontSize = "10px";
         const textWidth = title.getBoundingClientRect().width;
         if (textWidth > 0 && available > 0) {
-          title.style.fontSize = `${(10 * available * 0.995) / textWidth}px`;
+          title.style.fontSize = `${(10 * available * 0.978) / textWidth}px`;
         }
         title.style.width = "100%";
       });
@@ -241,7 +241,7 @@ export default function Portfolio() {
 
         <section id="works" className="works-section" aria-labelledby="works-title">
           <div className="works-heading" data-reveal>
-            <h2 id="works-title" data-fit-text>Project</h2>
+            <h2 id="works-title" data-fit-text>Projects</h2>
           </div>
           <StickyWorks projects={stickyProjects} />
         </section>
