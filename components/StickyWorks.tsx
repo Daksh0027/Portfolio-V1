@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, type MotionValue } from "framer-motion
 type StickyProject = {
   name: string;
   category: string;
+  blurb: string;
   url: string;
   images: [string, string, string];
 };
@@ -39,6 +40,7 @@ function WorkCard({
             <div>
               <span className="works-card-category">{project.category}</span>
               <h3 className="works-card-name">{project.name}</h3>
+              <p className="works-card-blurb">{project.blurb}</p>
             </div>
           </div>
           <a

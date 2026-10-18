@@ -12,12 +12,15 @@ if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 const stickyProjects: {
   name: string;
   category: string;
+  blurb: string;
   url: string;
   images: [string, string, string];
 }[] = [
   {
     name: "Greppa",
     category: "AI / DevTools",
+    blurb:
+      "Large-repository code intelligence engine. Indexes codebases with tree-sitter AST parsing into a symbol graph, ranks files with PageRank centrality, and answers questions via hybrid retrieval and a multi-step agent loop with file/line citations. FastAPI, Next.js 14, PostgreSQL/pgvector, Redis, Gemini.",
     url: "https://github.com/Daksh0027",
     images: [
       "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
@@ -28,6 +31,8 @@ const stickyProjects: {
   {
     name: "OmniDocs",
     category: "AI / SaaS",
+    blurb:
+      "Multi-document RAG chat platform. Ingests PDFs/DOCX with OCR fallback and Gemini embeddings, combining vector and full-text search with reranking, streaming answers, and cross-document comparison tables. FastAPI, Next.js, Clerk, PostgreSQL/pgvector, Redis.",
     url: "https://github.com/Daksh0027",
     images: [
       "https://images.pexels.com/photos/5225982/pexels-photo-5225982.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
@@ -36,8 +41,10 @@ const stickyProjects: {
     ],
   },
   {
-    name: "React-Movies",
+    name: "Respectro",
     category: "Client",
+    blurb:
+      "Movie and TV discovery app on the TMDB API, built with React 19, Vite and Tailwind CSS 4. Parallel search, genre and media-type filters, infinite scroll, Clerk authentication and Appwrite-backed trending-search analytics.",
     url: "https://respectro.vercel.app/",
     images: [
       "/assets/images/Screenshot_2026-10-17_223843.png",
