@@ -141,7 +141,13 @@ export default function Portfolio() {
       if (reducedMotion) return;
 
       gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from(".site-wordmark", { y: -12, opacity: 0, duration: 0.55 })
+        .from(".hero-grid-line", {
+          scaleY: 0,
+          transformOrigin: "bottom center",
+          duration: 1.1,
+          stagger: 0.14,
+        }, 0)
+        .from(".site-wordmark", { y: -12, opacity: 0, duration: 0.55 }, 0.25)
         .from(".hero-nav-links a", { y: -12, opacity: 0, duration: 0.55, stagger: 0.09 }, "-=0.35")
         .from("[data-hero-word]", { y: 42, opacity: 0, duration: 0.85 }, "-=0.25")
         .from("[data-hero-copy]", { y: 22, opacity: 0, duration: 0.65 }, "-=0.42");
