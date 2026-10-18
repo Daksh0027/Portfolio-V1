@@ -407,6 +407,7 @@
   color: #0c0c0c;
   font-weight: 650;
   letter-spacing: -0.08em;
+  word-spacing: 0.14em;
   line-height: 0.8;
   white-space: nowrap;
 }
@@ -1422,6 +1423,7 @@
   color: #0c0c0c;
   font-weight: 650;
   letter-spacing: -0.08em;
+  word-spacing: 0.14em;
   line-height: 0.82;
   white-space: nowrap;
 }
