@@ -36,7 +36,7 @@ const stickyProjects: {
     ],
   },
   {
-    name: "Library System",
+    name: "Omni Docs",
     category: "Client",
     url: "https://github.com/Daksh0027",
     images: [
