@@ -2420,38 +2420,3 @@
   mix-blend-mode: normal;
 }
 
-
-/* Grid beam: glowing light that travels along the vertical grid lines */
-.grid-beam-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10%;
-}
-
-.grid-beam-line {
-  width: 1px;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.grid-beam {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2px;
-  height: 180px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(241, 90, 36, 0.55) 30%,
-    rgba(255, 255, 255, 0.95) 50%,
-    rgba(241, 90, 36, 0.55) 70%,
-    transparent 100%
-  );
-  filter: blur(1px) drop-shadow(0 0 12px rgba(241, 90, 36, 0.8));
-  will-change: transform, opacity;
-}

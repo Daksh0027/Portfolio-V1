@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AmberFlow from "@/components/AmberFlow";
-import GridBeam from "@/components/GridBeam";
 import Capabilities from "@/components/Capabilities";
 import StickyWorks from "@/components/StickyWorks";
 
@@ -218,7 +217,6 @@ export default function Portfolio() {
   return (
     <div ref={pageRef} className="portfolio-page">
       <AmberFlow />
-      <GridBeam />
       <header
         ref={navRef}
         className={`site-nav${menuOpen ? " menu-open" : ""}`}
