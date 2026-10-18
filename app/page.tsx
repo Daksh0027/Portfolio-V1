@@ -20,9 +20,9 @@ const stickyProjects: {
     category: "Client",
     url: "https://respectro.vercel.app/",
     images: [
-      "https://images.pexels.com/photos/1790556/pexels-photo-1790556.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/7991501/pexels-photo-7991501.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/8263369/pexels-photo-8263369.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "/assets/images/Screenshot_2026-10-17_223843.png",
+      "/assets/images/Screenshot_2026-10-17_223921.png",
+      "/assets/images/Screenshot_2026-10-17_223942.png",
     ],
   },
   {
