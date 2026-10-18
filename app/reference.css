@@ -2419,14 +2419,25 @@
   z-index: 15;
   height: clamp(200px, 30vh, 340px);
   pointer-events: none;
-  backdrop-filter: blur(64px) saturate(1.6);
-  -webkit-backdrop-filter: blur(64px) saturate(1.6);
+  backdrop-filter: blur(64px) saturate(1.6) brightness(1.15);
+  -webkit-backdrop-filter: blur(64px) saturate(1.6) brightness(1.15);
   -webkit-mask-image: linear-gradient(to top, #000 60%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
   mask-image: linear-gradient(to top, #000 60%, rgba(0, 0, 0, 0.5) 80%, transparent 100%);
 }
 
+/* The glass reads through a faint warm veil + edge light; without any veil,
+   a backdrop blur over flat color is mathematically invisible. */
+.bottom-blur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(255, 138, 60, 0.1), rgba(255, 138, 60, 0) 55%),
+    radial-gradient(120% 90% at 50% 115%, rgba(255, 122, 40, 0.14), transparent 65%);
+}
+
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .bottom-blur {
-    background: rgba(0, 0, 0, 0.35);
+    background: linear-gradient(to top, rgba(255, 110, 40, 0.18), transparent);
   }
 }
