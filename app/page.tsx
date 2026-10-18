@@ -22,7 +22,7 @@ const stickyProjects: {
     images: [
       "/assets/images/Screenshot_2026-10-17_223843.png",
       "/assets/images/Screenshot_2026-10-17_223921.png",
-      "/assets/images/Screenshot_2026-10-17_223942.png",
+      "/assets/images/image copy.png",
     ],
   },
   {
