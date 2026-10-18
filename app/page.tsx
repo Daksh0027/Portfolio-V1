@@ -268,7 +268,7 @@ export default function Portfolio() {
 
         <section id="works" className="works-section" aria-labelledby="works-title">
           <div className="works-heading" data-reveal>
-            <h2 id="works-title" data-fit-text>Projects</h2>
+            <h2 id="works-title" data-fit-text>Selected Works</h2>
           </div>
           <StickyWorks projects={stickyProjects} />
         </section>
