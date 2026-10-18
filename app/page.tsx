@@ -16,33 +16,33 @@ const stickyProjects: {
   images: [string, string, string];
 }[] = [
   {
-    name: "ReSpectro",
+    name: "Greppa",
+    category: "AI / DevTools",
+    url: "https://github.com/Daksh0027",
+    images: [
+      "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    ],
+  },
+  {
+    name: "OmniDocs",
+    category: "AI / SaaS",
+    url: "https://github.com/Daksh0027",
+    images: [
+      "https://images.pexels.com/photos/5225982/pexels-photo-5225982.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/30752162/pexels-photo-30752162.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/8045884/pexels-photo-8045884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    ],
+  },
+  {
+    name: "React-Movies",
     category: "Client",
     url: "https://respectro.vercel.app/",
     images: [
       "/assets/images/Screenshot_2026-10-17_223843.png",
       "/assets/images/Screenshot_2026-10-17_223921.png",
       "/assets/images/image copy.png",
-    ],
-  },
-  {
-    name: "Gemini Clone",
-    category: "Personal",
-    url: "https://bot-clone.netlify.app/",
-    images: [
-      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/14314636/pexels-photo-14314636.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/25626449/pexels-photo-25626449.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    ],
-  },
-  {
-    name: "Omni Docs",
-    category: "Client",
-    url: "https://github.com/Daksh0027",
-    images: [
-      "https://images.pexels.com/photos/5225982/pexels-photo-5225982.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/30752162/pexels-photo-30752162.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/8045884/pexels-photo-8045884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
     ],
   },
 ];
