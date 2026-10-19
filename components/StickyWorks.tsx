@@ -54,19 +54,19 @@ function WorkCard({
         </div>
         <div className="mt-6 grid h-[clamp(340px,44vw,640px)] grid-cols-5 grid-rows-2 gap-4 md:mt-10 md:gap-6">
           <img
-            className="col-span-2 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
+            className="col-span-2 col-start-1 row-start-1 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
             src={project.images[0]}
             alt={`${project.name} preview one`}
             loading="lazy"
           />
           <img
-            className="col-span-2 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
+            className="col-span-2 col-start-1 row-start-2 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
             src={project.images[1]}
             alt={`${project.name} preview two`}
             loading="lazy"
           />
           <img
-            className="col-span-3 row-span-2 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
+            className="col-span-3 col-start-3 row-span-2 row-start-1 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
             src={project.images[2]}
             alt={`${project.name} preview three`}
             loading="lazy"
