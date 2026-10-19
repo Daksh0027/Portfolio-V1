@@ -24,9 +24,9 @@ const stickyProjects: {
       "Large-repository code intelligence engine. Indexes codebases with tree-sitter AST parsing into a symbol graph, ranks files with PageRank centrality, and answers questions via hybrid retrieval and a multi-step agent loop with file/line citations. FastAPI, Next.js 14, PostgreSQL/pgvector, Redis, Gemini.",
     url: "https://github.com/Daksh0027",
     images: [
-      "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "/assets/Greppa/Screenshot 2026-10-19 201844.png",
+      "/assets/Greppa/Screenshot 2026-10-19 203308.png",
+      "/assets/Greppa/Screenshot 2026-10-19 203620.png",
     ],
   },
   {
@@ -36,9 +36,9 @@ const stickyProjects: {
       "Multi-document RAG chat platform. Ingests PDFs/DOCX with OCR fallback and Gemini embeddings, combining vector and full-text search with reranking, streaming answers, and cross-document comparison tables. FastAPI, Next.js, Clerk, PostgreSQL/pgvector, Redis.",
     url: "https://github.com/Daksh0027",
     images: [
-      "https://images.pexels.com/photos/5225982/pexels-photo-5225982.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/30752162/pexels-photo-30752162.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "https://images.pexels.com/photos/8045884/pexels-photo-8045884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "/assets/Omni/Screenshot 2026-10-19 205557.png",
+      "/assets/Omni/Screenshot 2026-10-19 205711.png",
+      "/assets/Omni/Screenshot 2026-10-19 205732.png",
     ],
   },
   {
