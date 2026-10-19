@@ -1626,15 +1626,15 @@
 .about-portrait {
   position: relative;
   display: grid;
-  width: min(100%, 300px);
-  aspect-ratio: 0.76;
+  width: min(100%, 400px);
+  aspect-ratio: 1;
   place-items: center;
   justify-self: center;
-  overflow: hidden;
-  border: 7px solid #f4f4f2;
-  background: #d8d8d5;
+  overflow: visible;
+  border: none;
+  background: transparent;
   color: #111;
-  transform: rotate(-2deg);
+  transform: none;
 }
 
 .about-monogram {
@@ -1645,15 +1645,24 @@
   transform: translateX(-0.06em);
 }
 
-.about-portrait-caption {
+.about-portrait spline-viewer {
+  width: 120%;
+  height: 120%;
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 12px 14px 10px;
-  background: #f4f4f2;
-  font-size: 10px;
-  line-height: 1.35;
+  top: -10%;
+  left: -10%;
+  display: block;
+  z-index: 1;
+}
+
+.about-portrait spline-viewer canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.about-portrait-caption {
+  display: none;
 }
 
 .about-copy {
