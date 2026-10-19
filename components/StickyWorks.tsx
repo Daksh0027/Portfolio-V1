@@ -52,29 +52,25 @@ function WorkCard({
             Live Project
           </a>
         </div>
-        <div className="mt-6 flex gap-4 md:mt-10 md:gap-6">
-          <div className="flex w-[40%] flex-col gap-4 md:gap-6">
-            <img
-              className="h-[clamp(130px,16vw,230px)] w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
-              src={project.images[0]}
-              alt={`${project.name} preview one`}
-              loading="lazy"
-            />
-            <img
-              className="h-[clamp(160px,22vw,340px)] w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
-              src={project.images[1]}
-              alt={`${project.name} preview two`}
-              loading="lazy"
-            />
-          </div>
-          <div className="w-[60%]">
-            <img
-              className="h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
-              src={project.images[2]}
-              alt={`${project.name} preview three`}
-              loading="lazy"
-            />
-          </div>
+        <div className="mt-6 grid h-[clamp(340px,44vw,640px)] grid-cols-5 grid-rows-2 gap-4 md:mt-10 md:gap-6">
+          <img
+            className="col-span-2 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
+            src={project.images[0]}
+            alt={`${project.name} preview one`}
+            loading="lazy"
+          />
+          <img
+            className="col-span-2 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
+            src={project.images[1]}
+            alt={`${project.name} preview two`}
+            loading="lazy"
+          />
+          <img
+            className="col-span-3 row-span-2 h-full w-full rounded-[40px] object-cover sm:rounded-[50px] md:rounded-[60px]"
+            src={project.images[2]}
+            alt={`${project.name} preview three`}
+            loading="lazy"
+          />
         </div>
       </motion.div>
     </div>
