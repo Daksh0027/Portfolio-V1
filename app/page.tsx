@@ -3,41 +3,54 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import OrangeCanvas from "@/components/OrangeCanvas";
+import AmberFlow from "@/components/AmberFlow";
 import Capabilities from "@/components/Capabilities";
+import StickyWorks from "@/components/StickyWorks";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
+const stickyProjects: {
+  name: string;
+  category: string;
+  blurb: string;
+  url: string;
+  images: [string, string, string];
+}[] = [
   {
-    name: "ReSpectro",
-    category: "Entertainment",
-    year: "2025",
-    url: "https://respectro.vercel.app/",
-    description:
-      "A movie and series discovery platform with live TMDB data, Clerk authentication, and Appwrite-powered watchlists.",
-    technologies: "React · Vite · Appwrite · TMDB",
-    preview: "respectro",
-  },
-  {
-    name: "Gemini Clone",
-    category: "AI / Productivity",
-    year: "2025",
-    url: "https://bot-clone.netlify.app/",
-    description:
-      "A responsive AI interface with live Gemini API responses, streaming output, and conversation history.",
-    technologies: "React · Gemini API · CSS",
-    preview: "gemini",
-  },
-  {
-    name: "Library System",
-    category: "Operations / CLI",
-    year: "2024",
+    name: "Greppa",
+    category: "AI / DevTools",
+    blurb:
+      "Large-repository code intelligence engine. Indexes codebases with tree-sitter AST parsing into a symbol graph, ranks files with PageRank centrality, and answers questions via hybrid retrieval and a multi-step agent loop with file/line citations. FastAPI, Next.js 14, PostgreSQL/pgvector, Redis, Gemini.",
     url: "https://github.com/Daksh0027",
-    description:
-      "A Python and MySQL management system for inventory, sales records, and store operations.",
-    technologies: "Python · MySQL",
-    preview: "library",
+    images: [
+      "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    ],
+  },
+  {
+    name: "OmniDocs",
+    category: "AI / SaaS",
+    blurb:
+      "Multi-document RAG chat platform. Ingests PDFs/DOCX with OCR fallback and Gemini embeddings, combining vector and full-text search with reranking, streaming answers, and cross-document comparison tables. FastAPI, Next.js, Clerk, PostgreSQL/pgvector, Redis.",
+    url: "https://github.com/Daksh0027",
+    images: [
+      "https://images.pexels.com/photos/5225982/pexels-photo-5225982.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/30752162/pexels-photo-30752162.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "https://images.pexels.com/photos/8045884/pexels-photo-8045884.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    ],
+  },
+  {
+    name: "Respectro",
+    category: "Client",
+    blurb:
+      "Movie and TV discovery app on the TMDB API, built with React 19, Vite and Tailwind CSS 4. Parallel search, genre and media-type filters, infinite scroll, Clerk authentication and Appwrite-backed trending-search analytics.",
+    url: "https://respectro.vercel.app/",
+    images: [
+      "/assets/images/Screenshot_2026-10-17_223843.png",
+      "/assets/images/Screenshot_2026-10-17_223921.png",
+      "/assets/images/image copy.png",
+    ],
   },
 ];
 
@@ -47,64 +60,6 @@ const socials = [
   { label: "CodeChef", href: "https://www.codechef.com/users/gam_pearl_90" },
   { label: "Codeforces", href: "https://codeforces.com" },
 ];
-
-function ProjectArtwork({ kind }: { kind: string }) {
-  if (kind === "respectro") {
-    return (
-      <div className="project-artwork respectro-art" data-ui="project-preview">
-        <div className="art-topbar">
-          <span className="art-brand">ReSpectro</span>
-          <span>Discover</span>
-          <span>Movies</span>
-          <span>Series</span>
-          <span className="art-avatar">D</span>
-        </div>
-        <div className="respectro-content">
-          <p>Find your next favourite</p>
-          <strong>Stories worth<br />staying up for.</strong>
-          <div className="art-poster-row" aria-hidden="true">
-            <span className="poster poster-one" />
-            <span className="poster poster-two" />
-            <span className="poster poster-three" />
-            <span className="poster poster-four" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (kind === "gemini") {
-    return (
-      <div className="project-artwork gemini-art" data-ui="project-preview">
-        <div className="gemini-sidebar">
-          <span className="gemini-mark">G</span>
-          <span>＋</span>
-          <span>◷</span>
-        </div>
-        <div className="gemini-content">
-          <span className="gemini-greeting">Hello, Daksh</span>
-          <strong>Start with<br />an idea.</strong>
-          <div className="gemini-prompt">Ask anything <span>↑</span></div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="project-artwork library-art" data-ui="project-preview">
-      <div className="library-topbar"><strong>Library System</strong><span>Inventory</span><span>Sales</span><span>Reports</span></div>
-      <div className="library-content">
-        <p>Inventory overview</p>
-        <strong>Keep every<br />record in order.</strong>
-        <div className="library-table" aria-hidden="true">
-          <span /><span /><span />
-          <span /><span /><span />
-          <span /><span /><span />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 const lightLinePositions = [19, 40, 60, 80, 99.7];
 
@@ -175,6 +130,7 @@ function FallingLineLights() {
 export default function Portfolio() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const page = pageRef.current;
@@ -185,8 +141,15 @@ export default function Portfolio() {
       if (reducedMotion) return;
 
       gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-nav]", { y: -16, opacity: 0, duration: 0.6 })
-        .from("[data-hero-word]", { y: 42, opacity: 0, duration: 0.85 }, "-=0.18")
+        .from(".hero-grid-line", {
+          scaleY: 0,
+          transformOrigin: "bottom center",
+          duration: 1.1,
+          stagger: 0.14,
+        }, 0)
+        .from(".site-wordmark", { y: -12, opacity: 0, duration: 0.55 }, 0.25)
+        .from(".hero-nav-links a", { y: -12, opacity: 0, duration: 0.55, stagger: 0.09 }, "-=0.35")
+        .from("[data-hero-word]", { y: 42, opacity: 0, duration: 0.85 }, "-=0.25")
         .from("[data-hero-copy]", { y: 22, opacity: 0, duration: 0.65 }, "-=0.42");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
@@ -205,19 +168,65 @@ export default function Portfolio() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY + 2 && y > 140) {
+        nav.classList.add("is-hidden");
+      } else if (y < lastY - 2 || y <= 140) {
+        nav.classList.remove("is-hidden");
+      }
+      lastY = y;
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (menuOpen) navRef.current?.classList.remove("is-hidden");
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const fit = () => {
+      document.querySelectorAll<HTMLElement>("[data-fit-text]").forEach((title) => {
+        const container = title.parentElement;
+        if (!container) return;
+        const style = getComputedStyle(container);
+        const available = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        title.style.padding = "0 0 0.16em";
+        title.style.width = "max-content";
+        title.style.fontSize = "10px";
+        const textWidth = title.getBoundingClientRect().width;
+        if (textWidth > 0 && available > 0) {
+          title.style.fontSize = `${(10 * available * 0.978) / textWidth}px`;
+        }
+        title.style.width = "100%";
+      });
+    };
+
+    fit();
+    window.addEventListener("resize", fit);
+    document.fonts?.ready.then(fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
   return (
     <div ref={pageRef} className="portfolio-page">
-      <OrangeCanvas />
-      <header className="site-nav" data-nav>
-        <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">
-          <span className="site-wordmark-initials" aria-hidden="true">DS</span>
-          <span className="site-wordmark-full" aria-hidden="true">Daksh Shastri</span>
-        </a>
+      <AmberFlow />
+      <header
+        ref={navRef}
+        className={`site-nav${menuOpen ? " menu-open" : ""}`}
+        data-nav
+      >
+        <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">DS</a>
         <nav className="hero-nav-links" aria-label="Main navigation">
           <a href="#works">Work</a>
-          <a href="#capabilities">Capabilities</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#capabilities">Services</a>
+          <a href="#contact">Connect</a>
         </nav>
         <button
           className={`menu-button${menuOpen ? " is-open" : ""}`}
@@ -241,9 +250,8 @@ export default function Portfolio() {
           }}
         >
           <a href="#works" onClick={closeMenu}>Selected work</a>
-          <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
-          <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
+          <a href="#capabilities" onClick={closeMenu}>Services</a>
+          <a href="#contact" onClick={closeMenu}>Connect</a>
         </nav>
       </header>
 
@@ -254,10 +262,15 @@ export default function Portfolio() {
             <span className="hero-grid-line" />
             <span className="hero-grid-line" />
             <span className="hero-grid-line" />
+            <span className="hero-grid-line" />
           </div>
-          <h1 id="hero-title" className="hero-name" data-hero-word>Daksh Shastri</h1>
+          <h1 id="hero-title" className="hero-name" data-hero-word data-fit-text aria-label="Daksh Shastri">
+            {"DAKSH SHASTRI".split("").map((letter, index) => (
+              <span key={`${letter}-${index}`} aria-hidden="true">{letter === " " ? "\u00a0" : letter}</span>
+            ))}
+          </h1>
           <div className="hero-content" data-hero-copy>
-            <p className="hero-statement">Building digital experiences<br />with logic and feeling.</p>
+            <p className="hero-statement">Thoughtful interfaces for the real world.</p>
             <div className="hero-meta">
               <span>© 2026</span>
               <span>Based in Delhi, India</span>
@@ -268,52 +281,14 @@ export default function Portfolio() {
 
         <section id="works" className="works-section" aria-labelledby="works-title">
           <div className="works-heading" data-reveal>
-            <h2 id="works-title">Selected work</h2>
+            <h2 id="works-title" data-fit-text>Selected Works</h2>
           </div>
-          <div className="works-index" aria-hidden="true">
-            {projects.map((project) => <span key={project.name}>{project.category}</span>)}
-            <span>Recent projects</span>
-          </div>
-          <div className="project-list">
-            {projects.map((project) => {
-              // Map project preview to case study slug
-              const slug = project.preview === "respectro" ? "respectro" :
-                           project.preview === "gemini" ? "gemini-clone" :
-                           "library-system";
-
-              return (
-                <article className="project-row" key={project.name} data-reveal>
-                  <a
-                    className={`project-image project-image-${project.preview}`}
-                    href={`/works/${slug}`}
-                    aria-label={`Open ${project.name}`}
-                  >
-                    <ProjectArtwork kind={project.preview} />
-                    <span className="project-open" aria-hidden="true">↗</span>
-                  </a>
-                  <div className="project-info">
-                    <div className="project-copy">
-                      <div className="project-title-line">
-                        <h3>{project.name}</h3>
-                        <span className="project-year">{project.year}</span>
-                      </div>
-                      <p>{project.description}</p>
-                    </div>
-                    <div className="project-meta">
-                      <span className="project-category">{project.category}</span>
-                      <span className="project-tech">{project.technologies}</span>
-                      <a href={`/works/${slug}`}>View project <span>↗</span></a>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+          <StickyWorks projects={stickyProjects} />
         </section>
 
         <section id="about" className="about-section" aria-labelledby="about-title">
           <div className="section-grid" aria-hidden="true" />
-          <h2 id="about-title" className="about-display" data-reveal>About Daksh</h2>
+          <h2 id="about-title" className="about-display" data-reveal data-fit-text>About Daksh</h2>
           <div className="about-roles" data-reveal aria-label="A few things about me">
             <span>Student</span>
             <span>Developer</span>
@@ -355,7 +330,7 @@ export default function Portfolio() {
 
         <section id="contact" className="contact-section" aria-labelledby="contact-title">
           <div className="section-grid" aria-hidden="true" />
-          <h2 id="contact-title" data-reveal>Get in Touch</h2>
+          <h2 id="contact-title" data-reveal data-fit-text>Get in Touch</h2>
           <div className="contact-whispers" aria-hidden="true">
             <span>Let&apos;s chat</span>
             <span>Let&apos;s chat</span>
@@ -364,8 +339,9 @@ export default function Portfolio() {
             <span>Let&apos;s chat</span>
           </div>
           <div className="contact-bottom">
-            <a className="contact-button" href="mailto:dakshshastri0627@gmail.com">Start a conversation <span>↗</span></a>
-            <p>Have an idea in mind?<br />I&apos;d love to hear about it.</p>
+            <a className="contact-cta" href="mailto:dakshshastri0627@gmail.com">
+              <span className="contact-cta-label">Book Discovery Call</span>
+            </a>
           </div>
         </section>
       </main>
@@ -373,9 +349,8 @@ export default function Portfolio() {
         <a className="footer-name" href="#top" aria-label="Daksh Shastri, back to top">Daksh<br />Shastri</a>
         <nav className="footer-nav" aria-label="Footer navigation">
           <a href="#works">Work</a>
-          <a href="#capabilities">Capabilities</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#capabilities">Services</a>
+          <a href="#contact">Connect</a>
         </nav>
         <a className="footer-email" href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a>
         <div className="footer-bottom">

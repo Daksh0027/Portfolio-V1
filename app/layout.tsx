@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   title: "Daksh Shastri — Frontend Developer & Competitive Programmer",
@@ -34,7 +33,6 @@ export default function RootLayout({
         <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
       </head>
       <body className="min-h-[100dvh] bg-black text-white antialiased selection:bg-[#fc7814] selection:text-white">
-        <CustomCursor />
         <SmoothScroll>
           {children}
         </SmoothScroll>
