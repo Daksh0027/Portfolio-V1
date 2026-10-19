@@ -1637,6 +1637,18 @@
   transform: rotate(-2deg);
 }
 
+.about-spline {
+  border: 0;
+  background: #050505;
+  transform: none;
+}
+
+.about-spline > div,
+.about-spline canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .about-monogram {
   font-size: clamp(100px, 14vw, 190px);
   font-weight: 650;

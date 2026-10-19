@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AmberFlow from "@/components/AmberFlow";
 import Capabilities from "@/components/Capabilities";
 import StickyWorks from "@/components/StickyWorks";
+import Spline from "@splinetool/react-spline/next";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
@@ -296,9 +297,8 @@ export default function Portfolio() {
             <span>Delhi, India</span>
           </div>
           <div className="about-inner">
-            <div className="about-portrait" data-reveal aria-label="Daksh Shastri monogram">
-              <span className="about-monogram" aria-hidden="true">DS</span>
-              <span className="about-portrait-caption">Daksh Shastri<br />Frontend developer</span>
+            <div className="about-portrait about-spline" data-reveal aria-label="Interactive 3D robot">
+              <Spline scene="https://prod.spline.design/7s1iCLx-H-LOzHxC/scene.splinecode" />
             </div>
             <div className="about-copy" data-reveal>
               <p>
