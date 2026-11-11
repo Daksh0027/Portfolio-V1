@@ -320,51 +320,6 @@
 }
 
 
-.hero-light-lines {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.hero-light-streak {
-  position: absolute;
-  top: -76px;
-  display: block;
-  width: 2px;
-  height: 76px;
-  opacity: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 255, 255, 0.18) 14%,
-    rgba(255, 255, 255, 0.95) 48%,
-    rgba(255, 255, 255, 0.36) 72%,
-    transparent 100%
-  );
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9));
-}
-
-.hero-light-streak.is-falling {
-  animation: fall-through-grid 1050ms linear both;
-}
-
-@keyframes fall-through-grid {
-  0% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  8%,
-  78% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(calc(100vh + 170px));
-  }
-}
-
 .hero-action {
   display: inline-flex;
   min-height: 46px;

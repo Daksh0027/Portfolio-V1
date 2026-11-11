@@ -62,72 +62,6 @@ const socials = [
   { label: "Codeforces", href: "https://codeforces.com" },
 ];
 
-const lightLinePositions = [19, 40, 60, 80, 99.7];
-
-function FallingLineLights() {
-  const lineRefs = useRef<Array<HTMLSpanElement | null>>([]);
-
-  useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const lines = lineRefs.current;
-    const timers: number[] = [];
-
-    const clearTimers = () => {
-      timers.forEach((timer) => window.clearTimeout(timer));
-    };
-
-    const schedule = (index: number, delay: number) => {
-      timers[index] = window.setTimeout(() => {
-        lines[index]?.classList.add("is-falling");
-      }, delay);
-    };
-
-    const handleAnimationEnd = (index: number) => {
-      lines[index]?.classList.remove("is-falling");
-      if (!reducedMotion.matches) schedule(index, 1600 + Math.random() * 4400);
-    };
-    const animationEndHandlers = lines.map(
-      (_, index) => () => handleAnimationEnd(index),
-    );
-
-    const onMotionPreferenceChange = () => {
-      clearTimers();
-      lines.forEach((line, index) => {
-        line?.classList.remove("is-falling");
-        if (!reducedMotion.matches) schedule(index, Math.random() * 3000);
-      });
-    };
-
-    lines.forEach((line, index) => {
-      line?.addEventListener("animationend", animationEndHandlers[index]);
-      if (!reducedMotion.matches) schedule(index, Math.random() * 3000);
-    });
-    reducedMotion.addEventListener("change", onMotionPreferenceChange);
-
-    return () => {
-      clearTimers();
-      reducedMotion.removeEventListener("change", onMotionPreferenceChange);
-      lines.forEach((line, index) => {
-        line?.removeEventListener("animationend", animationEndHandlers[index]);
-        line?.classList.remove("is-falling");
-      });
-    };
-  }, []);
-
-  return (
-    <div className="hero-light-lines" aria-hidden="true">
-      {lightLinePositions.map((position, index) => (
-        <span
-          key={position}
-          ref={(line) => { lineRefs.current[index] = line; }}
-          className="hero-light-streak"
-          style={{ left: `${position}%` }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function Portfolio() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -258,7 +192,6 @@ export default function Portfolio() {
 
       <main id="top">
         <section className="hero-section" aria-labelledby="hero-title">
-          <FallingLineLights />
           <div className="hero-grid-lines" aria-hidden="true">
             <span className="hero-grid-line" />
             <span className="hero-grid-line" />
