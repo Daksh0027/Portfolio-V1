@@ -82,10 +82,22 @@ export default function Portfolio() {
           duration: 1.1,
           stagger: 0.14,
         }, 0)
-        .from(".site-wordmark", { y: -12, opacity: 0, duration: 0.55 }, 0.25)
-        .from(".hero-nav-links a", { y: -12, opacity: 0, duration: 0.55, stagger: 0.09 }, "-=0.35")
-        .from("[data-hero-word]", { y: 42, opacity: 0, duration: 0.85 }, "-=0.25")
-        .from("[data-hero-copy]", { y: 22, opacity: 0, duration: 0.65 }, "-=0.42");
+        .fromTo(".site-wordmark",
+          { y: -12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55 },
+          0.25)
+        .fromTo(".hero-nav-links a",
+          { y: -12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55, stagger: 0.09 },
+          "-=0.35")
+        .fromTo("[data-hero-word]",
+          { y: 42, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.85 },
+          "-=0.25")
+        .fromTo("[data-hero-copy]",
+          { y: 22, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.65 },
+          "-=0.42");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
@@ -109,6 +121,11 @@ export default function Portfolio() {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
+      if (y > 80) {
+        nav.classList.add("is-scrolled");
+      } else {
+        nav.classList.remove("is-scrolled");
+      }
       if (y > lastY + 2 && y > 140) {
         nav.classList.add("is-hidden");
       } else if (y < lastY - 2 || y <= 140) {
@@ -122,7 +139,14 @@ export default function Portfolio() {
   }, []);
 
   useEffect(() => {
-    if (menuOpen) navRef.current?.classList.remove("is-hidden");
+    const nav = navRef.current;
+    if (!nav) return;
+    if (menuOpen) {
+      nav.classList.remove("is-hidden");
+      nav.classList.add("is-scrolled");
+    } else {
+      nav.classList.remove("is-scrolled");
+    }
   }, [menuOpen]);
 
   useEffect(() => {
