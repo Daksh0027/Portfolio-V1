@@ -50,7 +50,7 @@
   align-items: baseline;
   width: fit-content;
   min-height: 1.2em;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: 0.01em;
   color: #fff;
@@ -97,7 +97,7 @@
 
 .hero-nav-links {
   display: contents;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
@@ -216,7 +216,7 @@
   width: fit-content;
   align-items: baseline;
   gap: 14px;
-  font-size: clamp(34px, 6vw, 58px);
+  font-size: clamp(42px, 7vw, 72px);
   font-weight: 600;
   letter-spacing: -0.075em;
   line-height: 1.1;
@@ -291,7 +291,7 @@
 }
 
 .menu-socials a {
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -306,7 +306,7 @@
 
 .menu-email {
   width: fit-content;
-  font-size: 15px;
+  font-size: 20px;
   color: var(--ink);
   transition: color 180ms ease;
 }
@@ -1090,7 +1090,7 @@
     flex-basis: auto;
     width: auto;
     min-width: 30px;
-    font-size: 15px;
+    font-size: 20px;
   }
 
   .hero-nav-links {
@@ -1915,7 +1915,7 @@
 
 .footer-name {
   width: fit-content;
-  font-size: clamp(42px, 5.2vw, 72px);
+  font-size: clamp(50px, 5.9vw, 86px);
   font-weight: 650;
   letter-spacing: -0.09em;
   line-height: 0.82;
@@ -1925,14 +1925,14 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
 }
 
 .footer-email {
   justify-self: end;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -1962,7 +1962,7 @@
   justify-content: flex-end;
   gap: 8px 18px;
   color: #f7f7f5;
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
 }
