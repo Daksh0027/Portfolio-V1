@@ -169,12 +169,12 @@
   position: relative;
   z-index: 22;
   display: none;
-  width: 36px;
-  height: 34px;
+  width: 44px;
+  height: 40px;
   flex-direction: column;
   justify-content: center;
   gap: 6px;
-  padding: 4px;
+  padding: 8px;
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -197,22 +197,26 @@
 }
 
 .menu-panel {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
+  bottom: 0;
+  z-index: 16;
   display: flex;
-  width: min(420px, 100vw);
-  min-height: 100svh;
+  width: min(420px, 100%);
+  height: 100svh;
   flex-direction: column;
   justify-content: center;
-  gap: 16px;
-  padding: 100px clamp(28px, 7vw, 76px);
+  gap: 18px;
+  padding: 100px clamp(28px, 8vw, 64px) 48px;
   background: #111;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  transform: translateX(24px);
-  transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
+  transform: translateX(48px);
+  transition: opacity 320ms ease, transform 460ms cubic-bezier(0.32, 0.72, 0, 1), visibility 460ms;
 }
 
 .menu-panel.is-open {
@@ -222,17 +226,129 @@
   transform: translateX(0);
 }
 
-.menu-panel a {
+.menu-panel > a {
+  display: flex;
   width: fit-content;
+  align-items: baseline;
+  gap: 14px;
   font-size: clamp(34px, 6vw, 58px);
   font-weight: 600;
   letter-spacing: -0.075em;
-  line-height: 1;
+  line-height: 1.1;
+  opacity: 0;
+  transform: translateY(24px);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: opacity 260ms ease, transform 260ms ease, color 180ms ease;
+}
+
+.menu-panel.is-open > a {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.22, 1, 0.36, 1), color 180ms ease;
+}
+
+.menu-panel.is-open > a:nth-of-type(1) {
+  transition-delay: 100ms;
+}
+
+.menu-panel.is-open > a:nth-of-type(2) {
+  transition-delay: 170ms;
+}
+
+.menu-panel.is-open > a:nth-of-type(3) {
+  transition-delay: 240ms;
+}
+
+.menu-panel > a:hover,
+.menu-panel > a:focus-visible {
+  color: var(--accent);
+}
+
+.menu-panel > a:active {
+  transform: scale(0.98);
+}
+
+.menu-panel > a:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.menu-link-index {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.menu-foot {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(247, 247, 245, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.menu-panel.is-open .menu-foot {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1) 320ms, transform 320ms cubic-bezier(0.22, 1, 0.36, 1) 320ms;
+}
+
+.menu-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+}
+
+.menu-socials a {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
   transition: color 180ms ease;
 }
 
-.menu-panel a:hover {
+.menu-socials a:hover,
+.menu-socials a:focus-visible {
   color: var(--accent);
+}
+
+.menu-email {
+  width: fit-content;
+  font-size: 15px;
+  color: var(--ink);
+  transition: color 180ms ease;
+}
+
+.menu-email:hover,
+.menu-email:focus-visible {
+  color: var(--accent);
+}
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  border: 0;
+  padding: 0;
+  background: rgba(5, 5, 5, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 320ms ease;
+}
+
+.menu-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .hero-section {
@@ -289,6 +405,14 @@
 }
 
 .hero-name span { display: inline; }
+
+.hero-name .hero-word {
+  display: inline-flex;
+}
+
+.hero-word + .hero-word {
+  margin-left: 0.26em;
+}
 
 .hero-content {
   position: absolute;
@@ -990,6 +1114,8 @@
 
   .menu-button {
     display: flex;
+    grid-column: 4;
+    justify-self: end;
   }
 
   .hero-section {
@@ -1188,6 +1314,9 @@
 @media (prefers-reduced-motion: reduce) {
   .menu-button span,
   .menu-panel,
+  .menu-backdrop,
+  .menu-panel > a,
+  .menu-foot,
   .hero-action,
   .project-open,
   .project-meta a,
@@ -1779,6 +1908,14 @@
   text-align: center;
 }
 
+.contact-cta-note {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(5, 5, 5, 0.62);
+}
+
 .site-footer {
   position: relative;
   display: grid;
@@ -1864,6 +2001,12 @@
     padding: 0 var(--page-gutter);
     font-size: clamp(40px, 13vw, 110px);
     letter-spacing: -0.09em;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-word + .hero-word {
+    margin-left: 0;
   }
 
   .hero-content {
@@ -1962,9 +2105,9 @@
   }
 
   .about-portrait {
-    width: min(62vw, 260px);
-    justify-self: start;
-    margin-left: 8%;
+    width: min(70vw, 300px);
+    justify-self: center;
+    margin-left: 0;
   }
 
   .about-copy > p {
@@ -2010,12 +2153,15 @@
   .contact-section h2 {
     margin-top: 80px;
     font-size: clamp(54px, 17vw, 104px);
+    color: #050505;
   }
 
   .contact-whispers {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    justify-content: space-between;
     gap: 9px;
     font-size: 8px;
+    color: rgba(5, 5, 5, 0.62);
   }
 
   .contact-whispers span:nth-child(2),
@@ -2037,25 +2183,35 @@
   }
 
   .site-footer {
-    grid-template-columns: 1fr 1fr;
-    gap: 34px 22px;
-    min-height: 340px;
-    padding-top: 38px;
+    grid-template-columns: 1fr;
+    gap: 26px;
+    min-height: 0;
+    padding-top: 42px;
   }
 
   .footer-name {
     font-size: clamp(42px, 10vw, 60px);
   }
 
+  .footer-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+  }
+
   .footer-email {
     grid-column: 1 / -1;
     justify-self: start;
+    font-size: 13px;
   }
 
   .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    padding-top: 22px;
   }
 
   .footer-bottom .social-links {
@@ -2209,7 +2365,9 @@
   }
 
   .hero-name {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     top: 48px;
     left: 12px;
     right: 12px;

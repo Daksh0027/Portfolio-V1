@@ -66,6 +66,9 @@ export default function Portfolio() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
+  const menuPanelRef = useRef<HTMLElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const menuWasOpenRef = useRef(false);
 
   useEffect(() => {
     const page = pageRef.current;
@@ -142,11 +145,29 @@ export default function Portfolio() {
     const nav = navRef.current;
     if (!nav) return;
     if (menuOpen) {
+      menuWasOpenRef.current = true;
       nav.classList.remove("is-hidden");
       nav.classList.add("is-scrolled");
-    } else {
-      nav.classList.remove("is-scrolled");
+      document.body.style.overflow = "hidden";
+      const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Escape") setMenuOpen(false);
+      };
+      document.addEventListener("keydown", onKeyDown);
+      const focusTimer = window.setTimeout(() => {
+        menuPanelRef.current?.querySelector("a")?.focus({ preventScroll: true });
+      }, 420);
+      return () => {
+        document.removeEventListener("keydown", onKeyDown);
+        window.clearTimeout(focusTimer);
+        document.body.style.overflow = "";
+      };
     }
+    nav.classList.remove("is-scrolled");
+    if (menuWasOpenRef.current) {
+      menuButtonRef.current?.focus({ preventScroll: true });
+      menuWasOpenRef.current = false;
+    }
+    return undefined;
   }, [menuOpen]);
 
   useEffect(() => {
@@ -188,6 +209,8 @@ export default function Portfolio() {
           <a href="#contact">Connect</a>
         </nav>
         <button
+          ref={menuButtonRef}
+          data-testid="menu-toggle-button"
           className={`menu-button${menuOpen ? " is-open" : ""}`}
           type="button"
           aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -198,21 +221,48 @@ export default function Portfolio() {
           <span />
           <span />
         </button>
-        <nav
-          id="site-menu"
-          className={`menu-panel${menuOpen ? " is-open" : ""}`}
-          aria-label="Main navigation"
-          aria-hidden={!menuOpen}
-          inert={!menuOpen}
-          onKeyDown={(event) => {
-            if (event.key === "Escape") setMenuOpen(false);
-          }}
-        >
-          <a href="#works" onClick={closeMenu}>Selected work</a>
-          <a href="#capabilities" onClick={closeMenu}>Services</a>
-          <a href="#contact" onClick={closeMenu}>Connect</a>
-        </nav>
       </header>
+      <button
+        type="button"
+        data-testid="menu-backdrop"
+        className={`menu-backdrop${menuOpen ? " is-open" : ""}`}
+        aria-hidden="true"
+        tabIndex={-1}
+        onClick={closeMenu}
+      />
+      <nav
+        ref={menuPanelRef}
+        id="site-menu"
+        data-testid="site-menu-panel"
+        className={`menu-panel${menuOpen ? " is-open" : ""}`}
+        aria-label="Main navigation"
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) setMenuOpen(false);
+        }}
+      >
+        <a data-testid="menu-link-works" href="#works" onClick={closeMenu}>
+          <span className="menu-link-index" aria-hidden="true">01</span>
+          Selected work
+        </a>
+        <a data-testid="menu-link-services" href="#capabilities" onClick={closeMenu}>
+          <span className="menu-link-index" aria-hidden="true">02</span>
+          Services
+        </a>
+        <a data-testid="menu-link-connect" href="#contact" onClick={closeMenu}>
+          <span className="menu-link-index" aria-hidden="true">03</span>
+          Connect
+        </a>
+        <div className="menu-foot">
+          <div className="menu-socials" data-testid="menu-social-links">
+            {socials.map((social) => (
+              <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>
+            ))}
+          </div>
+          <a className="menu-email" data-testid="menu-email-link" href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a>
+        </div>
+      </nav>
 
       <main id="top">
         <section className="hero-section" aria-labelledby="hero-title">
@@ -223,8 +273,12 @@ export default function Portfolio() {
             <span className="hero-grid-line" />
           </div>
           <h1 id="hero-title" className="hero-name" data-hero-word data-fit-text aria-label="Daksh Shastri">
-            {"DAKSH SHASTRI".split("").map((letter, index) => (
-              <span key={`${letter}-${index}`} aria-hidden="true">{letter === " " ? "\u00a0" : letter}</span>
+            {"DAKSH SHASTRI".split(" ").map((word, wordIndex) => (
+              <span className="hero-word" key={`word-${wordIndex}`} aria-hidden="true">
+                {word.split("").map((letter, index) => (
+                  <span key={`${wordIndex}-${index}`}>{letter}</span>
+                ))}
+              </span>
             ))}
           </h1>
           <div className="hero-content" data-hero-copy>
@@ -297,9 +351,17 @@ export default function Portfolio() {
             <span>Let&apos;s chat</span>
           </div>
           <div className="contact-bottom">
-            <a className="contact-cta" href="mailto:dakshshastri0627@gmail.com">
+            <a
+              className="contact-cta"
+              data-testid="contact-download-cta"
+              href="/portfolio-source.zip"
+              download="daksh-shastri-portfolio-source.zip"
+            >
               <span className="contact-cta-label">Book Discovery Call</span>
             </a>
+            <span className="contact-cta-note" data-testid="contact-download-note">
+              Downloads this portfolio&apos;s full source code (zip)
+            </span>
           </div>
         </section>
       </main>
