@@ -202,7 +202,13 @@ export default function Portfolio() {
         className={`site-nav${menuOpen ? " menu-open" : ""}`}
         data-nav
       >
-        <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">DS</a>
+        <a className="site-wordmark" href="#top" aria-label="Daksh Shastri, home">
+          <span>D</span>
+          <span className="wordmark-expand">AKSH</span>
+          <span className="wordmark-gap">&nbsp;</span>
+          <span>S</span>
+          <span className="wordmark-expand">HASTRI</span>
+        </a>
         <nav className="hero-nav-links" aria-label="Main navigation">
           <a href="#works">Work</a>
           <a href="#capabilities">Services</a>
