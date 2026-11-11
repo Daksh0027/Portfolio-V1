@@ -65,6 +65,7 @@ const socials = [
 export default function Portfolio() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showWorks, setShowWorks] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const menuPanelRef = useRef<HTMLElement | null>(null);
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -76,10 +77,14 @@ export default function Portfolio() {
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const context = gsap.context(() => {
-      if (reducedMotion) return;
+      if (reducedMotion) {
+        setShowWorks(true);
+        return;
+      }
 
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from(".hero-grid-line", {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl.from(".hero-grid-line", {
           scaleY: 0,
           transformOrigin: "bottom center",
           duration: 1.1,
@@ -100,7 +105,8 @@ export default function Portfolio() {
         .fromTo("[data-hero-copy]",
           { y: 22, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.65 },
-          "-=0.42");
+          "-=0.42")
+        .call(() => setShowWorks(true), null, "+=0.2");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
@@ -192,7 +198,7 @@ export default function Portfolio() {
     window.addEventListener("resize", fit);
     document.fonts?.ready.then(fit);
     return () => window.removeEventListener("resize", fit);
-  }, []);
+  }, [showWorks]);
 
   return (
     <div ref={pageRef} className="portfolio-page">
@@ -297,7 +303,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="works" className="works-section" aria-labelledby="works-title">
+        <section id="works" className="works-section" aria-labelledby="works-title" style={{ opacity: showWorks ? 1 : 0, transition: 'opacity 0.5s ease' }}>
           <div className="works-heading" data-reveal>
             <h2 id="works-title" data-fit-text>Selected Works</h2>
           </div>
