@@ -216,8 +216,8 @@ export default function Portfolio() {
           <span className="wordmark-expand">HASTRI</span>
         </a>
         <nav className="hero-nav-links" aria-label="Main navigation">
-          <a href="#works">Work</a>
-          <a href="#capabilities">Services</a>
+          <a href="#works">Projects</a>
+          <a href="#capabilities">Skills</a>
           <a href="#contact">Connect</a>
         </nav>
         <button
@@ -260,7 +260,7 @@ export default function Portfolio() {
         </a>
         <a data-testid="menu-link-services" href="#capabilities" onClick={closeMenu}>
           <span className="menu-link-index" aria-hidden="true">02</span>
-          Services
+          Skills
         </a>
         <a data-testid="menu-link-connect" href="#contact" onClick={closeMenu}>
           <span className="menu-link-index" aria-hidden="true">03</span>
@@ -380,7 +380,7 @@ export default function Portfolio() {
       <footer className="site-footer">
         <a className="footer-name" href="#top" aria-label="Daksh Shastri, back to top">Daksh<br />Shastri</a>
         <nav className="footer-nav" aria-label="Footer navigation">
-          <a href="#works">Work</a>
+          <a href="#works">Projects</a>
           <a href="#capabilities">Services</a>
           <a href="#contact">Connect</a>
         </nav>
