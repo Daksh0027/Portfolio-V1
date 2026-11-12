@@ -57,9 +57,10 @@ const stickyProjects: {
 
 const socials = [
   { label: "GitHub", href: "https://github.com/Daksh0027" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/daksh-shastri-5728b924a" },
   { label: "LeetCode", href: "https://leetcode.com/u/Daksh0027" },
   { label: "CodeChef", href: "https://www.codechef.com/users/gam_pearl_90" },
-  { label: "Codeforces", href: "https://codeforces.com" },
+  { label: "Codeforces", href: "https://codeforces.com/profile/Daksh0027" },
 ];
 
 export default function Portfolio() {
@@ -371,6 +372,14 @@ export default function Portfolio() {
             >
               <span className="contact-cta-label">Book Discovery Call</span>
             </a>
+            <a
+              className="contact-cta"
+              data-testid="contact-resume-cta"
+              href="/resume.pdf"
+              download="Daksh-Shastri-Resume.pdf"
+            >
+              <span className="contact-cta-label">Download Resume</span>
+            </a>
             <span className="contact-cta-note" data-testid="contact-download-note">
               Downloads this portfolio&apos;s full source code (zip)
             </span>
@@ -391,6 +400,7 @@ export default function Portfolio() {
             {socials.map((social) => (
               <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>
             ))}
+            <a data-testid="footer-resume-link" href="/resume.pdf" download="Daksh-Shastri-Resume.pdf">Resume ↓</a>
           </div>
         </div>
       </footer>
