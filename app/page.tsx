@@ -375,8 +375,9 @@ export default function Portfolio() {
             <a
               className="contact-cta"
               data-testid="contact-resume-cta"
-              href="/resume.pdf"
-              download="Daksh-Shastri-Resume.pdf"
+              href="https://drive.google.com/file/d/1CCIZ3fWyfG24rsKEB9FVKVQ3k0JlDCH_/view?usp=drive_link"
+              target="_blank"
+              rel="noreferrer"
             >
               <span className="contact-cta-label">Download Resume</span>
             </a>
@@ -400,7 +401,14 @@ export default function Portfolio() {
             {socials.map((social) => (
               <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>
             ))}
-            <a data-testid="footer-resume-link" href="/resume.pdf" download="Daksh-Shastri-Resume.pdf">Resume ↓</a>
+            <a
+              data-testid="footer-resume-link"
+              href="https://drive.google.com/file/d/1CCIZ3fWyfG24rsKEB9FVKVQ3k0JlDCH_/view?usp=drive_link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Resume ↓
+            </a>
           </div>
         </div>
       </footer>
