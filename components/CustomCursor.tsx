@@ -22,13 +22,13 @@ export default function CustomCursor() {
     };
 
     const handleMouseEnter = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest('a, button, .project-image')) {
+      if ((e.target as HTMLElement).closest("a, button, .project-image")) {
         setIsHovering(true);
       }
     };
 
     const handleMouseLeave = (e: MouseEvent) => {
-      if (!(e.target as HTMLElement).closest('a, button, .project-image')) {
+      if (!(e.target as HTMLElement).closest("a, button, .project-image")) {
         setIsHovering(false);
       }
     };
