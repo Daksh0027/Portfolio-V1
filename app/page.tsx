@@ -106,7 +106,7 @@ export default function Portfolio() {
           { y: 22, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.65 },
           "-=0.42")
-        .call(() => setShowWorks(true), null, "+=0.2");
+        .call(() => setShowWorks(true), [], "+=0.2");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
