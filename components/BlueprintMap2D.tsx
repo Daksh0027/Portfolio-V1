@@ -1,8 +1,15 @@
 "use client";
 
-import { useState, useRef, MouseEvent, useEffect } from "react";
+import { useState, useRef, useEffect, MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DATA, DistrictID } from "@/lib/data";
+import {
+  DISTRICT_ORDER,
+  GRID_STYLES,
+  getSpatialDelay,
+  getAdjacentDistricts,
+  getStatusColor,
+} from "@/lib/map-config";
 
 const useDecipher = (text: string, active: boolean, delay: number = 0, speed: number = 1) => {
   const [displayText, setDisplayText] = useState("");
@@ -69,39 +76,25 @@ export default function BlueprintMap2D() {
   };
 
   const handleSelect = (id: DistrictID) => {
-    // 1. Set active district immediately so the map can anchor to it
     setActiveDistrict(id);
-
-    // 2. Wait a tiny tick for React to commit the new anchor point to the DOM
-    // before triggering the unmount/exit animation. This solves the "always zooms to center" bug!
-    setTimeout(() => {
-      setViewState('detail');
-    }, 50);
+    setTimeout(() => setViewState('detail'), 50);
   };
 
   const handleBackToMap = () => {
     setViewState('map');
-    // Keep the active district during transition for zoom origin
-    setTimeout(() => {
-      setActiveDistrict(null);
-    }, 500);
+    setTimeout(() => setActiveDistrict(null), 500);
   };
 
   const activeData = activeDistrict ? DATA[activeDistrict] : null;
-
-  const DISTRICT_ORDER: DistrictID[] = ['core', 'proving', 'load', 'surface', 'archives', 'transmission', 'classified'];
-
-  let prevDistrictId: DistrictID | null = null;
-  let nextDistrictId: DistrictID | null = null;
-
-  if (activeDistrict) {
-    const currentIndex = DISTRICT_ORDER.indexOf(activeDistrict);
-    prevDistrictId = DISTRICT_ORDER[(currentIndex - 1 + DISTRICT_ORDER.length) % DISTRICT_ORDER.length];
-    nextDistrictId = DISTRICT_ORDER[(currentIndex + 1) % DISTRICT_ORDER.length];
-  }
-
-  const prevData = prevDistrictId ? DATA[prevDistrictId] : null;
-  const nextData = nextDistrictId ? DATA[nextDistrictId] : null;
+  const { prev: prevData, next: nextData } = activeDistrict
+    ? getAdjacentDistricts(activeDistrict, DATA)
+    : { prev: null, next: null };
+  const prevDistrictId = activeDistrict
+    ? DISTRICT_ORDER[(DISTRICT_ORDER.indexOf(activeDistrict) - 1 + DISTRICT_ORDER.length) % DISTRICT_ORDER.length]
+    : null;
+  const nextDistrictId = activeDistrict
+    ? DISTRICT_ORDER[(DISTRICT_ORDER.indexOf(activeDistrict) + 1) % DISTRICT_ORDER.length]
+    : null;
 
   return (
     <div
@@ -166,21 +159,7 @@ export default function BlueprintMap2D() {
                 const d = DATA[id];
                 const isActive = activeDistrict === id;
                 const isWide = id === 'surface';
-
-                // 3-1-3 Layout: 188px widths, 24px gaps, 14px margins
-                const gridStyles: Record<DistrictID, any> = {
-                  core: { left: '14px', top: '14px', width: '188px', height: '120px' },
-                  proving: { left: '226px', top: '14px', width: '188px', height: '120px' },
-                  load: { left: '438px', top: '14px', width: '188px', height: '120px' },
-                  surface: { left: '14px', top: '158px', width: '612px', height: '120px', background: 'rgba(14,20,16,0.8)' },
-                  archives: { left: '14px', top: '302px', width: '188px', height: '120px' },
-                  transmission: { left: '226px', top: '302px', width: '188px', height: '120px' },
-                  classified: { left: '438px', top: '302px', width: '188px', height: '120px' }
-                };
-
-                // Calculate radial distance from center (320, 218) for a spatial load animation
-                const distFromCenter = Math.sqrt(Math.pow(d.pos.x - 320, 2) + Math.pow(d.pos.y - 218, 2));
-                const spatialDelay = 0.1 + (distFromCenter * 0.0015);
+                const spatialDelay = getSpatialDelay(d);
 
                 return (
                   <motion.div
@@ -189,7 +168,7 @@ export default function BlueprintMap2D() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: spatialDelay }}
                     className={`blueprint-district group cursor-crosshair z-10 ${isActive ? 'active' : ''}`}
-                    style={gridStyles[id]}
+                    style={GRID_STYLES[id]}
                     onClick={() => handleSelect(id)}
                   >
                     <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#2a3e2f] group-hover:border-[#4eff91] transition-colors"></div>
@@ -221,7 +200,7 @@ export default function BlueprintMap2D() {
                           {Object.entries(d.specs).slice(3).map(([key, val]) => (
                             <div key={key} className={`flex text-[8px] tracking-widest leading-none ${isWide ? 'gap-2' : 'justify-between'}`}>
                               <span className="text-[#4a5e50]">{key.toUpperCase()}:</span>
-                              <span className={val === 'OPTIMAL' || val === 'ACTIVE' || val === 'NOMINAL_ACTIVE' ? 'text-[#4eff91]' : 'text-[#8a9e8f]'}>{val}</span>
+                              <span className={getStatusColor(val)}>{val}</span>
                             </div>
                           ))}
                         </div>
@@ -333,7 +312,7 @@ export default function BlueprintMap2D() {
                       <div className="text-right border-l border-[#2a3e2f] pl-4 md:pl-8 hidden sm:block">
  /* data-ui */
                         <p className="text-[10px] text-[#8a9e8f] mb-2 tracking-widest uppercase">REGISTRY_STATUS</p>
-                        <p className="text-sm font-bold uppercase text-[#4eff91] tracking-widest">
+                        <p className="text-sm font-bold uppercase tracking-widest" style={{ color: getStatusColor(activeData.specs.status) }}>
                           {activeData.specs.status}
                         </p>
                       </div>
