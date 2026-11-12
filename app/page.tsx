@@ -216,9 +216,9 @@ export default function Portfolio() {
           <span className="wordmark-expand">HASTRI</span>
         </a>
         <nav className="hero-nav-links" aria-label="Main navigation">
-          <a href="#works">Projects</a>
-          <a href="#capabilities">Skills</a>
-          <a href="#contact">Connect</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#connect">Connect</a>
         </nav>
         <button
           ref={menuButtonRef}
@@ -254,15 +254,15 @@ export default function Portfolio() {
           if (event.target === event.currentTarget) setMenuOpen(false);
         }}
       >
-        <a data-testid="menu-link-works" href="#works" onClick={closeMenu}>
+        <a data-testid="menu-link-works" href="#projects" onClick={closeMenu}>
           <span className="menu-link-index" aria-hidden="true">01</span>
           Selected work
         </a>
-        <a data-testid="menu-link-services" href="#capabilities" onClick={closeMenu}>
+        <a data-testid="menu-link-services" href="#skills" onClick={closeMenu}>
           <span className="menu-link-index" aria-hidden="true">02</span>
           Skills
         </a>
-        <a data-testid="menu-link-connect" href="#contact" onClick={closeMenu}>
+        <a data-testid="menu-link-connect" href="#connect" onClick={closeMenu}>
           <span className="menu-link-index" aria-hidden="true">03</span>
           Connect
         </a>
@@ -303,7 +303,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="works" className="works-section" aria-labelledby="works-title" style={{ opacity: showWorks ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+        <section id="projects" className="works-section" aria-labelledby="works-title" style={{ opacity: showWorks ? 1 : 0, transition: 'opacity 0.5s ease' }}>
           <div className="works-heading" data-reveal>
             <h2 id="works-title" data-fit-text>Selected Works</h2>
           </div>
@@ -352,7 +352,7 @@ export default function Portfolio() {
           </p>
         </section>
 
-        <section id="contact" className="contact-section" aria-labelledby="contact-title">
+        <section id="connect" className="contact-section" aria-labelledby="contact-title">
           <div className="section-grid" aria-hidden="true" />
           <h2 id="contact-title" data-reveal data-fit-text>Get in Touch</h2>
           <div className="contact-whispers" aria-hidden="true">
@@ -380,9 +380,9 @@ export default function Portfolio() {
       <footer className="site-footer">
         <a className="footer-name" href="#top" aria-label="Daksh Shastri, back to top">Daksh<br />Shastri</a>
         <nav className="footer-nav" aria-label="Footer navigation">
-          <a href="#works">Projects</a>
-          <a href="#capabilities">Services</a>
-          <a href="#contact">Connect</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#connect">Connect</a>
         </nav>
         <a className="footer-email" href="mailto:dakshshastri0627@gmail.com">dakshshastri0627@gmail.com</a>
         <div className="footer-bottom">

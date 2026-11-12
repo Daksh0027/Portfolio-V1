@@ -28,7 +28,7 @@ export default function Capabilities() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section id="capabilities" className="capabilities-section py-clamp(120px, 15vw, 200px) px-clamp(40px, 8vw, 100px) bg-black text-white overflow-hidden">
+    <section id="skills" className="capabilities-section py-clamp(120px, 15vw, 200px) px-clamp(40px, 8vw, 100px) bg-black text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-12 items-start">
 
