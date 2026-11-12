@@ -2548,3 +2548,19 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
+
+/* Negative nav: no bar background, elements invert against whatever is beneath
+   (white on black, black on white, blue on orange) via difference blending */
+.site-nav {
+  mix-blend-mode: difference;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.site-nav.is-scrolled,
+.site-nav.menu-open {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
